@@ -14,10 +14,14 @@ var SOCKET_LIST=[];
 
 function optimize(courses){  // has start time, finish time, and weight
 	var finishTime = [];
-	for (var i = 0; i < courses.length; i++){
-		finishTime.push(courses.finishTime);
+	var store = 0;
+	for (var i = courses.length; i < 0 ; i--){
+		if (courses[i].finishTime < courses[i-1].finishTime){
+			store = courses[i];
+			courses[i] = courses[i-1];
+			courses[i-1] = store;
+		}
 	}
-	Array.sort(finishTime)
 
 }
 
