@@ -12,23 +12,81 @@ console.log("Server Started");
 
 var SOCKET_LIST=[];
 
-function optimize(courses){  // has start time, finish time, and weight
-	var finishTime = [];
-	var store = 0;
-	for (var i = courses.length; i < 0 ; i--){
-		if (courses[i].finishTime < courses[i-1].finishTime){
-			store = courses[i];
-			courses[i] = courses[i-1];
-			courses[i-1] = store;
-		}
+
+var optimizedSchedule = [];
+
+
+function optimize(courses){
+	optimizedMaxProfit(sort(courses) , courses.length);
+
+    for (var i = 0; i < courses.length; i++){
+        console.log("Start: " + optimizedSchedule[i].startTime
+                    + "Finish: " + optimizedSchedule[i].finishTime
+                    + "Weight: " + optimizedSchedule[i].weight)
+    }
+}
+
+
+//sorts the jobs by their finishing time
+function sort(courses){  // has start time, finish time, and weight
+    if (courses.length < 2){
+        return courses;
+    }
+ 
+    var middle = parseInt(courses.length / 2);
+    var left   = courses.slice(0, middle);
+    var right  = courses.slice(middle, courses.length);
+ 
+    return merge(optimize(left), optimize(right));
+}
+
+function merge(left, right)
+{
+    var result = [];
+ 
+    while (left.length && right.length) {
+        if (left[0] <= right[0]) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+ 
+    while (left.length){
+        result.push(left.shift());
+    }
+ 
+    while (right.length){
+        result.push(right.shift());
+    }
+ 
+    return result;
+}
+
+
+//recursive algorithm that finds the maximum profit we can get from an array of jobs sorted by their finish time
+function maxProfit(courses, n){
+	if (n == 1) {
+		optimizedSchedule.push(courses[n-1].weight);
+		return courses[n-1].weight;
 	}
 
+	var inclProf = courses[n-1].weight;
+	var i = latestNonConflict(courses, n);
+
+	if( i != -1){
+		inclProf += maxProfit(courses, i + 1);
+	}
+	var exclProf = maxProfit(courses, n-1)
+
+	optimizedSchedule.push(Math.max(inclProf, exclProf));
+	return Math.max(inclProf, exclProf);
 }
 
 
 //finds the index of the nearest job BEFORE the job at index i
 function latestNonConflict(jobs, i){
-	for (var j = i -1; j >=0; j++){
+    for (var j = i -1; j >=0; j++){
 		if (jobs[j].finishTime <= jobs[i].finishTime){
 			return j;
 		}
