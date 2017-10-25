@@ -7,5 +7,9 @@ mongoose.set("debug", true);
 
 module.exports = {
     Head : require('../models/head.js'),
-    Year : require('../models/year.js')
+    Year : require('../models/year.js'),
+    Term : require('../models/term.js'),
+    Subject : require('../models/subject.js'),
+    Course : require('../models/course.js'),
+    Section : require('../models/section.js')
 }
