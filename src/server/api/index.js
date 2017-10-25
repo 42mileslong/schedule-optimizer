@@ -11,8 +11,12 @@ router.get('/', function(req, res) {
 });
 
 router.get('/year', function(req, res) {
-    database.Year.find({}, function(err, resp) {
-        res.send(resp);
+    database.Head.findOne({}, function(err, resp) {
+        database.Year.find({
+            '_id' : { $in : resp.children }
+        }, function(err2, resp2) {
+            res.send(resp2);
+        });
     });
 });
 
