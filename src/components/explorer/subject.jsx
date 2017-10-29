@@ -19,8 +19,11 @@ export default class Subject extends React.Component {
 
     render() {
         return (
-            <li className="list-group-item">
-                <h3 onClick={this.handleClick}>{this.state.subjectData.name}</h3>
+            <div>
+                <h6
+                  className="text-center"
+                  onClick={this.handleClick}>
+                  {this.state.subjectData.name}</h6>
                 {
                   this.state.subjectData.courses.map(data => {
                     return (
@@ -33,7 +36,7 @@ export default class Subject extends React.Component {
                   })
                 }
 
-            </li>
+            </div>
         );
 
     }

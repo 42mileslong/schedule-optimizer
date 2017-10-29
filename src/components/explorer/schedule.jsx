@@ -1,5 +1,7 @@
 import React from 'react';
 import Term from './term';
+import Filter from './filter/filter';
+import CourseList from './courseList/courseList';
 
 var fakeScheduleData = [
   {
@@ -312,6 +314,227 @@ var fakeScheduleData = [
 
             ]
 
+          }, {
+            name: "Astronomy",
+            code: "ANTRO",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to Astronomy",
+                description: "Some bullshit about astronomy",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to astronomy",
+                description: "Some more bullshit about astronomy",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Physics",
+            code: "PHYS",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to physics",
+                description: "Some bullshit about physics",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to physics",
+                description: "Some more bullshit about physics",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Aerospace",
+            code: "AERO",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to aerospace",
+                description: "Some bullshit about aerospace",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to aerospace",
+                description: "Some more bullshit about aerospace",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
 
         ]
@@ -326,20 +549,62 @@ export default class Schedule extends React.Component {
     super()
     this.state = {
       scheduleData: fakeScheduleData,
-      terms: []
+      terms: [],
+      searchCriteria: {
+        avalibility: [],
+        subjects: []
+      },
+      coursesToDisplay: []
     }
+    this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
   }
+
+  updateSearchCriteria(searchCriteria) {
+    var allCourses = [];
+    console.log(searchCriteria);
+    this.state.scheduleData[0].terms[0].subjects.forEach(subject => {
+      //  Add dept info to course.
+      var subjectName = subject.name;
+      var subjectCode = subject.code;
+
+      subject.courses.forEach(course => {
+        course.subject = subjectName;
+        course.code = subjectCode;
+        allCourses.push(course);
+      });
+    });
+    var filteredCourses = allCourses.filter(course => {
+      //  Filter by Subject
+      var index = searchCriteria.subjects.indexOf(course.subject);
+      if (index  == -1) {
+        return false;
+      }
+      return true;
+    });
+    this.setState({
+      searchCriteria: searchCriteria,
+      coursesToDisplay: filteredCourses
+    });
+  }
+
   render() {
+
     return (
-      <div className="container schedule">
+      <div className="container-fluid schedule">
         <h1>Schedule</h1>
-        {
-          this.state.scheduleData[0].terms.map(data => {
-            return (
-              <Term key={"term_" + data.name} termData={data} />
-            )
-          })
-        }
+        <div className="row">
+
+
+        </div>
+        <div className="row">
+          <Filter
+            searchCriteria={this.state.searchCriteria}
+            scheduleData={this.state.scheduleData}
+            onChange={this.updateSearchCriteria}/>
+          <CourseList
+            courses={this.state.coursesToDisplay}
+            />
+        </div>
       </div>
     );
   }
