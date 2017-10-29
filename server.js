@@ -13,10 +13,13 @@ app.use(require('webpack-dev-middleware')(compiler, {
     publicPath: config.output.publicPath
 }));
 app.use(require('webpack-hot-middleware')(compiler));
+// Route API accesses through the API module
+app.use('/api', require('./src/server/api'));
 app.use('/public', express.static('public'));
 app.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname, 'index.html'));
 });
+
 app.listen(process.env.PORT || 5000, function(err) {
     if (err) {
         console.log(err);
