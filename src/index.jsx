@@ -7,8 +7,7 @@ require('bootstrap');
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 require('./stylesheets/base.scss');
-require('./stylesheets/home.scss');
-require('./stylesheets/contact.scss');
+require('./stylesheets/explorer.scss');
 
 ReactDom.render(
     <Router history={browserHistory} routes={routes} />,document.querySelector('#app')

@@ -4,9 +4,8 @@ import Schedule from '../explorer/schedule';
 export default class Explorer extends Component {
     render() {
         return (
-            <div>
+            <div id="explorer">
                 <Schedule />
-                <div id="contact">This is the explorer me page.</div>
             </div>
         );
     }
