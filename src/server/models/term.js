@@ -15,4 +15,13 @@ TermSchema.methods.getChildren = function(callback) {
      }, callback);
 };
 
+TermSchema.methods.getChildWhere = function(fieldName, value, callback) {
+    var query = {
+         '_id' : { $in : this.children }
+    };
+    query[fieldName] = value;
+    return Subject.findOne(query, callback);
+};
+
+
 module.exports = mongoose.model('Term', TermSchema, 'terms');
