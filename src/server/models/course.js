@@ -18,4 +18,12 @@ CourseSchema.methods.getChildren = function(callback) {
      }, callback);
 };
 
+CourseSchema.methods.getChildWhere = function(fieldName, value, callback) {
+    var query = {
+         '_id' : { $in : this.children }
+    };
+    query[fieldName] = value;
+    return Section.findOne(query, callback);
+};
+
 module.exports = mongoose.model('Course', CourseSchema, 'courses');
