@@ -8,7 +8,539 @@ var fakeScheduleData = [
     name: "2017",
     terms: [
       {
-        name: "Spring 2017",
+        name: "Spring",
+        subjects: [
+          {
+            name: "Antropology",
+            code: "ANTRO",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to Antropology",
+                description: "Some bullshit about antropology",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to Antropology",
+                description: "Some more bullshit about antropology",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Computer Science",
+            code: "CS",
+            courses: [
+
+              {
+                number: "101",
+                name: "Introduction to Computer Science",
+                description: "Some bullshit about computer science",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to Computer Science",
+                description: "Some more bullshit about computer science",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+
+            ]
+
+          },
+          {
+            name: "Mathematics",
+            code: "MATH",
+            courses: [
+
+              {
+                number: "101",
+                name: "Introduction to Mathematics",
+                description: "Some bullshit about mathematics",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to mathematics",
+                description: "Some more bullshit about mathematics",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+
+            ]
+
+          },
+          {
+            name: "Basket Weaving",
+            code: "BW",
+            courses: [
+
+              {
+                number: "101",
+                name: "Introduction to Basket Weaving",
+                description: "Some bullshit about Basket Weaving",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to Basket Weaving",
+                description: "Some more bullshit about Basket Weaving",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+
+            ]
+
+          }, {
+            name: "Astronomy",
+            code: "ANTRO",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to Astronomy",
+                description: "Some bullshit about astronomy",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to astronomy",
+                description: "Some more bullshit about astronomy",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Physics",
+            code: "PHYS",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to physics",
+                description: "Some bullshit about physics",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to physics",
+                description: "Some more bullshit about physics",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Aerospace",
+            code: "AERO",
+            courses: [
+              {
+                number: "101",
+                name: "Introduction to aerospace",
+                description: "Some bullshit about aerospace",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                number: "102",
+                name: "Introduction to aerospace",
+                description: "Some more bullshit about aerospace",
+                sections: [
+                  {
+                    code:"A",
+                    end_date:"2017-01-13-06:00",
+                    start_date:"2017-01-13-06:00",
+                    number:"10003",
+                    meetings:[
+                      {
+                        "building": "David Kinley Hall",
+                        "days": "MTRF",
+                        "end_time": "11:50 AM",
+                        "instructors": [
+                          {
+                            "first_name": "M",
+                            "last_name": "Benoit"
+                          },
+                          {
+                            "first_name": "A",
+                            "last_name": "Ghaderi"
+                          }
+                        ],
+                        "room": "206",
+                        "start_time": "08:00 AM",
+                        "type": "LCD",
+                        "type_verbose": "Lecture-Discussion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        name: "Fall",
         subjects: [
           {
             name: "Antropology",
