@@ -1,0 +1,19 @@
+{
+  "name": "schedule-optimizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "optimizer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CS196Illinois/schedule-optimizer.git"
+  },
+  "author": "RockStars",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CS196Illinois/schedule-optimizer/issues"
+  },
+  "homepage": "https://github.com/CS196Illinois/schedule-optimizer#readme"
+}

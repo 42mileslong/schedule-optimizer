@@ -1,33 +1,132 @@
-var express = require("express");
-var app= express();
-var serv = require("http").Server(app);
+/*var express = require('express');
+var serv = require('http');
+var app = express();
+var mongoose = require('mongoose');
 
-app.get("/", function (req, res) {
-	res.sendFile(__dirname+ "/index.html");
+const PORT = process.env.PORT || 3000;
+
+mongoose.connect('mongodb://heroku-site:LMDPiqBxsBnoPDGh@narc-cluster-shard-00-00-uij1v.mongodb.net:27017,narc-cluster-shard-00-01-uij1v.mongodb.net:27017,narc-cluster-shard-00-02-uij1v.mongodb.net:27017/test?ssl=true&replicaSet=narc-cluster-shard-0&authSource=admin');
+
+
+//what options are given to the users, 
+
+//what are the factors of the optimization : travel time ? starting time ? instructor ?
+//name of the collection? ( is it all in one collection?)
+
+//should i generate every possible schedule ? 
+
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+serv.createServer(app).listen(PORT, function() {
+    console.log("Server is listening on port 3000"); 
 });
-app.use("/client", express.static(__dirname + "/client"));
 
-serv.listen(3000);
-console.log("Server Started");
+
+app.get('/', function(req,res) {
+    report.find({}, function(err, reports) {
+    renderResult(res, reports, "Reports from the database: ");
+    });
+});
+
+var io=require("socket.io")(serv,{});
+io.sockets.on("connection", function(socket){           //initialize when the player connects
+    socket.id=Math.random();
+    SOCKET_LIST[socket.id]=socket;
+
+    socket.on("sentData", function(data){   //assuming data has a courses list and a preferences property 
+        optimize(data);
+    })
+    socket.on("disconnect", function(){           //Delete when the player disconnects
+        delete SOCKET_LIST[socket.id];
+    });
+});*/
 
 var SOCKET_LIST=[];
 
 
 var optimizedSchedule = [];
 
+function Course(name, code, id, startTime, finishTime){
+    var property = {
+            name: String,
+            code: Number,
+            id: Number,
+            startTime: Number,
+            finishTime: Number,
+    }
+    return property;
+}
 
-function optimize(courses){
-	optimizedMaxProfit(sort(courses) , courses.length);
+function Schedule(arr){
+    var property = {
+        courses : arr,
+    }
+    return property;
+}
 
-    for (var i = 0; i < courses.length; i++){
-        console.log("Start: " + optimizedSchedule[i].startTime
-                    + "Finish: " + optimizedSchedule[i].finishTime
-                    + "Weight: " + optimizedSchedule[i].weight)
+var schedules = [];
+
+generate();
+
+function generate(){
+    //var reqCourses = data.courses;
+
+    //get request to server. it returns a 2d array
+//    classList = extractDB(reqCourses);
+
+    var classList = [];
+    classList.push([{startTime: 1, finishTime: 2}, {startTime: 3, finishTime: 4}]);
+    classList.push([{startTime:3, finishTime: 5},{startTime: 2, finishTime: 6}]);
+    classList.push([{startTime: 0, finishTime: 3},{startTime: 7, finishTime: 8}]);
+
+
+    //Sort the available classes for each course by their finish time
+    // for (var i in classList){
+    //     classList[i] = sort(classList[i]);
+    // }
+
+    //array of Schedule objects which holds all possbile schedules
+
+    //schedules[0] = Schedule();
+    //schedules[0].courses.push(Course(classList[0][0].name, classList[0][0].code, classList[0][0].id, classList[0][0].startTime, classList[0][0].finishTime));
+
+    oneRecursiveBoi([], 0, classList);
+}
+//topC : the list of courses from upper for loops, it's empty if we are on first course
+//i : the index of the class we want to pick courses
+function oneRecursiveBoi(topC, i, classList){
+
+    if (i == classList.length){
+        if (noConflict(sort(topC))){
+            schedules.push(Schedule(topC));
+            console.log("one Schedule: ");
+            for (i in topC) console.log(topC[i]);
+        }
+    } else {
+        for (var k in classList[i]){
+            var currentSch = topC;
+            currentSch.push(classList[i][k]);
+
+            oneRecursiveBoi(currentSch, i + 1, classList);
+
+            currentSch.pop();   
+        }
     }
 }
 
+function noConflict(arr){
+    for (var i = 1; i < arr.length; i++){
+        if (arr[i - 1].finishTime > arr[i].startTime){
+            return false;
+        }
+    }
+    return true;
+}
 
-//sorts the jobs by their finishing time
+
+
 function sort(courses){  // has start time, finish time, and weight
     if (courses.length < 2){
         return courses;
@@ -37,15 +136,14 @@ function sort(courses){  // has start time, finish time, and weight
     var left   = courses.slice(0, middle);
     var right  = courses.slice(middle, courses.length);
  
-    return merge(optimize(left), optimize(right));
+    return merge(sort(left), sort(right));
 }
 
-function merge(left, right)
-{
+function merge(left, right){
     var result = [];
  
     while (left.length && right.length) {
-        if (left[0] <= right[0]) {
+        if (left[0].finishTime <= right[0].finishTime) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
@@ -62,119 +160,3 @@ function merge(left, right)
  
     return result;
 }
-
-
-//recursive algorithm that finds the maximum profit we can get from an array of jobs sorted by their finish time
-function maxProfit(courses, n){
-	if (n == 1) {
-		optimizedSchedule.push(courses[n-1].weight);
-		return courses[n-1].weight;
-	}
-
-	var inclProf = courses[n-1].weight;
-	var i = latestNonConflict(courses, n);
-
-	if( i != -1){
-		inclProf += maxProfit(courses, i + 1);
-	}
-	var exclProf = maxProfit(courses, n-1)
-
-	optimizedSchedule.push(Math.max(inclProf, exclProf));
-	return Math.max(inclProf, exclProf);
-}
-
-
-//finds the index of the nearest job BEFORE the job at index i
-function latestNonConflict(jobs, i){
-    for (var j = i -1; j >=0; j++){
-		if (jobs[j].finishTime <= jobs[i].finishTime){
-			return j;
-		}
-	}
-	return -1;
-}
-
-
-var io=require("socket.io")(serv,{});
-io.sockets.on("connection", function(socket){           //initialize when the player connects
-	socket.id=Math.random();
-	SOCKET_LIST[socket.id]=socket;
-
-	socket.on("disconnect", function(){           //Delete when the player disconnects
-		delete SOCKET_LIST[socket.id];
-	});
-});
-
-
-
-
-
-// // C++ program for weighted job scheduling using Naive Recursive Method
-// #include <iostream>
-// #include <algorithm>
-// using namespace std;
- 
-// // A job has start time, finish time and profit.
-// struct Job
-// {
-//     int start, finish, profit;
-// };
- 
-// // A utility function that is used for sorting events
-// // according to finish time
-// bool jobComparataor(Job s1, Job s2)
-// {
-//     return (s1.finish < s2.finish);
-// }
- 
-// // Find the latest job (in sorted array) that doesn't
-// // conflict with the job[i]. If there is no compatible job,
-// // then it returns -1.
-// int latestNonConflict(Job arr[], int i)
-// {
-//     for (int j=i-1; j>=0; j--)
-//     {
-//         if (arr[j].finish <= arr[i-1].start)
-//             return j;
-//     }
-//     return -1;
-// }
- 
-// // A recursive function that returns the maximum possible
-// // profit from given array of jobs.  The array of jobs must
-// // be sorted according to finish time.
-// int findMaxProfitRec(Job arr[], int n)
-// {
-//     // Base case
-//     if (n == 1) return arr[n-1].profit;
- 
-//     // Find profit when current job is inclueded
-//     int inclProf = arr[n-1].profit;
-//     int i = latestNonConflict(arr, n);
-//     if (i != -1)
-//       inclProf += findMaxProfitRec(arr, i+1);
- 
-//     // Find profit when current job is excluded
-//     int exclProf = findMaxProfitRec(arr, n-1);
- 
-//     return max(inclProf,  exclProf);
-// }
- 
-// // The main function that returns the maximum possible
-// // profit from given array of jobs
-// int findMaxProfit(Job arr[], int n)
-// {
-//     // Sort jobs according to finish time
-//     sort(arr, arr+n, jobComparataor);
- 
-//     return findMaxProfitRec(arr, n);
-// }
- 
-// // Driver program
-// int main()
-// {
-//     Job arr[] = {{3, 10, 20}, {1, 2, 50}, {6, 19, 100}, {2, 100, 200}};
-//     int n = sizeof(arr)/sizeof(arr[0]);
-//     cout << "The optimal profit is " << findMaxProfit(arr, n);
-//     return 0;
-// }
