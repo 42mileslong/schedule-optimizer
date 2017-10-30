@@ -1,5 +1,4 @@
 import React from 'react';
-import Term from './term';
 import Filter from './filter/filter';
 import CourseList from './courseList/courseList';
 
@@ -1093,7 +1092,8 @@ export default class Schedule extends React.Component {
 
   updateSearchCriteria(searchCriteria) {
     var allCourses = [];
-    console.log(searchCriteria);
+    console.log(this.state.scheduleData);
+
     this.state.scheduleData[0].terms[0].subjects.forEach(subject => {
       //  Add dept info to course.
       var subjectName = subject.name;
