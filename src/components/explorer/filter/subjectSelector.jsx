@@ -1,58 +1,70 @@
 import React from 'react';
 import FilterButton from './filterButton';
 
-export default class AvalibilitySelector extends React.Component {
+export default class SubjectSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subjects: []
+      subjects: [],
+      loadedTermURL: ''
     }
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(subject) {
     subject.active = !subject.active;
-    this.props.toggleSubject(term);
+    this.props.toggleSubject(subject);
   }
 
   componentDidMount() {
-    var url = 
-    fetch('/api')
-      .then(res => {
+
+  }
+
+  loadSubjectOptions() {
+    var url = this.props.searchCriteria.avalibility.url;
+    if (typeof url != 'undefined' && url != this.state.loadedTermURL) {
+      fetch(url)
+        .then(res => {
           return res.json()
-      })
-      .then(data => {
-        var years = data.children;
-        years.map(year => {
-          fetch(year.url)
-            .then(res => {
-              return res.json()
-            })
-            .then(data => {
-              var terms = data.children;
-              var terms_obj = terms.map(term => {
-                return (
-                  {
-                    active: false,
-                    year: year.name,
-                    term: term.name,
-                    name: year.name + " " + term.name,
-                    key: "filterAvalibilityButton" + term.name,
-                    url: term.url,
-                  }
-                )
-              })
-              this.setState({
-                terms: terms_obj
-              });
-            })
-        });
-      })
+        })
+        .then(data => {
+          var subjects = data.children;
+          subjects = subjects.map(subject => {
+            subject.active = false;
+            subject.key = "subjectSelectorButton_" + subject.name;
+
+            return subject;
+          })
+          this.setState({
+            subjects: subjects,
+            loadedTermURL: url
+          });
+        })
+    }
   }
 
   render() {
-    return (
+    this.loadSubjectOptions();
 
+    return (
+      <div>
+        <h6 className="text-center">Subjects</h6>
+        <ul className="list-group">
+          {
+            this.state.subjects.map(subject => {
+              return (
+                <FilterButton
+                  active={subject.active}
+                  name={subject.name}
+                  key={subject.key}
+                  onClick={()=> {this.handleClick(subject)}
+                  }
+                />
+              )
+            })
+          }
+        </ul>
+      </div>
     )
   }
 }

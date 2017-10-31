@@ -11,7 +11,10 @@ export default class AvalibilitySelector extends React.Component {
   }
 
   handleClick(term) {
-    term.active = !term.active;
+    this.state.terms.forEach(term => {
+      term.active = false;
+    })
+    term.active = true;
     this.props.toggleAvalibility(term);
   }
 
@@ -34,8 +37,7 @@ export default class AvalibilitySelector extends React.Component {
                   {
                     active: false,
                     year: year.name,
-                    term: term.name,
-                    name: year.name + " " + term.name,
+                    name: term.name,
                     key: "filterAvalibilityButton" + term.name,
                     url: term.url,
                   }

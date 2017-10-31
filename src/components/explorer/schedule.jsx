@@ -9,7 +9,7 @@ export default class Schedule extends React.Component {
       scheduleData: {},
       terms: [],
       searchCriteria: {
-        avalibility: [],
+        avalibility: {},
         subjects: []
       },
       coursesToDisplay: []

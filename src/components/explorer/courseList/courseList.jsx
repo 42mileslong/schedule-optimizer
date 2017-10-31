@@ -1,6 +1,15 @@
 import React from 'react';
 
 export default class CourseList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadedSubjects: []
+    }
+  }
+
+
+
   render() {
     var props = this.props;
     return (
