@@ -15,7 +15,7 @@ export default class FilterButton extends React.Component {
     var props = this.props;
     return (
       <li
-        className={this.props.active ? "list-group-item active" : "list-group-item"}
+        className={props.active ? "list-group-item text-center active" : "list-group-item text-center"}
         onClick={this.handleClick}>
         {props.name}
       </li>

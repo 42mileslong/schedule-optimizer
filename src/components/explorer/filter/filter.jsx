@@ -1,85 +1,55 @@
 import React from 'react';
-import FilterButton from './FilterButton';
+import AvalibilitySelector from './avalibilitySelector';
+import FilterButton from './filterButton';
 
 export default class Filter extends React.Component {
   constructor(props) {
     super(props);
 
     this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
-    this.toggleSubjectToCriteria = this.toggleSubjectToCriteria.bind(this);
+    this.toggleAvalibility = this.toggleAvalibility.bind(this);
   }
 
   updateSearchCriteria(newSearchCriteria) {
     this.props.onChange(newSearchCriteria);
   }
 
-  toggleAvalibilityToCriteria(year, term) {
+  toggleAvalibility(term) {
     var searchCriteria = this.props.searchCriteria;
-
     var avalibility = searchCriteria.avalibility;
-    var token = year + term;
-    var index = avalibility.indexOf(token);
+
+    var index = -1;
+    for (var i = 0; i < avalibility.length; i++) {
+      if(term.term == avalibility[i].term) {
+        index = i;
+        break;
+      }
+    }
+
     if (index != -1) {
       avalibility.splice(index, 1)
       searchCriteria.avalibility = avalibility;
     } else {
-      searchCriteria.avalibility = avalibility.concat([token]);
+      avalibility.push(term);
+      searchCriteria.avalibility = avalibility
     }
     this.updateSearchCriteria(searchCriteria);
   }
 
-  toggleSubjectToCriteria(subject) {
-    var searchCriteria = this.props.searchCriteria;
-
-    var subjects = searchCriteria.subjects;
-    var index = subjects.indexOf(subject);
-    if (index != -1) {
-      subjects.splice(index, 1)
-      searchCriteria.subjects = subjects;
-    } else {
-      searchCriteria.subjects = subjects.concat([subject]);
-    }
-    this.updateSearchCriteria(searchCriteria);
-  }
 
   render() {
 
-    var props = this.props;
-    var searchCriteria = props.searchCriteria;
-    var years = props.scheduleData;
-    var subjects = props.scheduleData[0].terms[0].subjects;
-    console.log(years);
     return (
       <div className="col-3">
         <h4 className="text-center">Filter Courses</h4>
         <br/>
-        <h6 className="text-center">Avalibility</h6>
-        <ul className="list-group">
-          {
-            years.map(year => {
-              return (
-                year.terms.map(term => {
-                  var token = year.name + term.name;
-                  return (
-                    <FilterButton
-                      active={searchCriteria.avalibility.indexOf(token) != -1 ? true : false}
-                      name={year.name + " " + term.name}
-                      key={"filterAvalibilityButton" + token}
-                      onClick={()=> {
-                          this.toggleAvalibilityToCriteria(year.name, term.name);
-                        }
-                      }
-                    />
-                  )
-                })
-              )
-            })
-          }
-        </ul>
+        <AvalibilitySelector
+          toggleAvalibility={this.toggleAvalibility}
+          searchCriteria={this.props.searchCriteria}/>
         <br/>
         <h6 className="text-center">Subjects</h6>
         <ul className="list-group">
-          {
+          {/*
             subjects.map(data => {
               return (
                 <FilterButton
@@ -90,7 +60,7 @@ export default class Filter extends React.Component {
                     this.toggleSubjectToCriteria(data.name);
                   }}/>
               )
-            })
+            })*/
           }
         </ul>
       </div>
