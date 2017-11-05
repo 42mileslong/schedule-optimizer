@@ -18,9 +18,6 @@ export default class Schedule extends React.Component {
   }
 
   updateSearchCriteria(searchCriteria) {
-<<<<<<< HEAD
-    console.log(searchCriteria);
-=======
     var allCourses = [];
     console.log(this.state.scheduleData);
 
@@ -43,7 +40,6 @@ export default class Schedule extends React.Component {
       }
       return true;
     });
->>>>>>> 6e980704fe845da0da352beb1fd48bcb83fb8a49
     this.setState({
       searchCriteria: searchCriteria,
     });
