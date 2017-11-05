@@ -1,11 +1,8 @@
-/*var express = require('express');
-var serv = require('http');
+var express = require('express');
+var http = require('http');
 var app = express();
 var mongoose = require('mongoose');
 
-const PORT = process.env.PORT || 3000;
-
-mongoose.connect('mongodb://heroku-site:LMDPiqBxsBnoPDGh@narc-cluster-shard-00-00-uij1v.mongodb.net:27017,narc-cluster-shard-00-01-uij1v.mongodb.net:27017,narc-cluster-shard-00-02-uij1v.mongodb.net:27017/test?ssl=true&replicaSet=narc-cluster-shard-0&authSource=admin');
 
 
 //what options are given to the users, 
@@ -16,32 +13,32 @@ mongoose.connect('mongodb://heroku-site:LMDPiqBxsBnoPDGh@narc-cluster-shard-00-0
 //should i generate every possible schedule ? 
 
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'ejs');
 
-serv.createServer(app).listen(PORT, function() {
-    console.log("Server is listening on port 3000"); 
-});
+// serv.createServer(app).listen(PORT, function() {
+//     console.log("Server is listening on port 3000"); 
+// });
 
 
-app.get('/', function(req,res) {
-    report.find({}, function(err, reports) {
-    renderResult(res, reports, "Reports from the database: ");
-    });
-});
+// app.get('/', function(req,res) {
+//     report.find({}, function(err, reports) {
+//     renderResult(res, reports, "Reports from the database: ");
+//     });
+// });
 
-var io=require("socket.io")(serv,{});
-io.sockets.on("connection", function(socket){           //initialize when the player connects
-    socket.id=Math.random();
-    SOCKET_LIST[socket.id]=socket;
+// var io=require("socket.io")(serv,{});
+// io.sockets.on("connection", function(socket){           //initialize when the player connects
+//     socket.id=Math.random();
+//     SOCKET_LIST[socket.id]=socket;
 
-    socket.on("sentData", function(data){   //assuming data has a courses list and a preferences property 
-        optimize(data);
-    })
-    socket.on("disconnect", function(){           //Delete when the player disconnects
-        delete SOCKET_LIST[socket.id];
-    });
-});*/
+//     socket.on("sentData", function(data){   //assuming data has a courses list and a preferences property 
+//         fetchData(data.courses);
+//     })
+//     socket.on("disconnect", function(){           //Delete when the player disconnects
+//         delete SOCKET_LIST[socket.id];
+//     });
+// });
 
 var SOCKET_LIST=[];
 
@@ -50,11 +47,11 @@ var optimizedSchedule = [];
 
 function Course(name, code, id, startTime, finishTime){
     var property = {
-            name: String,
-            code: Number,
-            id: Number,
-            startTime: Number,
-            finishTime: Number,
+            name: name,
+            code: code,
+            id: id,
+            startTime: startTime,
+            finishTime: finishTime,
     }
     return property;
 }
@@ -67,7 +64,15 @@ function Schedule(arr){
 }
 
 var schedules = [];
-
+console.log("working");
+samCourse = {
+    year: '2018',
+    term: 'Summer',
+    subject: 'ASTR',
+    code: '330',
+}
+getCourse([samCourse]);
+console.log(samCourse.year);
 generate();
 
 function generate(){
@@ -77,9 +82,9 @@ function generate(){
 //    classList = extractDB(reqCourses);
 
     var classList = [];
-    classList.push([{startTime: 1, finishTime: 2}, {startTime: 3, finishTime: 4}]);
-    classList.push([{startTime:3, finishTime: 5},{startTime: 2, finishTime: 6}]);
-    classList.push([{startTime: 0, finishTime: 3},{startTime: 7, finishTime: 8}]);
+    classList.push([{startTime: 3, finishTime: 5}, {startTime: 9, finishTime: 10}]);
+    classList.push([{startTime:0, finishTime: 1},{startTime: 2, finishTime: 6}]);
+    classList.push([{startTime: 1, finishTime: 4},{startTime: 7, finishTime: 8}]);
 
 
     //Sort the available classes for each course by their finish time
@@ -99,24 +104,47 @@ function generate(){
 function oneRecursiveBoi(topC, i, classList){
 
     if (i == classList.length){
-        if (noConflict(sort(topC))){
             schedules.push(Schedule(topC));
             console.log("one Schedule: ");
             for (i in topC) console.log(topC[i]);
-        }
     } else {
-        for (var k in classList[i]){
+        var k = 0;
+        var next = nextNonConflict(topC, classList[i], k);
+        while (next != -1){
             var currentSch = topC;
-            currentSch.push(classList[i][k]);
+            currentSch.push(classList[i][next]);
 
             oneRecursiveBoi(currentSch, i + 1, classList);
 
-            currentSch.pop();   
+            currentSch.pop(); 
+            k = next + 1;
+            next = nextNonConflict(topC, classList[i], k);
         }
     }
 }
 
+// function oneRecursiveBoi(topC, i, classList){
+
+//     if (i == classList.length){
+//         if (noConflict(sort(topC))){
+//             schedules.push(Schedule(topC));
+//             console.log("one Schedule: ");
+//             for (i in topC) console.log(topC[i]);
+//         }
+//     } else {
+//         for (var k in classList[i]){
+//             var currentSch = topC;
+//             currentSch.push(classList[i][k]);
+
+//             oneRecursiveBoi(currentSch, i + 1, classList);
+
+//             currentSch.pop();   
+//         }
+//     }
+// }
+
 function noConflict(arr){
+    arr = sort(arr);
     for (var i = 1; i < arr.length; i++){
         if (arr[i - 1].finishTime > arr[i].startTime){
             return false;
@@ -125,6 +153,19 @@ function noConflict(arr){
     return true;
 }
 
+//Finds the next course from the courses in arr from k index 
+//and onward that doesn't conflict with the current courses in schedule
+function nextNonConflict(schedule, courseList, k){
+    for (var i = k; i < courseList.length; i++){
+        schedule.push(courseList[i]);
+        if (noConflict(schedule)){
+            schedule.pop();
+            return i;
+        }
+        schedule.pop();
+    }
+    return -1;
+}
 
 
 function sort(courses){  // has start time, finish time, and weight
@@ -159,4 +200,47 @@ function merge(left, right){
     }
  
     return result;
+}
+
+function getTotalDistance(){
+
+}
+
+function profScore(){
+
+}
+
+function rankSchedules(SchList){
+
+}
+
+//puts all the available classes for the give courses in a 2d arr.
+//different rows are different courses and different column are available classes of those courses
+function getAvailableCourses(arr){
+    allCourses = [];
+    for (var i in arr){
+        var add = 'http://localhost:5000/api/'+ arr[i].year + '/' + arr[i].term + '/' + arr[i].subject + '/' + arr[i].code;
+
+        http.get(add, function(res) {
+            //res.pipe(process.stdout);
+            res.on('data', function (chunk) {
+            var obj = JSON.parse(chunk);
+
+            for (k in obj.children){
+                var theClass = getClass(add, obj.children[k].name);
+                allCourses[i].push(Course(arr[i].name, arr[i].code, arr[i].id, theClass.startTime, theClass.finshTime ));
+            }
+          });
+        });
+    }
+}
+
+function getClass(address, id){
+            http.get(address + '/' + 'id', function(res) {
+            res.on('data', function (chunk) {
+            var obj = JSON.parse(chunk);
+            return obj;
+          });
+        });
+
 }
