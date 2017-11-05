@@ -4,14 +4,48 @@ export default class CourseList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadedSubjects: []
+      courses: []
     }
   }
 
+  loadCourses() {
+    var subjects = this.props.searchCriteria.subjects;
+    console.log("")
+    console.log(subjects);
+    subjects.forEach(subject => {
+      var isLoaded = false;
+      this.state.courses.forEach(course => {
+        if (course.code == subject.name) {
+          isLoaded = true;
+        }
+      })
+      console.log("loaded? " + isLoaded);
+      if (!isLoaded) {
+        fetch(subject.url)
+          .then(res => {
+            return res.json()
+          })
+          .then(subject => {
+            var courses = subject.children;
+            var coursesCollector = courses.map(course => {
+              return {
+                code: subject.code,
+                name: subject.name + " " + course.name,
+                url: course.url
+              }
+            })
+            this.setState({
+              courses: coursesCollector,
+            })
 
+          })
+      }
+    });
+
+  }
 
   render() {
-    var props = this.props;
+    this.loadCourses();
     return (
       <div className="col-9">
         <div className="container-fluid">
@@ -21,11 +55,11 @@ export default class CourseList extends React.Component {
           </div>
           <div className="row">
             {
-              props.courses.map(course => {
+              this.state.courses.map(course => {
                 return (
                   <div className="card col-6">
                     <div className="card-body">
-                      <h4 className="card-title">{course.code + " " + course.number}</h4>
+                      <h4 className="card-title">{course.name}</h4>
                       <h6 className="card-subtitle">{course.name}</h6>
                       <p>{course.description}</p>
                     </div>

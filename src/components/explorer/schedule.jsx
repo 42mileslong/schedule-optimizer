@@ -37,10 +37,10 @@ export default class Schedule extends React.Component {
             searchCriteria={this.state.searchCriteria}
             scheduleData={this.state.scheduleData}
             onChange={this.updateSearchCriteria}/>
-            {
-          /*<CourseList
-            courses={this.state.coursesToDisplay}
-            />*/}
+
+          <CourseList
+            searchCriteria={this.state.searchCriteria}
+            />
         </div>
       </div>
     );

@@ -27,7 +27,6 @@ export default class Filter extends React.Component {
 
     var index = -1;
     for(var i = 0; i < searchCriteria.subjects.length; i++) {
-      console.log(subject.name);
       if (searchCriteria.subjects[i].name == subject.name) {
         index = i;
         break;
