@@ -49,21 +49,30 @@ export default class SubjectSelector extends React.Component {
     return (
       <div>
         <h6 className="text-center">Subjects</h6>
-        <ul className="list-group" data-spy="scroll" data-offset="0">
-          {
-            this.state.subjects.map(subject => {
-              return (
-                <FilterButton
-                  active={subject.active}
-                  name={subject.name}
-                  key={subject.key}
-                  onClick={()=> {this.handleClick(subject)}
-                  }
-                />
-              )
-            })
-          }
-        </ul>
+        {
+          this.props.searchCriteria.avalibility.url == null ? (
+            <div className="text-center">
+              <small >Choose avalibility.</small>
+            </div>
+          ) : (
+            <ul className="list-group" data-spy="scroll" data-offset="0">
+              {
+                this.state.subjects.map(subject => {
+                  return (
+                    <FilterButton
+                      active={subject.active}
+                      name={subject.name}
+                      key={subject.key}
+                      onClick={()=> {this.handleClick(subject)}
+                      }
+                    />
+                  )
+                })
+              }
+            </ul>
+          )
+        }
+
       </div>
     )
   }

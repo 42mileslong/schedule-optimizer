@@ -1,4 +1,5 @@
 import React from 'react'
+import GridViewItem from './gridViewItem'
 
 export default class GridView extends React.Component {
   render() {
@@ -7,13 +8,7 @@ export default class GridView extends React.Component {
         {
           this.props.courses.map(course => {
             return (
-              <div className="card col-6">
-                <div className="card-body">
-                  <h4 className="card-title">{course.name}</h4>
-                  <h6 className="card-subtitle">{course.name}</h6>
-                  <p>{course.description}</p>
-                </div>
-              </div>
+              <GridViewItem course={course} />
             );
 
           })
