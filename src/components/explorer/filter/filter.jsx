@@ -2,6 +2,7 @@ import React from 'react';
 import AvalibilitySelector from './avalibilitySelector';
 import FilterButton from './filterButton';
 import SubjectSelector from './subjectSelector';
+import CreditHourSelector from './creditHourSelector';
 
 export default class Filter extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class Filter extends React.Component {
     this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
     this.toggleAvalibility = this.toggleAvalibility.bind(this);
     this.toggleSubject = this.toggleSubject.bind(this);
+    this.toggleCreditHour = this.toggleCreditHour.bind(this);
   }
 
   updateSearchCriteria(newSearchCriteria) {
@@ -41,6 +43,17 @@ export default class Filter extends React.Component {
     this.updateSearchCriteria(searchCriteria);
   }
 
+  toggleCreditHour(creditHour) {
+    var newSearchCriteria = this.props.searchCriteria;
+
+    var index = newSearchCriteria.creditHour.indexOf(creditHour);
+    if (index == -1) {
+      newSearchCriteria.creditHour.push(creditHour);
+    } else {
+      newSearchCriteria.creditHour.splice(index, 1);
+    }
+    this.updateSearchCriteria(newSearchCriteria);
+  }
 
   render() {
 
@@ -54,6 +67,10 @@ export default class Filter extends React.Component {
         <br/>
         <SubjectSelector
           toggleSubject={this.toggleSubject}
+          searchCriteria={this.props.searchCriteria}/>
+        <br />
+        <CreditHourSelector
+          toggleCreditHour={this.toggleCreditHour}
           searchCriteria={this.props.searchCriteria}/>
       </div>
     );
