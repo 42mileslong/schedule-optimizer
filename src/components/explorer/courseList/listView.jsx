@@ -1,5 +1,5 @@
 import React from 'react'
-
+import ListViewItem from './listViewItem';
 export default class GridView extends React.Component {
   constructor(props) {
     super(props);
@@ -14,12 +14,8 @@ export default class GridView extends React.Component {
           {
             this.props.courses.map(course => {
               return (
-                <div className="list-group-item">
-                  <h4>{course.code + " " + course.name.split(" ").slice().pop()}</h4>
-                  <h6>{course.name}</h6>
-                  <p>Some Course Description</p>
-                </div>
-              );
+                <ListViewItem course={course} />
+              )
 
             })
           }
