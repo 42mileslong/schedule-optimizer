@@ -49,7 +49,7 @@ export default class SubjectSelector extends React.Component {
     return (
       <div>
         <h6 className="text-center">Subjects</h6>
-        <ul className="list-group">
+        <ul className="list-group" data-spy="scroll" data-offset="0">
           {
             this.state.subjects.map(subject => {
               return (

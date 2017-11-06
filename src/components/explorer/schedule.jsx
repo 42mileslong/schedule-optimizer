@@ -18,28 +18,6 @@ export default class Schedule extends React.Component {
   }
 
   updateSearchCriteria(searchCriteria) {
-    var allCourses = [];
-    console.log(this.state.scheduleData);
-
-    this.state.scheduleData[0].terms[0].subjects.forEach(subject => {
-      //  Add dept info to course.
-      var subjectName = subject.name;
-      var subjectCode = subject.code;
-
-      subject.courses.forEach(course => {
-        course.subject = subjectName;
-        course.code = subjectCode;
-        allCourses.push(course);
-      });
-    });
-    var filteredCourses = allCourses.filter(course => {
-      //  Filter by Subject
-      var index = searchCriteria.subjects.indexOf(course.subject);
-      if (index  == -1) {
-        return false;
-      }
-      return true;
-    });
     this.setState({
       searchCriteria: searchCriteria,
     });
