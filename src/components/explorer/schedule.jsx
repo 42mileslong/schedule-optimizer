@@ -1,6 +1,7 @@
 import React from 'react';
 import Filter from './filter/filter';
 import CourseList from './courseList/courseList';
+import FeaturedCourses from './FeaturedCourses';
 
 export default class Schedule extends React.Component {
   constructor() {
@@ -23,6 +24,17 @@ export default class Schedule extends React.Component {
     });
   }
 
+  hasSearchCriteria() {
+    var hasSearchCriteria = false;
+    if (this.state.searchCriteria.avalibility.year != undefined) {
+      hasSearchCriteria = true;
+    }
+    if (this.state.searchCriteria.subjects.length > 0) {
+      hasSearchCriteria = true;
+    }
+    return hasSearchCriteria;
+  }
+
   render() {
     return (
       <div className="container-fluid schedule">
@@ -37,9 +49,16 @@ export default class Schedule extends React.Component {
             scheduleData={this.state.scheduleData}
             onChange={this.updateSearchCriteria}/>
 
-          <CourseList
-            searchCriteria={this.state.searchCriteria}
-            />
+          {
+            this.hasSearchCriteria() ? (
+              <CourseList
+                searchCriteria={this.state.searchCriteria}
+                />
+            ) : (
+              <FeaturedCourses />
+            )
+          }
+
         </div>
       </div>
     );
