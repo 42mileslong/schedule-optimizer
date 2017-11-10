@@ -11,11 +11,14 @@ export default class AvalibilitySelector extends React.Component {
   }
 
   handleClick(term) {
-    this.state.terms.forEach(term => {
-      term.active = false;
+    this.state.terms.forEach(e => {
+      if (e.name == term.name) {
+        return;
+      }
+      e.active = false;
     })
-    term.active = true;
-    this.props.toggleAvalibility(term);
+    term.active = !term.active;
+    this.props.selectFilterCriteria("avalibility", term);
   }
 
   componentDidMount() {

@@ -12,12 +12,14 @@ export default class SubjectSelector extends React.Component {
   }
 
   handleClick(subject) {
+    this.state.subjects.forEach((e) => {
+      if (e.name == subject.name) {
+        return;
+      }
+      e.active = false
+    });
     subject.active = !subject.active;
-    this.props.selectFilterCriteria("subject",subject);
-  }
-
-  componentDidMount() {
-
+    this.props.selectFilterCriteria("subject", subject);
   }
 
   componentWillReceiveProps() {
