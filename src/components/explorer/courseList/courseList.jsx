@@ -6,7 +6,6 @@ export default class CourseList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subjects: [],
       courses: [],
       viewType: 'grid'
     }
@@ -15,9 +14,9 @@ export default class CourseList extends React.Component {
   }
 
   componentWillReceiveProps() {
-    console.log('here');
+    //  Rebuild course list on change
     this.state.courses = [];
-    var subjects = this.props.searchCriteria.subjects;
+    var subjects = [this.props.searchCriteria.subject];
     var newCourses = [];
     console.log(subjects);
     subjects.forEach(subject => {
@@ -28,11 +27,12 @@ export default class CourseList extends React.Component {
         .then(subject => {
           console.log(subject);
           var courses = subject.children;
+          console.log(courses);
           var coursesCollector = courses.map(course => {
             return {
               code: subject.code,
               name: subject.name + " " + course.name,
-              url: course.url
+              url: course.url,
             }
           })
           console.log(coursesCollector);
@@ -43,6 +43,7 @@ export default class CourseList extends React.Component {
         })
     });
   }
+
 
   handleGridToggle() {
     this.setState({

@@ -7,11 +7,9 @@ export default class Schedule extends React.Component {
   constructor() {
     super()
     this.state = {
-      scheduleData: {},
-      terms: [],
       searchCriteria: {
         avalibility: {},
-        subjects: [],
+        subject: {},
         creditHour: []
       },
       coursesToDisplay: []
@@ -30,7 +28,7 @@ export default class Schedule extends React.Component {
     if (this.state.searchCriteria.avalibility.year != undefined) {
       hasSearchCriteria = true;
     }
-    if (this.state.searchCriteria.subjects.length > 0) {
+    if (this.state.searchCriteria.subject.code != undefined > 0) {
       hasSearchCriteria = true;
     }
     return hasSearchCriteria;
@@ -47,7 +45,6 @@ export default class Schedule extends React.Component {
         <div className="row">
           <Filter
             searchCriteria={this.state.searchCriteria}
-            scheduleData={this.state.scheduleData}
             onChange={this.updateSearchCriteria}/>
 
           {

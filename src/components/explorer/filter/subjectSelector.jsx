@@ -13,14 +13,14 @@ export default class SubjectSelector extends React.Component {
 
   handleClick(subject) {
     subject.active = !subject.active;
-    this.props.toggleSubject(subject);
+    this.props.selectFilterCriteria("subject",subject);
   }
 
   componentDidMount() {
 
   }
 
-  loadSubjectOptions() {
+  componentWillReceiveProps() {
     var url = this.props.searchCriteria.avalibility.url;
     if (typeof url != 'undefined' && url != this.state.loadedTermURL) {
       fetch(url)
@@ -44,8 +44,6 @@ export default class SubjectSelector extends React.Component {
   }
 
   render() {
-    this.loadSubjectOptions();
-
     return (
       <div>
         <h6 className="text-center">Subjects</h6>
@@ -55,21 +53,32 @@ export default class SubjectSelector extends React.Component {
               <small >Choose avalibility.</small>
             </div>
           ) : (
-            <ul className="list-group" data-spy="scroll" data-offset="0">
-              {
-                this.state.subjects.map(subject => {
-                  return (
-                    <FilterButton
-                      active={subject.active}
-                      name={subject.name}
-                      key={subject.key}
-                      onClick={()=> {this.handleClick(subject)}
-                      }
-                    />
-                  )
-                })
-              }
-            </ul>
+            this.props.searchCriteria.subject.code == null ? (
+              <ul className="list-group">
+                {
+                  this.state.subjects.map(subject => {
+                    return (
+                      <FilterButton
+                        active={subject.active}
+                        name={subject.name}
+                        key={subject.key}
+                        onClick={()=> {
+                          this.handleClick(subject)
+                        }
+                        }
+                      />
+                    )
+                  })
+                }
+              </ul>
+            ) : (
+              <ul className="list-group">
+                <li className="list-group-item">
+                  {this.props.searchCriteria.subject.name}
+                </li>
+              </ul>
+            )
+
           )
         }
 

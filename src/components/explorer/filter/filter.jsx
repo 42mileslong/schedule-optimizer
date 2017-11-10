@@ -10,8 +10,14 @@ export default class Filter extends React.Component {
 
     this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
     this.toggleAvalibility = this.toggleAvalibility.bind(this);
-    this.toggleSubject = this.toggleSubject.bind(this);
+    this.selectFilterCriteria = this.selectFilterCriteria.bind(this);
     this.toggleCreditHour = this.toggleCreditHour.bind(this);
+  }
+
+  selectFilterCriteria(criteria, value) {
+    var newSearchCriteria = this.props.searchCriteria;
+    newSearchCriteria[criteria] = value;
+    this.updateSearchCriteria(newSearchCriteria);
   }
 
   updateSearchCriteria(newSearchCriteria) {
@@ -24,24 +30,24 @@ export default class Filter extends React.Component {
     this.updateSearchCriteria(searchCriteria);
   }
 
-  toggleSubject(subject) {
-    var searchCriteria = this.props.searchCriteria;
-
-    var index = -1;
-    for(var i = 0; i < searchCriteria.subjects.length; i++) {
-      if (searchCriteria.subjects[i].name == subject.name) {
-        index = i;
-        break;
-      }
-    }
-    if (index == -1) {
-      searchCriteria.subjects.push(subject);
-    } else {
-      searchCriteria.subjects.splice(index, 1);
-    }
-
-    this.updateSearchCriteria(searchCriteria);
-  }
+  // toggleSubject(subject) {
+  //   var searchCriteria = this.props.searchCriteria;
+  //
+  //   var index = -1;
+  //   for(var i = 0; i < searchCriteria.subjects.length; i++) {
+  //     if (searchCriteria.subjects[i].name == subject.name) {
+  //       index = i;
+  //       break;
+  //     }
+  //   }
+  //   if (index == -1) {
+  //     searchCriteria.subjects.push(subject);
+  //   } else {
+  //     searchCriteria.subjects.splice(index, 1);
+  //   }
+  //
+  //   this.updateSearchCriteria(searchCriteria);
+  // }
 
   toggleCreditHour(creditHour) {
     var newSearchCriteria = this.props.searchCriteria;
@@ -66,7 +72,7 @@ export default class Filter extends React.Component {
           searchCriteria={this.props.searchCriteria}/>
         <br/>
         <SubjectSelector
-          toggleSubject={this.toggleSubject}
+          selectFilterCriteria={this.selectFilterCriteria}
           searchCriteria={this.props.searchCriteria}/>
         <br />
         <CreditHourSelector
