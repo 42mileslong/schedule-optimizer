@@ -1,5 +1,5 @@
 import React from 'react';
-
+import SectionView from './sectionView';
 export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +8,7 @@ export default class GridViewItem extends React.Component {
       id: ""
     }
     this.renderCardDetails = this.renderCardDetails.bind(this);
+    this.renderModalDetails = this.renderModalDetails.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,21 @@ export default class GridViewItem extends React.Component {
             className="btn btn-link"
             data-toggle="modal"
             data-target={"#Modal" + this.state.id}>Details</button>
+        </div>
+      )
+    } else {
+      return (
+        <p>Loading...</p>
+      )
+    }
+  }
+  renderModalDetails() {
+    if (typeof this.state.course.name != "undefined") {
+      var course = this.state.course;
+      return (
+        <div>
+          <p>{course.description}</p>
+          <SectionView sections={course.children}/>
         </div>
       )
     } else {
@@ -75,7 +91,9 @@ export default class GridViewItem extends React.Component {
                 </button>
               </div>
               <div className="modal-body">
-                <p>{course.description}</p>
+                {
+                  this.renderModalDetails()
+                }
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

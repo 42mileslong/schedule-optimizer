@@ -11,11 +11,14 @@ export default class CreditHourSelector extends React.Component {
   }
 
   handleClick(hour) {
-    this.state.hours.forEach(hour => {
-      hour.active = false;
+    this.state.hours.forEach(e => {
+      if (e.name == hour.name) {
+        return;
+      }
+      e.active = false;
     })
-    hour.active = true;
-    this.props.toggleCreditHour(hour);
+    hour.active = !hour.active;
+    this.props.selectFilterCriteria("creditHour", hour);
   }
 
   componentDidMount() {

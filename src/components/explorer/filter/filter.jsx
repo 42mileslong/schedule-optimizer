@@ -40,7 +40,7 @@ export default class Filter extends React.Component {
           searchCriteria={this.props.searchCriteria}/>
         <br />
         <CreditHourSelector
-          toggleCreditHour={this.toggleCreditHour}
+          selectFilterCriteria={this.selectFilterCriteria}
           searchCriteria={this.props.searchCriteria}/>
       </div>
     );
