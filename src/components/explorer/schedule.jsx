@@ -1,7 +1,7 @@
 import React from 'react';
 import Filter from './filter/filter';
 import CourseList from './courseList/courseList';
-import FeaturedCourses from './FeaturedCourses';
+import FeaturedCourses from './featuredCourses';
 
 export default class Schedule extends React.Component {
   constructor() {
