@@ -4,13 +4,14 @@ export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      course: {
-
-      }
+      course: {},
+      id: ""
     }
+    this.renderCardDetails = this.renderCardDetails.bind(this);
   }
 
   componentDidMount() {
+    this.state.id = this.props.course.name.replace(/\s/g,''); // No render
     var url = this.props.course.url;
     fetch(url)
       .then(res => {
@@ -23,28 +24,47 @@ export default class GridViewItem extends React.Component {
       })
   }
 
+  renderCardDetails() {
+    if (typeof this.state.course.name != "undefined") {
+      var course = this.state.course;
+      return (
+        <div>
+          <h6 className="card-subtitle">{course.name}</h6>
+          <p>{course.description}</p>
+          <button type="button"
+            className="btn btn-link"
+            data-toggle="modal"
+            data-target={"#Modal" + this.state.id}>Details</button>
+        </div>
+      )
+    } else {
+      return (
+        <p>Loading...</p>
+      )
+    }
+  }
+
   render() {
-    var id = this.props.course.name.replace(/\s/g,'');
+    var courseMinData = this.props.course;
+    var courseNum = courseMinData.name.split(" ").splice(-1)[0];
+
+    //  Course will be undefined in initial render
     var course = this.state.course;
-    var courseNum = course.number;
     return (
       <div className="col-6">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">{course.number + " " + course.name}</h4>
-            <h6 className="card-subtitle">{course.name}</h6>
-            <p>{course.description}</p>
-            <button type="button"
-              className="btn btn-link"
-              data-toggle="modal"
-              data-target={"#Modal" + id}>Details</button>
+            <h4 className="card-title">{courseMinData.code + " " + courseNum}</h4>
+            {
+              this.renderCardDetails()
+            }
           </div>
         </div>
 
         <div className="modal fade"
-          id={"Modal" + id}
+          id={"Modal" + this.state.id}
           tabIndex="-1" role="dialog"
-          aria-labelledby={"Modal" + id}
+          aria-labelledby={"Modal" + this.state.id}
           aria-hidden="true">
           <div className="modal-dialog modal-lg" role="document">
             <div className="modal-content">
