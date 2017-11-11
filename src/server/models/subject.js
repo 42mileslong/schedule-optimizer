@@ -9,7 +9,7 @@ var SubjectSchema = new Schema({
     name_verbose: String,
     year: String,
     term: String,
-    iter_id: Number
+    iteration: Number
 });
 
 SubjectSchema.methods.getChildren = function(callback) {

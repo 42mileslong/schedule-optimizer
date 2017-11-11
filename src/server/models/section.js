@@ -25,7 +25,7 @@ var SectionSchema = new Schema({
     term: String,
     subject: String,
     course_number: String,
-    iter_id: Number
+    iteration: Number
 });
 
 module.exports = mongoose.model('Section', SectionSchema, 'sections');

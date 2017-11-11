@@ -7,7 +7,7 @@ var Subject = require('./subject.js')
 var TermSchema = new Schema({
     name: String,
     year: String,
-    iter_id: Number
+    iteration: Number
 });
 
 TermSchema.methods.getChildren = function(callback) {

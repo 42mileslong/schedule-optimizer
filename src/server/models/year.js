@@ -6,7 +6,7 @@ var Term = require('./term.js')
 // A model for the year object
 var YearSchema = new Schema({
     name: String,
-    iter_id: Number
+    iteration: Number
 });
 
 YearSchema.methods.getChildren = function(callback) {

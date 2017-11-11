@@ -12,7 +12,7 @@ var CourseSchema = new Schema({
     year: String,
     term: String,
     subject: String,
-    iter_id: Number
+    iteration: Number
 });
 
 CourseSchema.methods.getChildren = function(callback) {
