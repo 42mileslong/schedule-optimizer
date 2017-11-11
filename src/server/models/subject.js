@@ -6,8 +6,10 @@ var Course = require('./course.js')
 // A model for the sbuject object
 var SubjectSchema = new Schema({
     name: String,
-    code: String,
-    children: [ObjectId]
+    name_verbose: String,
+    year: String,
+    term: String,
+    iter_id: Number
 });
 
 SubjectSchema.methods.getChildren = function(callback) {

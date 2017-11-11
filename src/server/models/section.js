@@ -21,7 +21,11 @@ var SectionSchema = new Schema({
             last_name: String
         }]
     }],
-    children: [ObjectId]
+    year: String,
+    term: String,
+    subject: String,
+    course_number: String,
+    iter_id: Number
 });
 
 module.exports = mongoose.model('Section', SectionSchema, 'sections');

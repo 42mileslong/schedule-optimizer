@@ -47,9 +47,7 @@ var getChildWhere = function(doc, fieldName, value, res, callback) {
 // The jank JS pyramid begins now
 router.get('/', function(req, res) {
     getHead(function(err, head) {
-        replaceChildrenWithUrls(head, '/api', 'name', function(h2) {
-            res.send(h2);
-        });
+        res.send(head);
     });
 });
 
@@ -59,6 +57,36 @@ router.get('/:yearName', function(req, res) {
             var url = '/api/' + req.params.yearName;
             replaceChildrenWithUrls(year, url, 'name', function(h2) {
                 res.send(h2);
+            });
+        });
+    });
+});
+
+router.post('/:yearName/:termName/search', function(req, res) {
+    var subjectCodes = req.body['subjects']
+
+    getHead(function(err, head) {
+        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
+            var termNameFull = req.params.termName + ' ' + req.params.yearName;
+            getChildWhere(year, 'name', termNameFull, res, function(err, term) {
+
+                var toComplete = subjectCodes.length;
+                var wow = []
+                subjectCodes.forEach(function(subjectCode) {
+                    getChildWhere(term, 'code', subjectCode, res, function(err, subject) {
+                        var url = '/api/' + req.params.yearName
+                                    + '/' + req.params.termName
+                                    + '/' + subjectCode;
+                        replaceChildrenWithUrls(subject, url, 'number', function(h2) {
+                            toComplete--;
+                            wow = wow.concat(h2['children']);
+                            if (toComplete == 0) {
+                                res.send(wow);
+                            }
+                        });
+                    });
+                });
+
             });
         });
     });
@@ -78,6 +106,7 @@ router.get('/:yearName/:termName', function(req, res) {
         });
     });
 });
+
 
 router.get('/:yearName/:termName/:subjectCode', function(req, res) {
     getHead(function(err, head) {
@@ -134,5 +163,7 @@ router.get('/:yearName/:termName/:subjectCode/:courseNumber/:sectionNumber', fun
         });
     });
 });
+
+
 
 module.exports = router;
