@@ -16,4 +16,12 @@ SubjectSchema.methods.getChildren = function(callback) {
      }, callback);
 };
 
+SubjectSchema.methods.getChildWhere = function(fieldName, value, callback) {
+    var query = {
+         '_id' : { $in : this.children }
+    };
+    query[fieldName] = value;
+    return Course.findOne(query, callback);
+};
+
 module.exports = mongoose.model('Subject', SubjectSchema, 'subjects');

@@ -15,4 +15,12 @@ YearSchema.methods.getChildren = function(callback) {
      }, callback);
 };
 
+YearSchema.methods.getChildWhere = function(fieldName, value, callback) {
+    var query = {
+         '_id' : { $in : this.children }
+    };
+    query[fieldName] = value;
+    return Term.findOne(query, callback);
+};
+
 module.exports = mongoose.model('Year', YearSchema, 'years');
