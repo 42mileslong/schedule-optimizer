@@ -41,96 +41,86 @@ var getChildWhere = function(doc, fieldName, value, res, callback) {
     });
 }
 
+var getChildren = function(doc, callback) {
+    if (doc === null || doc === undefined) {
+        res.send(null);
+        return;
+    }
+    doc.getChildren(callback);
+}
+
 // This module routes specific urls / API endpoints to content - in this case,
 // data pulled from the database.
 
 // The jank JS pyramid begins now
 router.get('/', function(req, res) {
     getHead(function(err, head) {
-        replaceChildrenWithUrls(head, '/api', 'name', function(h2) {
-            res.send(h2);
+        database.Year.find({
+            'iteration' : head.iter_id,
+            'name' : '2018'
+        }, function(err, years) {
+            res.send(years);
         });
     });
 });
 
-router.get('/:yearName', function(req, res) {
+router.get('/year', function(req, res) {
     getHead(function(err, head) {
-        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
-            var url = '/api/' + req.params.yearName;
-            replaceChildrenWithUrls(year, url, 'name', function(h2) {
-                res.send(h2);
-            });
+        var parameters = req.query;
+        parameters['iteration'] = head.iter_id;
+        database.Year.find(
+            parameters,
+            function(err, years) {
+                res.send(years);
         });
     });
 });
 
-router.get('/:yearName/:termName', function(req, res) {
+router.get('/term', function(req, res) {
     getHead(function(err, head) {
-        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
-            var termNameFull = req.params.termName + ' ' + req.params.yearName;
-            getChildWhere(year, 'name', termNameFull, res, function(err, term) {
-                    var url = '/api/' + req.params.yearName
-                                + '/' + req.params.termName;
-                    replaceChildrenWithUrls(term, url, 'code', function(h2) {
-                    res.send(h2);
-                });
-            });
+        var parameters = req.query;
+        parameters['iteration'] = head.iter_id;
+        database.Term.find(
+            parameters,
+            function(err, years) {
+                res.send(years);
         });
     });
 });
 
-router.get('/:yearName/:termName/:subjectCode', function(req, res) {
+router.get('/subject', function(req, res) {
     getHead(function(err, head) {
-        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
-            var termNameFull = req.params.termName + ' ' + req.params.yearName;
-            getChildWhere(year, 'name', termNameFull, res, function(err, term) {
-                getChildWhere(term, 'code', req.params.subjectCode, res, function(err, subject) {
-                    var url = '/api/' + req.params.yearName
-                                + '/' + req.params.termName
-                                + '/' + req.params.subjectCode;
-                    replaceChildrenWithUrls(subject, url, 'number', function(h2) {
-                        res.send(h2);
-                    });
-                });
-            });
+        var parameters = req.query;
+        parameters['iteration'] = head.iter_id;
+        database.Subject.find(
+            parameters,
+            function(err, years) {
+                res.send(years);
         });
     });
 });
 
-router.get('/:yearName/:termName/:subjectCode/:courseNumber', function(req, res) {
+router.get('/course', function(req, res) {
     getHead(function(err, head) {
-        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
-            var termNameFull = req.params.termName + ' ' + req.params.yearName;
-            getChildWhere(year, 'name', termNameFull, res, function(err, term) {
-                getChildWhere(term, 'code', req.params.subjectCode, res, function(err, subject) {
-                    getChildWhere(subject, 'number', req.params.courseNumber, res, function(err, course) {
-                        var url = '/api/' + req.params.yearName
-                                    + '/' + req.params.termName
-                                    + '/' + req.params.subjectCode
-                                    + '/' + req.params.courseNumber;
-                        replaceChildrenWithUrls(course, url, 'number', function(h2) {
-                            res.send(h2);
-                        });
-                    });
-                });
-            });
+        var parameters = req.query;
+        parameters['iteration'] = head.iter_id;
+        database.Course.find(
+            parameters,
+            function(err, years) {
+                res.send(years);
         });
     });
 });
 
-router.get('/:yearName/:termName/:subjectCode/:courseNumber/:sectionNumber', function(req, res) {
+
+router.get('/section', function(req, res) {
     getHead(function(err, head) {
-        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
-            var termNameFull = req.params.termName + ' ' + req.params.yearName;
-            getChildWhere(year, 'name', termNameFull, res, function(err, term) {
-                getChildWhere(term, 'code', req.params.subjectCode, res, function(err, subject) {
-                    getChildWhere(subject, 'number', req.params.courseNumber, res, function(err, course) {
-                        getChildWhere(course, 'number', req.params.sectionNumber, res, function(err, section) {
-                            res.send(section);
-                        });
-                    });
-                });
-            });
+        var parameters = req.query;
+        parameters['iteration'] = head.iter_id;
+        database.Section.find(
+            parameters,
+            function(err, years) {
+                res.send(years);
         });
     });
 });

@@ -9,7 +9,10 @@ var CourseSchema = new Schema({
     number: String,
     description: String,
     credit_hours: String,
-    children: [ObjectId]
+    year: String,
+    term: String,
+    subject: String,
+    iteration: Number
 });
 
 CourseSchema.methods.getChildren = function(callback) {

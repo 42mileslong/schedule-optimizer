@@ -6,7 +6,8 @@ var Subject = require('./subject.js')
 // A model for the term object
 var TermSchema = new Schema({
     name: String,
-    children: [ObjectId]
+    year: String,
+    iteration: Number
 });
 
 TermSchema.methods.getChildren = function(callback) {
