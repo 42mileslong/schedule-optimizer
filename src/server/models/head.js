@@ -5,7 +5,8 @@ var Year = require('./year.js')
 
 // A model for the head object
 var HeadSchema = new Schema({
-    children: [ObjectId]
+    children: [ObjectId],
+    iter_id: Number
 });
 
 HeadSchema.methods.getChildren = function(callback) {
