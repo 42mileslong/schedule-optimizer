@@ -20,7 +20,12 @@ var SectionSchema = new Schema({
             first_name: String,
             last_name: String
         }]
-    }]
+    }],
+    year: String,
+    term: String,
+    subject: String,
+    course_number: String,
+    iteration: Number
 });
 
 module.exports = mongoose.model('Section', SectionSchema, 'sections');
