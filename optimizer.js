@@ -2,8 +2,8 @@ var express = require('express');
 var http = require('http');
 var app = express();
 var mongoose = require('mongoose');
-
-
+var promise = require('request-promise');
+var request = require("request");
 
 //what options are given to the users, 
 
@@ -45,13 +45,15 @@ var SOCKET_LIST=[];
 
 var optimizedSchedule = [];
 
-function Course(name, code, id, startTime, finishTime){
+function Course(name, code, id, startTime, finishTime, startDate, finishDate){
     var property = {
             name: name,
             code: code,
             id: id,
-            startTime: startTime,
-            finishTime: finishTime,
+            startDate: startDate,
+            finishDate: finishDate,
+            startTime: startDate,
+            finishTime: finishDate,
     }
     return property;
 }
@@ -65,14 +67,19 @@ function Schedule(arr){
 
 var schedules = [];
 console.log("working");
-samCourse = {
+samCourses = [{
     year: '2018',
     term: 'Summer',
-    subject: 'ASTR',
-    code: '330',
-}
-getCourse([samCourse]);
-console.log(samCourse.year);
+    subject: 'PSYC',
+    code: '100',
+}, {
+    year: '2018',
+    term: 'Summer',
+    subject: 'CSE',
+    code: '440',
+}];
+var p = getAvailableCourses(samCourses);
+//console.log(p);
 generate();
 
 function generate(){
@@ -106,7 +113,7 @@ function oneRecursiveBoi(topC, i, classList){
     if (i == classList.length){
             schedules.push(Schedule(topC));
             console.log("one Schedule: ");
-            for (i in topC) console.log(topC[i]);
+            //for (i in topC) console.log(topC[i]);
     } else {
         var k = 0;
         var next = nextNonConflict(topC, classList[i], k);
@@ -218,20 +225,43 @@ function rankSchedules(SchList){
 //different rows are different courses and different column are available classes of those courses
 function getAvailableCourses(arr){
     allCourses = [];
-    for (var i in arr){
-        var add = 'http://localhost:5000/api/'+ arr[i].year + '/' + arr[i].term + '/' + arr[i].subject + '/' + arr[i].code;
+    for (var i = 0; i < arr.length; i++){
 
-        http.get(add, function(res) {
-            //res.pipe(process.stdout);
-            res.on('data', function (chunk) {
-            var obj = JSON.parse(chunk);
+        allCourses.push([]);
+        var add = 'http://localhost:5000/api/'+ arr[i].year + '/' + arr[i].term + '/' + arr[i].subject + '/' + arr[i].code + '/' + 'sections';
+        //console.log(add);
 
-            for (k in obj.children){
-                var theClass = getClass(add, obj.children[k].name);
-                allCourses[i].push(Course(arr[i].name, arr[i].code, arr[i].id, theClass.startTime, theClass.finshTime ));
-            }
-          });
-        });
+
+        console.log("Req " + i + "sent");
+        request(add, response());
+
+    //     http.get(add, function(res, err) {
+    //         console.log(res);
+
+    //         if (err) console.log (err.message);
+    //         //res.pipe(process.stdout);
+    //         res.on('data', function (chunk) {
+    //         var obj = JSON.parse(chunk);
+
+    //         for (k in obj){
+    //             //var theClass = getClass(add, obj[k].name);
+    //             allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, obj[k].meetings[0].start_time, obj[k].meetings[0].finsh_time, obj[k].start_date, obj[k].end_date));
+    //             //console.log(allCourses[i]);
+    //         }
+    //       });
+    //     });
+    // }
+}
+return allCourses;
+}
+
+function response(err, response, obj) {
+    console.log("Res " + "" + "received");
+    //console.log(obj);
+
+    for (k in obj){
+        allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, obj[k].meetings[0].start_time, obj[k].meetings[0].finsh_time, obj[k].start_date, obj[k].end_date));
+        console.log(allCourses[i][k]);
     }
 }
 
