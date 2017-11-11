@@ -6,7 +6,8 @@ export default class SubjectSelector extends React.Component {
     super(props);
     this.state = {
       subjects: [],
-      loadedTermURL: ''
+      loadedTermName: '',
+      loadedYearName: ''
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -23,23 +24,27 @@ export default class SubjectSelector extends React.Component {
   }
 
   componentWillReceiveProps() {
-    var url = this.props.searchCriteria.avalibility.url;
-    if (typeof url != 'undefined' && url != this.state.loadedTermURL) {
-      fetch(url)
+    var termName = this.props.searchCriteria.avalibility.name;
+    var yearName = this.props.searchCriteria.avalibility.year;
+    var isNewYearOrTerm = (termName != this.state.loadedTermName)
+            || (yearName != this.state.loadedYearName);
+    if (typeof termName != 'undefined' && isNewYearOrTerm) {
+      fetch('/api/subject?year=2018&term=Summer')
         .then(res => {
           return res.json()
         })
-        .then(data => {
-          var subjects = data.children;
+        .then(subjects => {
           subjects = subjects.map(subject => {
             subject.active = false;
             subject.key = "subjectSelectorButton_" + subject.name;
 
             return subject;
           })
+          console.log(subjects[0]);
           this.setState({
             subjects: subjects,
-            loadedTermURL: url
+            loadedTermName: termName,
+            loadedYearName: yearName
           });
         })
     }
@@ -50,7 +55,7 @@ export default class SubjectSelector extends React.Component {
       <div>
         <h6 className="text-center">Subjects</h6>
         {
-          this.props.searchCriteria.avalibility.url == null ? (
+          this.props.searchCriteria.avalibility.name == null ? (
             <div className="text-center">
               <small >Choose avalibility.</small>
             </div>

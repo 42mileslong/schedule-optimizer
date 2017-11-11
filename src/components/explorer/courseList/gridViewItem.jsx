@@ -1,5 +1,4 @@
 import React from 'react';
-import SectionView from './sectionView';
 export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -13,16 +12,6 @@ export default class GridViewItem extends React.Component {
 
   componentDidMount() {
     this.state.id = this.props.course.name.replace(/\s/g,''); // No render
-    var url = this.props.course.url;
-    fetch(url)
-      .then(res => {
-        return res.json();
-      })
-      .then(course => {
-        this.setState({
-          course: course
-        })
-      })
   }
 
   renderCardDetails() {
@@ -45,12 +34,11 @@ export default class GridViewItem extends React.Component {
     }
   }
   renderModalDetails() {
-    if (typeof this.state.course.name != "undefined") {
-      var course = this.state.course;
+    if (typeof this.props.course.name != "undefined") {
+      var course = this.props.course;
       return (
         <div>
           <p>{course.description}</p>
-          <SectionView sections={course.children}/>
         </div>
       )
     } else {
@@ -65,7 +53,7 @@ export default class GridViewItem extends React.Component {
     var courseNum = courseMinData.name.split(" ").splice(-1)[0];
 
     //  Course will be undefined in initial render
-    var course = this.state.course;
+    var course = this.props.course;
     return (
       <div className="col-6">
         <div className="card">

@@ -1,5 +1,4 @@
 import React from 'react';
-import SectionView from './sectionView';
 
 export default class ListViewItem extends React.Component {
   constructor(props) {
@@ -12,16 +11,6 @@ export default class ListViewItem extends React.Component {
   }
 
   componentDidMount() {
-    var url = this.props.course.url;
-    fetch(url)
-      .then(res => {
-        return res.json();
-      })
-      .then(course => {
-        this.setState({
-          course: course
-        })
-      })
   }
 
   handleClick() {
@@ -31,14 +20,13 @@ export default class ListViewItem extends React.Component {
   }
 
   renderCourseDetails() {
-    var course = this.state.course;
+    var course = this.props.course;
     if (typeof course.name != "undefined") {
       return (
         <div>
           <h6>{course.name}</h6>
           <p>{course.description}</p>
           <div className={this.state.active ? "d-inline" : "d-none"}>
-            <SectionView sections={course.children}/>
           </div>
         </div>
       )
@@ -50,7 +38,7 @@ export default class ListViewItem extends React.Component {
     var courseMinData = this.props.course;
     var courseNum = courseMinData.name.split(" ").splice(-1)[0];
 
-    var course = this.state.course;
+    var course = this.props.course;
     return (
       <div className="list-group-item">
         <h4>{courseMinData.code + " " + courseNum}</h4>

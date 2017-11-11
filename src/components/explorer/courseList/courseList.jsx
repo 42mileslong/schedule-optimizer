@@ -14,33 +14,32 @@ export default class CourseList extends React.Component {
   }
 
   componentWillReceiveProps() {
+      console.log('aaaaadafds');
     //  Rebuild course list on change
     this.state.courses = [];
     var subjects = [this.props.searchCriteria.subject];
     var newCourses = [];
-    console.log(subjects);
+    console.log(subjects.length + 'aaaa');
     subjects.forEach(subject => {
-      fetch(subject.url)
-        .then(res => {
-          return res.json()
-        })
-        .then(subject => {
-          console.log(subject);
-          var courses = subject.children;
-          console.log(courses);
-          var coursesCollector = courses.map(course => {
-            return {
-              code: subject.code,
-              name: subject.name + " " + course.name,
-              url: course.url,
-            }
+        console.log('bbb');
+        fetch('api/course?year=2018&term=Spring&subject=' + subject.name)
+          .then(res => {
+            return res.json()
           })
-          console.log(coursesCollector);
-
-          this.setState({
-            courses: this.state.courses.concat(coursesCollector)
+          .then(courses => {
+              console.log('aaa');
+              var coursesCollector = courses.map(course => {
+                return {
+                  code: subject.name,
+                  name: subject.name_verbose + " " + course.name,
+                  number: course.number,
+                  description: course.description
+                }
+              })
+              this.setState({
+                courses: this.state.courses.concat(coursesCollector)
+              });
           });
-        })
     });
   }
 
