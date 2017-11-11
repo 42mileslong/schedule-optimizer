@@ -41,6 +41,14 @@ var getChildWhere = function(doc, fieldName, value, res, callback) {
     });
 }
 
+var getChildren = function(doc, callback) {
+    if (doc === null || doc === undefined) {
+        res.send(null);
+        return;
+    }
+    doc.getChildren(callback);
+}
+
 // This module routes specific urls / API endpoints to content - in this case,
 // data pulled from the database.
 
@@ -139,6 +147,24 @@ router.get('/:yearName/:termName/:subjectCode/:courseNumber', function(req, res)
                                     + '/' + req.params.courseNumber;
                         replaceChildrenWithUrls(course, url, 'number', function(h2) {
                             res.send(h2);
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+
+router.get('/:yearName/:termName/:subjectCode/:courseNumber/sections', function(req, res) {
+    getHead(function(err, head) {
+        getChildWhere(head, 'name', req.params.yearName, res, function(err, year) {
+            var termNameFull = req.params.termName + ' ' + req.params.yearName;
+            getChildWhere(year, 'name', termNameFull, res, function(err, term) {
+                getChildWhere(term, 'code', req.params.subjectCode, res, function(err, subject) {
+                    getChildWhere(subject, 'number', req.params.courseNumber, res, function(err, course) {
+                        var numChildren = course.children.length;
+                        getChildren(course, function(err, children) {
+                          res.send(children);
                         });
                     });
                 });

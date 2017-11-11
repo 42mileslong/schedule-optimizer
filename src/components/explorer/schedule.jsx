@@ -1,6 +1,7 @@
 import React from 'react';
 import Filter from './filter/filter';
 import CourseList from './courseList/courseList';
+import FeaturedCourses from './featuredCourses';
 
 export default class Schedule extends React.Component {
   constructor() {
@@ -10,7 +11,8 @@ export default class Schedule extends React.Component {
       terms: [],
       searchCriteria: {
         avalibility: {},
-        subjects: []
+        subjects: [],
+        creditHour: []
       },
       coursesToDisplay: []
     }
@@ -18,31 +20,20 @@ export default class Schedule extends React.Component {
   }
 
   updateSearchCriteria(searchCriteria) {
-    var allCourses = [];
-    console.log(this.state.scheduleData);
-
-    this.state.scheduleData[0].terms[0].subjects.forEach(subject => {
-      //  Add dept info to course.
-      var subjectName = subject.name;
-      var subjectCode = subject.code;
-
-      subject.courses.forEach(course => {
-        course.subject = subjectName;
-        course.code = subjectCode;
-        allCourses.push(course);
-      });
-    });
-    var filteredCourses = allCourses.filter(course => {
-      //  Filter by Subject
-      var index = searchCriteria.subjects.indexOf(course.subject);
-      if (index  == -1) {
-        return false;
-      }
-      return true;
-    });
     this.setState({
       searchCriteria: searchCriteria,
     });
+  }
+
+  hasSearchCriteria() {
+    var hasSearchCriteria = false;
+    if (this.state.searchCriteria.avalibility.year != undefined) {
+      hasSearchCriteria = true;
+    }
+    if (this.state.searchCriteria.subjects.length > 0) {
+      hasSearchCriteria = true;
+    }
+    return hasSearchCriteria;
   }
 
   render() {
@@ -59,9 +50,16 @@ export default class Schedule extends React.Component {
             scheduleData={this.state.scheduleData}
             onChange={this.updateSearchCriteria}/>
 
-          <CourseList
-            searchCriteria={this.state.searchCriteria}
-            />
+          {
+            this.hasSearchCriteria() ? (
+              <CourseList
+                searchCriteria={this.state.searchCriteria}
+                />
+            ) : (
+              <FeaturedCourses />
+            )
+          }
+
         </div>
       </div>
     );

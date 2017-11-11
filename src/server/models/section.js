@@ -9,7 +9,7 @@ var SectionSchema = new Schema({
     start_date: String,
     end_date: String,
     meetings: [{
-        type: String,
+        type: { type: String },
         type_verbose: String,
         start_time: String,
         end_time: String,
