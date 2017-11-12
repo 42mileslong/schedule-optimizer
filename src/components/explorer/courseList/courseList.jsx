@@ -18,6 +18,7 @@ export default class CourseList extends React.Component {
     this.state.courses = [];
     var subjects = this.props.searchCriteria.subjects;
     var creditHours = this.props.searchCriteria.creditHours;
+    var textSearch = this.props.searchCriteria.textSearch;
     var newCourses = [];
 
     // Build URL to access desired courses
@@ -35,7 +36,11 @@ export default class CourseList extends React.Component {
       url += '&credit_hours=' + creditHour.name;
     });
 
-    if (subjects.length > 0) {
+    if (textSearch.length > 0) {
+      url += '&search=' + textSearch;
+    }
+
+    if (subjects.length > 0 || textSearch.length > 0) {
       fetch(url)
         .then(res => {
           return res.json()
