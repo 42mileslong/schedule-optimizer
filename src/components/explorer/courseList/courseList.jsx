@@ -15,7 +15,7 @@ export default class CourseList extends React.Component {
 
   componentWillReceiveProps() {
     //  Rebuild course list on change
-    this.state.courses = [];
+    //this.state.courses = [];
     var subjects = this.props.searchCriteria.subjects;
     var creditHours = this.props.searchCriteria.creditHours;
     var textSearch = this.props.searchCriteria.textSearch;
@@ -47,7 +47,7 @@ export default class CourseList extends React.Component {
         })
         .then(courses => {
           this.setState({
-            courses: this.state.courses.concat(courses)
+            courses: courses
           });
         });
     } else {
