@@ -13,14 +13,14 @@ export default class SubjectSelector extends React.Component {
   }
 
   handleClick(subject) {
-    this.state.subjects.forEach((e) => {
-      if (e.name == subject.name) {
-        return;
-      }
-      e.active = false
-    });
     subject.active = !subject.active;
-    this.props.selectFilterCriteria("subject", subject);
+    var activeSubjects = [];
+    this.state.subjects.forEach((e) => {
+      if (e.active) {
+        activeSubjects.push(e);
+      }
+    });
+    this.props.selectFilterCriteria("subjects", activeSubjects);
   }
 
   componentWillReceiveProps() {
@@ -58,32 +58,23 @@ export default class SubjectSelector extends React.Component {
               <small >Choose avalibility.</small>
             </div>
           ) : (
-            this.props.searchCriteria.subject.code == null ? (
-              <ul className="list-group">
-                {
-                  this.state.subjects.map(subject => {
-                    return (
-                      <FilterButton
-                        active={subject.active}
-                        name={subject.name}
-                        key={subject.key}
-                        onClick={()=> {
+            <ul className="list-group">
+              {
+                this.state.subjects.map(subject => {
+                  return (
+                    <FilterButton
+                      active={subject.active}
+                      name={subject.name}
+                      key={subject.key}
+                      onClick={()=> {
                           this.handleClick(subject)
                         }
-                        }
-                      />
-                    )
-                  })
-                }
-              </ul>
-            ) : (
-              <ul className="list-group">
-                <li className="list-group-item">
-                  {this.props.searchCriteria.subject.name}
-                </li>
-              </ul>
-            )
-
+                      }
+                    />
+                  )
+                })
+              }
+            </ul>
           )
         }
 

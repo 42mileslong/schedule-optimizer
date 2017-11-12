@@ -16,7 +16,8 @@ export default class CourseList extends React.Component {
   componentWillReceiveProps() {
     //  Rebuild course list on change
     this.state.courses = [];
-    var subjects = [this.props.searchCriteria.subject];
+    var subjects = this.props.searchCriteria.subjects;
+    var creditHours = this.props.searchCriteria.creditHours;
     var newCourses = [];
 
     // Build URL to access desired courses
@@ -29,15 +30,28 @@ export default class CourseList extends React.Component {
       url += '&subject=' + subject.name;
     });
 
-    fetch(url)
-      .then(res => {
-        return res.json()
-      })
-      .then(courses => {
-        this.setState({
-          courses: this.state.courses.concat(courses)
+    // Add multiple &subject parameters, one for each desired subject
+    creditHours.forEach(creditHour => {
+      url += '&credit_hours=' + creditHour.name + ' hours.';
+    });
+
+    if (subjects.length > 0) {
+      fetch(url)
+        .then(res => {
+          return res.json()
+        })
+        .then(courses => {
+          this.setState({
+            courses: this.state.courses.concat(courses)
+          });
         });
+    } else {
+      // Reset course list so not every class is shown
+      this.setState({
+        courses: []
       });
+    }
+
   }
 
   handleGridToggle() {

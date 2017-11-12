@@ -9,8 +9,8 @@ export default class Schedule extends React.Component {
     this.state = {
       searchCriteria: {
         avalibility: {},
-        subject: {},
-        creditHour: {}
+        subjects: [],
+        creditHours: []
       },
       coursesToDisplay: []
     }
@@ -28,7 +28,7 @@ export default class Schedule extends React.Component {
     if (this.state.searchCriteria.avalibility.year != undefined) {
       hasSearchCriteria = true;
     }
-    if (this.state.searchCriteria.subject.code != undefined > 0) {
+    if (this.state.searchCriteria.subjects.length > 0) {
       hasSearchCriteria = true;
     }
     return hasSearchCriteria;
