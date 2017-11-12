@@ -6,6 +6,7 @@ var ObjectId = Schema.Types.ObjectId;
 var SectionSchema = new Schema({
     code: String,
     number: String,
+    type: String,
     start_date: String,
     end_date: String,
     meetings: [{

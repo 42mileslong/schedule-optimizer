@@ -32,7 +32,7 @@ export default class CourseList extends React.Component {
 
     // Add multiple &subject parameters, one for each desired subject
     creditHours.forEach(creditHour => {
-      url += '&credit_hours=' + creditHour.name + ' hours.';
+      url += '&credit_hours=' + creditHour.name;
     });
 
     if (subjects.length > 0) {
