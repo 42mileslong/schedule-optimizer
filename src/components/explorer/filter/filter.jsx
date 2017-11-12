@@ -3,6 +3,7 @@ import AvalibilitySelector from './avalibilitySelector';
 import FilterButton from './filterButton';
 import SubjectSelector from './subjectSelector';
 import CreditHourSelector from './creditHourSelector';
+import SearchSelector from './searchSelector';
 
 export default class Filter extends React.Component {
   constructor(props) {
@@ -32,6 +33,10 @@ export default class Filter extends React.Component {
         <h4 className="text-center">Filter Courses</h4>
         <br/>
         <AvalibilitySelector
+          selectFilterCriteria={this.selectFilterCriteria}
+          searchCriteria={this.props.searchCriteria}/>
+        <br/>
+        <SearchSelector
           selectFilterCriteria={this.selectFilterCriteria}
           searchCriteria={this.props.searchCriteria}/>
         <br/>

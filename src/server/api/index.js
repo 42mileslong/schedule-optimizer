@@ -75,11 +75,30 @@ router.get('/course', function(req, res) {
 
           delete parameters['credit_hours'];
         }
-        database.Course.find(
-            parameters,
-            function(err, years) {
+
+        if (parameters['search'] !== undefined) {
+          parameters['$text'] = {
+            '$search' :  parameters['search']
+          }
+
+          delete parameters['search'];
+
+          database.Course.find(
+              parameters,
+              { score : { $meta: 'textScore' } }
+            ).sort({
+              score: { $meta: "textScore" }
+            }).exec(function(err, years) {
                 res.send(years);
-        });
+            });
+
+        } else {
+          database.Course.find(
+              parameters
+            ).exec(function(err, years) {
+                res.send(years);
+            });
+        }
     });
 });
 

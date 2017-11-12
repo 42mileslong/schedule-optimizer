@@ -12,7 +12,8 @@ export default class Schedule extends React.Component {
       searchCriteria: {
         avalibility: {},
         subjects: [],
-        creditHours: []
+        creditHours: [],
+        textSearch: ""
       },
       coursesToDisplay: []
     }
