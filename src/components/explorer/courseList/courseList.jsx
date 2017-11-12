@@ -14,35 +14,39 @@ export default class CourseList extends React.Component {
   }
 
   componentWillReceiveProps() {
-      console.log('aaaaadafds');
     //  Rebuild course list on change
     this.state.courses = [];
     var subjects = [this.props.searchCriteria.subject];
     var newCourses = [];
-    console.log(subjects.length + 'aaaa');
-    subjects.forEach(subject => {
-        console.log('bbb');
-        fetch('api/course?year=2018&term=Spring&subject=' + subject.name)
-          .then(res => {
-            return res.json()
-          })
-          .then(courses => {
-              console.log('aaa');
-              var coursesCollector = courses.map(course => {
-                return {
-                  code: subject.name,
-                  name: subject.name_verbose + " " + course.name,
-                  number: course.number,
-                  description: course.description
-                }
-              })
-              this.setState({
-                courses: this.state.courses.concat(coursesCollector)
-              });
-          });
-    });
-  }
 
+    // Build URL to access desired courses
+    var url = 'api/course'
+        + '?year=' + this.props.searchCriteria.avalibility.year
+        + '&term=' + this.props.searchCriteria.avalibility.name;
+
+    // Add multiple &subject parameters, one for each desired subject
+    subjects.forEach(subject => {
+      url += '&subject=' + subject.name;
+    });
+    
+    fetch(url)
+      .then(res => {
+        return res.json()
+      })
+      .then(courses => {
+        var coursesCollector = courses.map(course => {
+          return {
+            code: course.subject,
+            name: course.subject + " " + course.name,
+            number: course.number,
+            description: course.description
+          }
+        })
+        this.setState({
+          courses: this.state.courses.concat(coursesCollector)
+        });
+      });
+  }
 
   handleGridToggle() {
     this.setState({

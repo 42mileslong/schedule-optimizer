@@ -37,10 +37,8 @@ export default class SubjectSelector extends React.Component {
           subjects = subjects.map(subject => {
             subject.active = false;
             subject.key = "subjectSelectorButton_" + subject.name;
-
             return subject;
           })
-          console.log(subjects[0]);
           this.setState({
             subjects: subjects,
             loadedTermName: termName,

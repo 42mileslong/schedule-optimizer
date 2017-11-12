@@ -28,18 +28,13 @@ export default class AvalibilitySelector extends React.Component {
       })
       .then(terms => {
         var terms_obj = terms.map(term => {
-          return (
-              {
-                active: false,
-                year: '2018',
-                name: term.name,
-                key: "filterAvailabilityButton" + term.name
-              }
-            )
-          })
-          this.setState({
-            terms: terms_obj
-          });
+          term.active = false;
+          term.key = "filterAvailabilityButton" + term.name;
+          return term;
+        });
+        this.setState({
+          terms: terms_obj
+        });
       });
   }
 
