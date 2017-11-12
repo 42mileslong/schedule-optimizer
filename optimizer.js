@@ -93,17 +93,6 @@ function generate(){
     classList.push([{startTime:0, finishTime: 1},{startTime: 2, finishTime: 6}]);
     classList.push([{startTime: 1, finishTime: 4},{startTime: 7, finishTime: 8}]);
 
-
-    //Sort the available classes for each course by their finish time
-    // for (var i in classList){
-    //     classList[i] = sort(classList[i]);
-    // }
-
-    //array of Schedule objects which holds all possbile schedules
-
-    //schedules[0] = Schedule();
-    //schedules[0].courses.push(Course(classList[0][0].name, classList[0][0].code, classList[0][0].id, classList[0][0].startTime, classList[0][0].finishTime));
-
     oneRecursiveBoi([], 0, classList);
 }
 //topC : the list of courses from upper for loops, it's empty if we are on first course
@@ -228,49 +217,25 @@ function getAvailableCourses(arr){
     for (var i = 0; i < arr.length; i++){
 
         allCourses.push([]);
-        var add = 'http://localhost:5000/api/'+ arr[i].year + '/' + arr[i].term + '/' + arr[i].subject + '/' + arr[i].code + '/' + 'sections';
+        var add = 'http://localhost:5000/api/section?year=' + arr[i].year + '&term=' + arr[i].term + '&subject=' + arr[i].subject + '&course_number=' + arr[i].code;
         //console.log(add);
 
+        console.log("Req " + i + " sent");
+        sendRequest(allCourses, arr, add, i);
 
-        console.log("Req " + i + "sent");
-        request(add, response());
-
-    //     http.get(add, function(res, err) {
-    //         console.log(res);
-
-    //         if (err) console.log (err.message);
-    //         //res.pipe(process.stdout);
-    //         res.on('data', function (chunk) {
-    //         var obj = JSON.parse(chunk);
-
-    //         for (k in obj){
-    //             //var theClass = getClass(add, obj[k].name);
-    //             allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, obj[k].meetings[0].start_time, obj[k].meetings[0].finsh_time, obj[k].start_date, obj[k].end_date));
-    //             //console.log(allCourses[i]);
-    //         }
-    //       });
-    //     });
-    // }
-}
-return allCourses;
-}
-
-function response(err, response, obj) {
-    console.log("Res " + "" + "received");
-    //console.log(obj);
-
-    for (k in obj){
-        allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, obj[k].meetings[0].start_time, obj[k].meetings[0].finsh_time, obj[k].start_date, obj[k].end_date));
-        console.log(allCourses[i][k]);
     }
+    return allCourses;
 }
 
-function getClass(address, id){
-            http.get(address + '/' + 'id', function(res) {
-            res.on('data', function (chunk) {
-            var obj = JSON.parse(chunk);
-            return obj;
-          });
-        });
 
+function sendRequest(allCourses, arr, add, i){
+    request(add, function(err, response, chunk) {
+        console.log("Res " + "i " + "received");
+        var obj = JSON.parse(chunk);
+
+        for (k in obj){
+            allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, 0, 1, obj[k].start_date, obj[k].end_date));
+            console.log(allCourses[i][k]);
+        }
+    });
 }
