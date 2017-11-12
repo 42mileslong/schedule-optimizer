@@ -28,22 +28,14 @@ export default class CourseList extends React.Component {
     subjects.forEach(subject => {
       url += '&subject=' + subject.name;
     });
-    
+
     fetch(url)
       .then(res => {
         return res.json()
       })
       .then(courses => {
-        var coursesCollector = courses.map(course => {
-          return {
-            code: course.subject,
-            name: course.subject + " " + course.name,
-            number: course.number,
-            description: course.description
-          }
-        })
         this.setState({
-          courses: this.state.courses.concat(coursesCollector)
+          courses: this.state.courses.concat(courses)
         });
       });
   }

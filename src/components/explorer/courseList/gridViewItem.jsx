@@ -15,23 +15,17 @@ export default class GridViewItem extends React.Component {
   }
 
   renderCardDetails() {
-    if (typeof this.state.course.name != "undefined") {
-      var course = this.state.course;
-      return (
-        <div>
-          <h6 className="card-subtitle">{course.name}</h6>
-          <p>{course.description}</p>
-          <button type="button"
-            className="btn btn-link"
-            data-toggle="modal"
-            data-target={"#Modal" + this.state.id}>Details</button>
-        </div>
-      )
-    } else {
-      return (
-        <p>Loading...</p>
-      )
-    }
+    var course = this.props.course;
+    return (
+      <div>
+        <h6 className="card-subtitle">{course.name}</h6>
+        <p>{course.description}</p>
+        <button type="button"
+          className="btn btn-link"
+          data-toggle="modal"
+          data-target={"#Modal" + this.state.id}>Details</button>
+      </div>
+    )
   }
   renderModalDetails() {
     if (typeof this.props.course.name != "undefined") {
@@ -49,16 +43,12 @@ export default class GridViewItem extends React.Component {
   }
 
   render() {
-    var courseMinData = this.props.course;
-    var courseNum = courseMinData.name.split(" ").splice(-1)[0];
-
-    //  Course will be undefined in initial render
     var course = this.props.course;
     return (
       <div className="col-6">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">{courseMinData.code + " " + courseNum}</h4>
+            <h4 className="card-title">{course.subject + " " + course.number}</h4>
             {
               this.renderCardDetails()
             }
@@ -73,7 +63,7 @@ export default class GridViewItem extends React.Component {
           <div className="modal-dialog modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{this.props.course.code + " " + courseNum + " " + course.name}</h5>
+                <h5 className="modal-title" id="exampleModalLabel">{course.code + " " + course.number + " " + course.name}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

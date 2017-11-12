@@ -19,6 +19,7 @@ export default class AvalibilitySelector extends React.Component {
     })
     term.active = !term.active;
     this.props.selectFilterCriteria("avalibility", term);
+    this.props.selectFilterCriteria("subject", {});
   }
 
   componentDidMount() {
