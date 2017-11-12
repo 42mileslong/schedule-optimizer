@@ -18,7 +18,7 @@ export default class GridViewItem extends React.Component {
     var course = this.props.course;
     return (
       <div>
-        <h6 className="card-subtitle">{course.name}</h6>
+        <h5 className="card-subtitle">{course.name}</h5>
         <p>{course.description}</p>
         <button type="button"
           className="btn btn-link"
@@ -45,16 +45,14 @@ export default class GridViewItem extends React.Component {
   render() {
     var course = this.props.course;
     return (
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">{course.subject + " " + course.number}</h4>
-            {
-              this.renderCardDetails()
-            }
-          </div>
+      <div className="card">
+        <div className="card-body">
+          <h4 className="card-title">{course.subject + " " + course.number}</h4>
+          {
+            this.renderCardDetails()
+          }
         </div>
-
-
+      </div>
     )
   }
 }

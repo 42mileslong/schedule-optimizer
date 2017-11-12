@@ -23,7 +23,7 @@ export default class ListViewItem extends React.Component {
     var course = this.props.course;
     return (
       <div>
-        <h6>{course.name}</h6>
+        <h5>{course.name}</h5>
         <p>{course.description}</p>
         <div className={this.state.active ? "d-inline" : "d-none"}>
         </div>
