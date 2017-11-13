@@ -49,7 +49,10 @@ var database = require('../database')
   */
 module.exports.generate = function(courseList, callback) {
   getAvailableSectionsForCourses(courseList, function(sectionList) {
-    callback(sectionList);
+
+    // TODO generate schedule here given sectionlist
+    var schedule = sectionList;
+    callback(schedule);
   });
 };
 
