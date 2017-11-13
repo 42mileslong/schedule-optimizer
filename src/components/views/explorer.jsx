@@ -31,7 +31,7 @@ export default class Schedule extends React.Component {
 
   hasSearchCriteria() {
     var hasSearchCriteria = false;
-    if (this.state.searchCriteria.avalibility.year != undefined) {
+    if (this.state.searchCriteria.avalibility.year !== undefined) {
       hasSearchCriteria = true;
     }
     if (this.state.searchCriteria.subjects.length > 0) {

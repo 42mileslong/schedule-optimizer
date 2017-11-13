@@ -35,13 +35,28 @@ export default class SectionView extends React.Component {
     return (
       <div>
         <h4>Sections</h4>
-        {
-          sections.map(section => {
-            return (
-              <SectionViewItem section={section}/>
-            )
-          })
-        }
+        <table className = "table">
+          <thead>
+            <tr>
+              <th scope="col">CRN</th>
+              <th scope="col">Section Code</th>
+              <th scope="col">Type</th>
+              <th scope="col">Time</th>
+              <th scope="col">Days</th>
+              <th scope="col">Location</th>
+              <th scope="col">Instructor</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            sections.map(section => {
+              return (
+                <SectionViewItem section={section}/>
+              )
+            })
+          }
+          </tbody>
+        </table>
       </div>
     )
   }
