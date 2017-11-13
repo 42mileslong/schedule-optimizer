@@ -1,4 +1,5 @@
 import React from 'react';
+import SectionView from './sectionView';
 
 export default class ListViewItem extends React.Component {
   constructor(props) {
@@ -25,7 +26,9 @@ export default class ListViewItem extends React.Component {
       <div>
         <h5>{course.name}</h5>
         <p>{course.description}</p>
+        <button type="button" className="btn btn-primary" onClick={this.handleClick}>{this.state.active ? "Hide Details" : "Show Details"}</button>
         <div className={this.state.active ? "d-inline" : "d-none"}>
+          <SectionView course={course}/>
         </div>
       </div>
     )
@@ -36,7 +39,6 @@ export default class ListViewItem extends React.Component {
       <div className="list-group-item">
         <h4>{course.subject + " " + course.number}</h4>
         {this.renderCourseDetails()}
-        <button onClick={this.handleClick}>{this.state.active ? "Hide Details" : "Show Details"}</button>
       </div>
     )
   }

@@ -1,4 +1,6 @@
 import React from 'react';
+import SectionView from './sectionView';
+
 export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export default class GridViewItem extends React.Component {
         <h5 className="card-subtitle">{course.name}</h5>
         <p>{course.description}</p>
         <button type="button"
-          className="btn btn-link"
+          className="btn btn-primary"
           data-toggle="modal"
           data-target={"#Modal" + this.state.id}>Details</button>
       </div>
@@ -51,6 +53,30 @@ export default class GridViewItem extends React.Component {
           {
             this.renderCardDetails()
           }
+        </div>
+        <div className="modal fade"
+          id={"Modal" + this.state.id}
+          tabIndex="-1" role="dialog"
+          aria-labelledby={"Modal" + this.state.id}
+          aria-hidden="true">
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">{course.subject + " " + course.number + " " + course.name}</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {
+                  this.renderModalDetails()
+                }
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
