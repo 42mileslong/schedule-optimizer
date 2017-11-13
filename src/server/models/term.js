@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var Subject = require('./subject.js')
+var Head = require('./head.js')
 
 // A model for the term object
 var TermSchema = new Schema({
@@ -10,19 +10,12 @@ var TermSchema = new Schema({
     iteration: Number
 });
 
-TermSchema.methods.getChildren = function(callback) {
-    return Subject.find({
-         '_id' : { $in : this.children }
-     }, callback);
-};
+var TermModel = mongoose.model('Term', TermSchema, 'terms');
+module.exports = TermModel;
 
-TermSchema.methods.getChildWhere = function(fieldName, value, callback) {
-    var query = {
-         '_id' : { $in : this.children }
-    };
-    query[fieldName] = value;
-    return Subject.findOne(query, callback);
-};
-
-
-module.exports = mongoose.model('Term', TermSchema, 'terms');
+module.exports.findCurrent = function(params, callback) {
+  Head.getHead(function(err, head) {
+    params['iteration'] = head.iter_id;
+    return TermModel.find(params, callback);
+  });
+}
