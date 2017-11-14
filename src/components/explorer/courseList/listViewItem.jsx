@@ -21,6 +21,7 @@ export default class ListViewItem extends React.Component {
 
   renderCourseDetails() {
     var course = this.props.course;
+    console.log(course);
     return (
       <div>
         <h6>{course.name}</h6>

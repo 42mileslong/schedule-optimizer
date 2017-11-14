@@ -7,10 +7,16 @@ export default class CourseList extends React.Component {
     super(props);
     this.state = {
       courses: [],
-      viewType: 'grid'
+      viewType: 'grid',
+      courseWork: {
+        requiredCourses: [],
+        preferedCourses: []
+      }
     }
     this.handleGridToggle = this.handleGridToggle.bind(this);
     this.handleListToggle = this.handleListToggle.bind(this);
+    this.addCourse = this.addCourse.bind(this);
+    this.removeCourse = this.removeCourse.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -54,6 +60,45 @@ export default class CourseList extends React.Component {
 
   }
 
+  addCourse(type, course) {
+    var courseWork = this.props.courseWork;
+    console.log(courseWork);
+    var typedWork = courseWork[type];
+
+    var index = -1;
+    for (var i = 0; i < typedWork.length; i++) {
+      if (typedWork[i].search_field == course.search_field) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index == -1) {
+      typedWork.push(course);
+    }
+
+    this.props.selectCourses(type, typedWork);
+  }
+
+  removeCourse(type, course) {
+    var courseWork = this.props.courseWork;
+    var typedWork = courseWork[type];
+
+    var index = -1;
+    for (var i = 0; i < typedWork.length; i++) {
+      if (typedWork[i].search_field == course.search_field) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index != -1) {
+      typedWork.splice(index, 1);
+    }
+
+    this.props.selectCourses(type, typedWork);
+  }
+
   handleGridToggle() {
     this.setState({
       viewType: 'grid'
@@ -86,9 +131,15 @@ export default class CourseList extends React.Component {
           <br/>
           {
             this.state.viewType == 'grid' ? (
-              <GridView courses={this.state.courses}/>
+              <GridView
+                courses={this.state.courses}
+                addCourse={this.addCourse}
+                removeCourse={this.removeCourse}/>
             ) : (
-              <ListView courses={this.state.courses} />
+              <ListView
+                courses={this.state.courses}
+                addCourse={this.addCourse}
+                removeCourse={this.removeCourse}/>
             )
 
           }

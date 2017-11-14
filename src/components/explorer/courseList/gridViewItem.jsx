@@ -3,7 +3,6 @@ export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      course: {},
       id: ""
     }
     this.renderCardDetails = this.renderCardDetails.bind(this);
@@ -13,6 +12,15 @@ export default class GridViewItem extends React.Component {
   componentDidMount() {
     this.state.id = this.props.course.name.replace(/\s/g,''); // No render
   }
+
+  addCourse(type) {
+    this.props.addCourse(type, this.props.course);
+  }
+
+  removeCourse(type) {
+    this.props.removeCourse(type, this.props.course);
+  }
+
 
   renderCardDetails() {
     var course = this.props.course;
@@ -24,6 +32,12 @@ export default class GridViewItem extends React.Component {
           className="btn btn-link"
           data-toggle="modal"
           data-target={"#Modal" + this.state.id}>Details</button>
+        <button type="button"
+          className="btn btn-success"
+          onClick={() => {
+            this.addCourse("requiredCourses")
+          }}>Add Course</button>
+
       </div>
     )
   }

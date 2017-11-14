@@ -1,21 +1,57 @@
 import React from "react";
 import { browserHistory } from 'react-router';
 
+import CourseTable from '../planner/courseTable.jsx';
+
 export default class Planner extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        requiredCourses:[],
-        preferredCourses: []
+        courseWork: {
+          requiredCourses:[],
+          preferredCourses: []
+        }
       }
     }
+
     componentDidMount() {
         browserHistory.push('/planner');
     }
 
+    componentWillReceiveProps() {
+      console.log("Recieved Props");
+      console.log(sessionStorage.getItem('state'));
+      var courseWork = this.props.route.courseWork;
+      this.setState({
+        courseWork: {
+          requiredCourses: courseWork.requiredCourses,
+          preferredCourses: courseWork.preferredCourses
+        }
+      })
+    }
+
     render() {
-        return (
-            <div id="planner">This is the planning page.</div>
-        );
+      var courseWork = this.state.courseWork;
+      return (
+          <div className="container-fluid">
+            <br />
+            <div className="row">
+              <div className="col-12 text-center">
+                <h1>Planner</h1>
+              </div>
+            </div>
+            <br />
+            <div className="row">
+              <div className="col-6">
+                <h3>Required Courses</h3>
+                <CourseTable courses={courseWork.requiredCourses}/>
+              </div>
+              <div className="col-6">
+                <h3>Preferred Courses</h3>
+                <CourseTable courses={courseWork.preferredCourses}/>
+              </div>
+            </div>
+          </div>
+      );
     }
 }

@@ -56,6 +56,8 @@ export default class Schedule extends React.Component {
             this.hasSearchCriteria() ? (
               <CourseList
                 searchCriteria={this.state.searchCriteria}
+                selectCourses={this.props.route.selectCourses}
+                courseWork={this.props.route.courseWork}
                 />
             ) : (
               <FeaturedCourses />
