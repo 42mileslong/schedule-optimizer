@@ -18,9 +18,10 @@ export default class ScheduleBuilder extends React.Component {
 
   selectCourses(type, courses) {
     var state = this.state;
-    state[type] = courses;
+    state.courseWork[type] = courses;
+    console.log("Setting Course");
+    console.log(state.courseWork[type]);
     this.setState(state);
-    sessionStorage.setItem("state", this.state);
   }
 
   setView(view) {

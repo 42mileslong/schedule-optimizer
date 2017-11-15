@@ -3,6 +3,9 @@ import React from 'react';
 export default class CourseTable extends React.Component {
   render() {
     var courses = this.props.courses;
+    if (typeof courses == 'undefined') {
+      courses = [];
+    }
     console.log(courses);
     return (
       <table className="table">
@@ -16,9 +19,9 @@ export default class CourseTable extends React.Component {
             courses.map(course => {
               return (
                 <tr>
-                  <td>{course.search_field}</td>
-                  <td>Title</td>
-                  <td>Credits</td>
+                  <td>{course.subject + " " + course.number}</td>
+                  <td>{course.name}</td>
+                  <td>{course.credit_Hours}</td>
                 </tr>
               )
             })

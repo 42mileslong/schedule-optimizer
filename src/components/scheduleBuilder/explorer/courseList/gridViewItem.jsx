@@ -21,7 +21,33 @@ export default class GridViewItem extends React.Component {
     this.props.removeCourse(type, this.props.course);
   }
 
+  renderSelectorButton() {
+    var isSelected = false;
+    var courseWork = this.props.courseWork;
+    courseWork['requiredCourses'].forEach(course => {
+      if (course._id == this.props.course._id) {
+        isSelected = true;
+      }
+    })
 
+    if (isSelected) {
+      return (
+        <button type="button"
+          className="btn btn-danger"
+          onClick={() => {
+            this.removeCourse("requiredCourses")
+          }}>Remove Course</button>
+      )
+    } else {
+      return (
+        <button type="button"
+          className="btn btn-success"
+          onClick={() => {
+            this.addCourse("requiredCourses")
+          }}>Add Course</button>
+      )
+    }
+  }
   renderCardDetails() {
     var course = this.props.course;
     return (
@@ -32,11 +58,10 @@ export default class GridViewItem extends React.Component {
           className="btn btn-link"
           data-toggle="modal"
           data-target={"#Modal" + this.state.id}>Details</button>
-        <button type="button"
-          className="btn btn-success"
-          onClick={() => {
-            this.addCourse("requiredCourses")
-          }}>Add Course</button>
+        {
+          this.renderSelectorButton()
+        }
+
 
       </div>
     )

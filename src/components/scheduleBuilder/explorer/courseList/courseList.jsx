@@ -62,12 +62,11 @@ export default class CourseList extends React.Component {
 
   addCourse(type, course) {
     var courseWork = this.props.courseWork;
-    console.log(courseWork);
     var typedWork = courseWork[type];
 
     var index = -1;
     for (var i = 0; i < typedWork.length; i++) {
-      if (typedWork[i].search_field == course.search_field) {
+      if (typedWork[i]._id == course._id) {
         index = i;
         break;
       }
@@ -86,7 +85,7 @@ export default class CourseList extends React.Component {
 
     var index = -1;
     for (var i = 0; i < typedWork.length; i++) {
-      if (typedWork[i].search_field == course.search_field) {
+      if (typedWork[i]._id == course._id) {
         index = i;
         break;
       }
@@ -132,11 +131,13 @@ export default class CourseList extends React.Component {
           {
             this.state.viewType == 'grid' ? (
               <GridView
+                courseWork={this.props.courseWork}
                 courses={this.state.courses}
                 addCourse={this.addCourse}
                 removeCourse={this.removeCourse}/>
             ) : (
               <ListView
+                courseWork={this.props.courseWork}
                 courses={this.state.courses}
                 addCourse={this.addCourse}
                 removeCourse={this.removeCourse}/>

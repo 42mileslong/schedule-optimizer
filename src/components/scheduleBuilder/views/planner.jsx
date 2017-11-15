@@ -6,28 +6,16 @@ import CourseTable from '../planner/courseTable.jsx';
 export default class Planner extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        courseWork: {
-          requiredCourses:[],
-          preferredCourses: []
-        }
-      }
     }
 
-    componentWillReceiveProps() {
+    componentWillMount() {
       console.log("Recieved Props");
       console.log(this.props.courseWork);
       var courseWork = this.props.courseWork;
-      this.setState({
-        courseWork: {
-          requiredCourses: courseWork.requiredCourses,
-          preferredCourses: courseWork.preferredCourses
-        }
-      })
     }
 
     render() {
-      var courseWork = this.state.courseWork;
+      var courseWork = this.props.courseWork;
       return (
           <div className="container-fluid">
             <br />
