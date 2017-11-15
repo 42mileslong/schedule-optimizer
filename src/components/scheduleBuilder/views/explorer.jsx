@@ -18,9 +18,6 @@ export default class Schedule extends React.Component {
     }
     this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
   }
-  componentDidMount() {
-      browserHistory.push('/explorer');
-  }
 
   updateSearchCriteria(searchCriteria) {
     this.setState({
@@ -56,8 +53,8 @@ export default class Schedule extends React.Component {
             this.hasSearchCriteria() ? (
               <CourseList
                 searchCriteria={this.state.searchCriteria}
-                selectCourses={this.props.route.selectCourses}
-                courseWork={this.props.route.courseWork}
+                selectCourses={this.props.selectCourses}
+                courseWork={this.props.courseWork}
                 />
             ) : (
               <FeaturedCourses />

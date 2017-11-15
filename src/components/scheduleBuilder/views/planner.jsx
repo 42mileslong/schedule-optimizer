@@ -14,14 +14,10 @@ export default class Planner extends React.Component {
       }
     }
 
-    componentDidMount() {
-        browserHistory.push('/planner');
-    }
-
     componentWillReceiveProps() {
       console.log("Recieved Props");
-      console.log(sessionStorage.getItem('state'));
-      var courseWork = this.props.route.courseWork;
+      console.log(this.props.courseWork);
+      var courseWork = this.props.courseWork;
       this.setState({
         courseWork: {
           requiredCourses: courseWork.requiredCourses,
