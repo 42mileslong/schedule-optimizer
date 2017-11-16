@@ -9,6 +9,10 @@ var SectionSchema = new Schema({
     type: String,
     start_date: String,
     end_date: String,
+    enrollment_status: String,
+    section_restrictions: String,
+    section_text: String,
+    special_approval: String,
     meetings: [{
         type: { type: String },
         type_verbose: String,
