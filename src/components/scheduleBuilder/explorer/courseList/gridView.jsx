@@ -4,7 +4,7 @@ import GridViewItem from './gridViewItem'
 export default class GridView extends React.Component {
   render() {
     return (
-      <div className="row">
+      <div className="row card-columns">
         {
           this.props.courses.map(course => {
             return (
