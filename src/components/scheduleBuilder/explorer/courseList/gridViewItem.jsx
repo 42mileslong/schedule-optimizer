@@ -79,6 +79,7 @@ export default class GridViewItem extends React.Component {
           className="btn btn-primary"
           data-toggle="modal"
           data-target={"#Modal" + this.state.id}>Details</button>
+
         {
           this.renderSelectorButton()
         }
