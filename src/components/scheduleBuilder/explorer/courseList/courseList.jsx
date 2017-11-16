@@ -10,7 +10,7 @@ export default class CourseList extends React.Component {
       viewType: 'grid',
       courseWork: {
         requiredCourses: [],
-        preferedCourses: []
+        preferredCourses: []
       }
     }
     this.handleGridToggle = this.handleGridToggle.bind(this);

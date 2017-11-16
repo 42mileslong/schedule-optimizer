@@ -31,22 +31,41 @@ export default class GridViewItem extends React.Component {
         isSelected = true;
       }
     })
+    courseWork['preferredCourses'].forEach(course => {
+      if (course._id == this.props.course._id) {
+        isSelected = true;
+      }
+    })
 
     if (isSelected) {
       return (
         <button type="button"
           className="btn btn-danger"
           onClick={() => {
-            this.removeCourse("requiredCourses")
+            this.removeCourse("requiredCourses");
+            this.removeCourse("preferredCourses");
           }}>Remove Course</button>
       )
     } else {
       return (
-        <button type="button"
-          className="btn btn-success"
-          onClick={() => {
-            this.addCourse("requiredCourses")
-          }}>Add Course</button>
+        <div className="btn-group">
+          <button type="button"
+            className="btn btn-success"
+            onClick={() => {
+              this.addCourse("requiredCourses")
+            }}>Add Course
+          </button>
+          <button type="button" className="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </button>
+          <div className="dropdown-menu dropdown-menu-right">
+            <a className="dropdown-item" href="#" onClick={() => {
+              this.addCourse("requiredCourses")
+            }}>Require Course</a>
+            <a className="dropdown-item" href="#" onClick={() => {
+              this.addCourse("preferredCourses")
+            }}>Prefer Course</a>
+          </div>
+        </div>
       )
     }
   }

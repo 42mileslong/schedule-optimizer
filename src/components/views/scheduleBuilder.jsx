@@ -8,7 +8,7 @@ export default class ScheduleBuilder extends React.Component {
     this.state = {
       courseWork: {
         requiredCourses: [],
-        preferedCourses: []
+        preferredCourses: []
       },
       view: "explorer"
     }
