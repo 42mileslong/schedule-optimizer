@@ -83,6 +83,24 @@ export default class ListViewItem extends React.Component {
         <h5>{course.name}</h5>
         <p>{course.description}</p>
 
+        // We should add icons for this later
+        {
+          course.gen_ed_categories.length > 0 ? (
+            <p>Satisfies the following general education categories:
+              {
+                 course.gen_ed_categories.map(category => {
+                   return (
+                     <span>
+                       <br/>
+                       {category}
+                     </span>
+                   )
+                 })
+              }
+            </p>
+          ) : ''
+        }
+
         {
           this.renderSelectorButton()
         }
