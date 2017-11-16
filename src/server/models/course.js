@@ -12,6 +12,7 @@ var CourseSchema = new Schema({
     credit_hours: String,
     min_credit_hours: Number,
     max_credit_hours: Number,
+    gen_ed_categories: [String],
     year: String,
     term: String,
     subject: String,
