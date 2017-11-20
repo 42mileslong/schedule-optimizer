@@ -1,6 +1,7 @@
 import React from 'react';
 import Explorer from './../scheduleBuilder/views/explorer';
 import Planner from './../scheduleBuilder/views/planner';
+import Startup from './../scheduleBuilder/views/startup';
 
 export default class ScheduleBuilder extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class ScheduleBuilder extends React.Component {
         requiredCourses: [],
         preferedCourses: []
       },
-      view: "explorer"
+      view: "startup"
     }
     this.selectCourses = this.selectCourses.bind(this);
     this.setView = this.setView.bind(this);
@@ -43,6 +44,11 @@ export default class ScheduleBuilder extends React.Component {
         <Planner
           courseWork={this.state.courseWork}/>
       )
+    } else if (view == "startup") {
+      return (
+        <Startup
+          courseWork={this.state.courseWork} />
+      )
     }
   }
   render() {
@@ -50,7 +56,7 @@ export default class ScheduleBuilder extends React.Component {
       <div>
         <ul className="nav justify-content-center">
           <li className="nav-item">
-            <a className="nav-link">Configure</a>
+            <button className="nav-link btn btn-link" onClick={() => this.setView("startup")}>Startup</button>
           </li>
           <li className="nav-item">
             <button className="nav-link btn btn-link" onClick={() => this.setView("explorer")}>Explorer</button>
