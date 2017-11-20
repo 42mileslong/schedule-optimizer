@@ -10,7 +10,7 @@ export default class CourseList extends React.Component {
       viewType: 'grid',
       courseWork: {
         requiredCourses: [],
-        preferedCourses: []
+        preferredCourses: []
       }
     }
     this.handleGridToggle = this.handleGridToggle.bind(this);
@@ -21,9 +21,10 @@ export default class CourseList extends React.Component {
 
   componentWillReceiveProps() {
     //  Rebuild course list on change
-    this.state.courses = [];
+    //this.state.courses = [];
     var subjects = this.props.searchCriteria.subjects;
     var creditHours = this.props.searchCriteria.creditHours;
+    var textSearch = this.props.searchCriteria.textSearch;
     var newCourses = [];
 
     // Build URL to access desired courses
@@ -38,17 +39,21 @@ export default class CourseList extends React.Component {
 
     // Add multiple &subject parameters, one for each desired subject
     creditHours.forEach(creditHour => {
-      url += '&credit_hours=' + creditHour.name + ' hours.';
+      url += '&credit_hours=' + creditHour.name;
     });
 
-    if (subjects.length > 0) {
+    if (textSearch.length > 0) {
+      url += '&search=' + textSearch;
+    }
+
+    if (subjects.length > 0 || textSearch.length > 0) {
       fetch(url)
         .then(res => {
           return res.json()
         })
         .then(courses => {
           this.setState({
-            courses: this.state.courses.concat(courses)
+            courses: courses
           });
         });
     } else {

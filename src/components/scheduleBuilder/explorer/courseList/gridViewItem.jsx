@@ -1,4 +1,6 @@
 import React from 'react';
+import SectionView from './sectionView';
+
 export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -29,22 +31,41 @@ export default class GridViewItem extends React.Component {
         isSelected = true;
       }
     })
+    courseWork['preferredCourses'].forEach(course => {
+      if (course._id == this.props.course._id) {
+        isSelected = true;
+      }
+    })
 
     if (isSelected) {
       return (
         <button type="button"
           className="btn btn-danger"
           onClick={() => {
-            this.removeCourse("requiredCourses")
+            this.removeCourse("requiredCourses");
+            this.removeCourse("preferredCourses");
           }}>Remove Course</button>
       )
     } else {
       return (
-        <button type="button"
-          className="btn btn-success"
-          onClick={() => {
-            this.addCourse("requiredCourses")
-          }}>Add Course</button>
+        <div className="btn-group">
+          <button type="button"
+            className="btn btn-success"
+            onClick={() => {
+              this.addCourse("requiredCourses")
+            }}>Add Course
+          </button>
+          <button type="button" className="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </button>
+          <div className="dropdown-menu dropdown-menu-right">
+            <a className="dropdown-item" href="#" onClick={() => {
+              this.addCourse("requiredCourses")
+            }}>Require Course</a>
+            <a className="dropdown-item" href="#" onClick={() => {
+              this.addCourse("preferredCourses")
+            }}>Prefer Course</a>
+          </div>
+        </div>
       )
     }
   }
@@ -52,12 +73,13 @@ export default class GridViewItem extends React.Component {
     var course = this.props.course;
     return (
       <div>
-        <h6 className="card-subtitle">{course.name}</h6>
+        <h5 className="card-subtitle">{course.name}</h5>
         <p>{course.description}</p>
         <button type="button"
-          className="btn btn-link"
+          className="btn btn-primary"
           data-toggle="modal"
           data-target={"#Modal" + this.state.id}>Details</button>
+
         {
           this.renderSelectorButton()
         }
@@ -84,16 +106,13 @@ export default class GridViewItem extends React.Component {
   render() {
     var course = this.props.course;
     return (
-      <div className="col-6">
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">{course.subject + " " + course.number}</h4>
-            {
-              this.renderCardDetails()
-            }
-          </div>
+      <div className="card">
+        <div className="card-body">
+          <h4 className="card-title">{course.subject + " " + course.number}</h4>
+          {
+            this.renderCardDetails()
+          }
         </div>
-
         <div className="modal fade"
           id={"Modal" + this.state.id}
           tabIndex="-1" role="dialog"
@@ -102,7 +121,7 @@ export default class GridViewItem extends React.Component {
           <div className="modal-dialog modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{course.code + " " + course.number + " " + course.name}</h5>
+                <h5 className="modal-title" id="exampleModalLabel">{course.subject + " " + course.number + " " + course.name}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

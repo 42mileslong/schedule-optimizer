@@ -6,8 +6,13 @@ var ObjectId = Schema.Types.ObjectId;
 var SectionSchema = new Schema({
     code: String,
     number: String,
+    type: String,
     start_date: String,
     end_date: String,
+    enrollment_status: String,
+    section_restrictions: String,
+    section_text: String,
+    special_approval: String,
     meetings: [{
         type: { type: String },
         type_verbose: String,
