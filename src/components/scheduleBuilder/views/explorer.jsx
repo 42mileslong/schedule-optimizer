@@ -20,6 +20,12 @@ export default class Schedule extends React.Component {
     this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
   }
 
+  componentDidMount() {
+    var searchCriteria = this.state.searchCriteria;
+    searchCriteria.avalibility = this.props.config.term;
+    this.updateSearchCriteria(searchCriteria);
+  }
+
   updateSearchCriteria(searchCriteria) {
     this.setState({
       searchCriteria: searchCriteria,
@@ -48,7 +54,8 @@ export default class Schedule extends React.Component {
         <div className="row">
           <Filter
             searchCriteria={this.state.searchCriteria}
-            onChange={this.updateSearchCriteria}/>
+            onChange={this.updateSearchCriteria}
+            config={this.props.config}/>
 
           {
             this.hasSearchCriteria() ? (

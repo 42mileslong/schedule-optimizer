@@ -11,10 +11,25 @@ export default class ScheduleBuilder extends React.Component {
         requiredCourses: [],
         preferredCourses: []
       },
+      config: {
+        term: {}
+      },
       view: "startup"
     }
+
+    this.selectConfig = this.selectConfig.bind(this);
     this.selectCourses = this.selectCourses.bind(this);
     this.setView = this.setView.bind(this);
+  }
+
+  selectConfig(type, value) {
+    var config = this.state.config;
+    config[type] = value;
+    console.log("Setting Config");
+    console.log(config[type]);
+    this.setState({
+      config: config
+    });
   }
 
   selectCourses(type, courses) {
@@ -37,7 +52,8 @@ export default class ScheduleBuilder extends React.Component {
       return (
         <Explorer
           selectCourses={this.selectCourses}
-          courseWork={this.state.courseWork}/>
+          courseWork={this.state.courseWork}
+          config={this.state.config}/>
       );
     } else if (view == "planner") {
       return (
@@ -47,7 +63,9 @@ export default class ScheduleBuilder extends React.Component {
     } else if (view == "startup") {
       return (
         <Startup
-          courseWork={this.state.courseWork} />
+          selectConfig={this.selectConfig}
+          courseWork={this.state.courseWork}
+          config={this.state.config}/>
       )
     }
   }

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TermSelector from '../startup/termSelector';
+
 export default class Startup extends React.Component {
   constructor(props) {
     super(props)
@@ -15,7 +17,9 @@ export default class Startup extends React.Component {
         </div>
         <br />
         <div className="row">
-          
+          <TermSelector
+            selectConfig={this.props.selectConfig}
+            config={this.props.config}/>
         </div>
       </div>
     )
