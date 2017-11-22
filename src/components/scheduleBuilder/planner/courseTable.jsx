@@ -21,13 +21,14 @@ export default class CourseTable extends React.Component {
                 <tr>
                   <td>{course.subject + " " + course.number}</td>
                   <td>{course.name}</td>
-                  <td>{course.credit_Hours}</td>
+                  <td>{course.credit_hours}</td>
                 </tr>
               )
             })
           }
         </thead>
       </table>
+
     )
   }
 }

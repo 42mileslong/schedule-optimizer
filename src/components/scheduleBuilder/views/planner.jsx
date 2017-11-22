@@ -27,11 +27,11 @@ export default class Planner extends React.Component {
             <br />
             <div className="row">
               <div className="col-6">
-                <h3>Required Courses</h3>
+                <h3 className="text-center">Required Courses</h3>
                 <CourseTable courses={courseWork.requiredCourses}/>
               </div>
               <div className="col-6">
-                <h3>Preferred Courses</h3>
+                <h3 className="text-center">Preferred Courses</h3>
                 <CourseTable courses={courseWork.preferredCourses}/>
               </div>
             </div>
