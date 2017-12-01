@@ -47,7 +47,23 @@ export default class Schedule extends React.Component {
     return (
       <div className="container-fluid schedule">
         <br />
-        <h1 className="text-center">Explorer</h1>
+        <div className="row">
+          <div className="col-4 mx-auto">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              onClick={() => this.props.setView("startup")}>Previous Step: Startup</button>
+          </div>
+          <div className="col-4">
+            <h1 className="text-center">Explorer</h1>
+          </div>
+          <div className="col-4">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              onClick={() => this.props.setView("planner")}>Next Step: Planner</button>
+          </div>
+        </div>
         <br />
         <div className="row">
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Explorer from './../scheduleBuilder/views/explorer';
 import Planner from './../scheduleBuilder/views/planner';
 import Startup from './../scheduleBuilder/views/startup';
+import Builder from './../scheduleBuilder/views/builder';
 
 export default class ScheduleBuilder extends React.Component {
   constructor(props) {
@@ -53,20 +54,32 @@ export default class ScheduleBuilder extends React.Component {
         <Explorer
           selectCourses={this.selectCourses}
           courseWork={this.state.courseWork}
-          config={this.state.config}/>
+          config={this.state.config}
+          setView={this.setView}/>
       );
     } else if (view == "planner") {
       return (
         <Planner
-          courseWork={this.state.courseWork}/>
+          courseWork={this.state.courseWork}
+          setView={this.setView}/>
       )
     } else if (view == "startup") {
       return (
         <Startup
           selectConfig={this.selectConfig}
           courseWork={this.state.courseWork}
-          config={this.state.config}/>
+          config={this.state.config}
+          setView={this.setView}/>
       )
+    } else if (view == "builder") {
+      return (
+        <Builder
+          selectConfig={this.selectConfig}
+          courseWork={this.state.courseWork}
+          config={this.state.config}
+          setView={this.setView}/>
+      )
+
     }
   }
   render() {
@@ -81,6 +94,9 @@ export default class ScheduleBuilder extends React.Component {
           </li>
           <li className="nav-item">
             <button className="nav-link btn btn-link" onClick={() => this.setView("planner")}>Planner</button>
+          </li>
+          <li className="nav-item">
+            <button className="nav-link btn btn-link" onClick={() => this.setView("builder")}>Builder</button>
           </li>
         </ul>
         {  this.renderSection()}

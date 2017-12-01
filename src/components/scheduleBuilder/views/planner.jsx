@@ -20,8 +20,20 @@ export default class Planner extends React.Component {
           <div className="container-fluid">
             <br />
             <div className="row">
-              <div className="col-12 text-center">
-                <h1>Planner</h1>
+              <div className="col-4 mx-auto">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-lg"
+                  onClick={() => this.props.setView("explorer")}>Previous Step: Explorer</button>
+              </div>
+              <div className="col-4">
+                <h1 className="text-center">Planner</h1>
+              </div>
+              <div className="col-4">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-lg"
+                  onClick={() => this.props.setView("builder")}>Next Step: Builder</button>
               </div>
             </div>
             <br />
