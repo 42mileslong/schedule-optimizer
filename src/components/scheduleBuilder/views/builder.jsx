@@ -1,4 +1,5 @@
 import React from 'react';
+import ScheduleView from './../builder/scheduleView';
 
 export default class Builder extends React.Component {
   render() {
@@ -17,9 +18,9 @@ export default class Builder extends React.Component {
           </div>
         </div>
         <br />
-        <div className="row">
-
-        </div>
+        <ScheduleView
+          config={this.props.config}
+          />
       </div>
     )
   }
