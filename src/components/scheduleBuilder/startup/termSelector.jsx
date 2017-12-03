@@ -18,7 +18,6 @@ export default class TermSelector extends React.Component {
       })
       .then(terms => {
         var terms_obj = terms.map(term => {
-          term.active = false;
           term.key = "termSelectorButton" + term.name;
           return term;
         });
@@ -29,10 +28,6 @@ export default class TermSelector extends React.Component {
   }
 
   selectTerm(term) {
-    this.state.terms.forEach(term => {
-      term.active= false
-    })
-    term.active = true;
     this.props.selectConfig('term', term)
   }
 
@@ -48,7 +43,7 @@ export default class TermSelector extends React.Component {
                 return (
                   <ButtonSelector
                     className="col-3"
-                    active={term.active}
+                    active={this.props.config.term.key == term.key}
                     name={name}
                     onClick={() => {
                       this.selectTerm(term)

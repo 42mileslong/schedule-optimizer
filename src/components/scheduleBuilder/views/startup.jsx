@@ -18,6 +18,7 @@ export default class Startup extends React.Component {
             <button
               type="button"
               className="btn btn-primary btn-lg"
+              disabled={this.props.config.term.name ? false : true}
               onClick={() => this.props.setView("explorer")}>Next Step: Explorer</button>
           </div>
         </div>
