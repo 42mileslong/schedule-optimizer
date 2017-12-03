@@ -76,6 +76,22 @@ router.get('/course', function(req, res) {
           delete parameters['credit_hours'];
         }
 
+        var maxCourseNum = parameters['max_course_num'];
+        var minCourseNum = parameters['min_course_num'];
+        if (maxCourseNum !== undefined) {
+          if (minCourseNum !== undefined) {
+            parameters['number'] = { '$lte' : maxCourseNum, '$gte' : minCourseNum };
+            delete parameters['min_course_num'];
+          } else {
+            parameters['number'] = { '$lte' : maxCourseNum };
+          }
+          delete parameters['max_course_num'];
+        }
+        else if (minCourseNum !== undefined) {
+          delete parameters['min_course_num'];
+          parameters['number'] = { '$gte' : minCourseNum };
+        }
+
         if (parameters['search'] !== undefined) {
           parameters['$text'] = {
             '$search' :  parameters['search']

@@ -103,7 +103,7 @@ export default class SubjectSelector extends React.Component {
                   this.state.options.map(subject => {
                     return (
                       <FilterButton
-                        name={subject.name}
+                        name={subject.name_verbose + ' (' + subject.name + ')'}
                         key={subject.key}
                         onClick={()=> {
                             this.handleClick(subject)
@@ -121,7 +121,8 @@ export default class SubjectSelector extends React.Component {
                     if (subject.active) {
                       return (
                         <FilterButton
-                          name={subject.name}
+                          active={true}
+                          name={subject.name_verbose + ' (' + subject.name + ')'}
                           key={subject.key}
                           onClick={()=> {
                               this.handleClick(subject)

@@ -42,6 +42,29 @@ export default class CourseList extends React.Component {
       url += '&credit_hours=' + creditHour.name;
     });
 
+    var lowerNumberBound = null;
+    var upperNumberBound = null;
+
+    var courseNumberFinder = /[><]\d+/g;
+    var match = courseNumberFinder.exec(textSearch);
+    while (match != null) {
+      if (match[0][0] == '>') {
+        lowerNumberBound = match[0].slice(1);
+      } else {
+        upperNumberBound = match[0].slice(1);
+      }
+      match = courseNumberFinder.exec(textSearch);
+    }
+    textSearch = textSearch.replace(courseNumberFinder, '').trim();
+
+    if (lowerNumberBound !== null) {
+      url += '&min_course_num=' + lowerNumberBound;
+    }
+
+    if (upperNumberBound !== null) {
+      url += '&max_course_num=' + upperNumberBound;
+    }
+
     if (textSearch.length > 0) {
       url += '&search=' + textSearch;
     }
