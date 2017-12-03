@@ -7,9 +7,11 @@ export default class SubjectSelector extends React.Component {
     this.state = {
       subjects: [],
       loadedTermName: '',
-      loadedYearName: ''
+      loadedYearName: '',
+      options: []
     }
     this.handleClick = this.handleClick.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   handleClick(subject) {
@@ -21,6 +23,38 @@ export default class SubjectSelector extends React.Component {
       }
     });
     this.props.selectFilterCriteria("subjects", activeSubjects);
+    this.setState({
+      options: []
+    });
+  }
+
+  handleInput(event) {
+    var text = event.target.value;
+    if (text.length > 0) {
+      text = text.toLowerCase().trim();
+      var matchList = []
+      this.state.subjects.forEach((e) => {
+        if (e.name.toLowerCase().includes(text) && !e.active) {
+          matchList.push(e);
+        }
+      });
+      matchList.sort((first, second) => {
+        return first.name.length - second.name.length;
+      });
+      this.state.subjects.forEach((e) => {
+        if (e.name_verbose.toLowerCase().includes(text) && !e.active) {
+          matchList.push(e);
+        }
+      });
+      matchList = matchList.slice(0, 4);
+      this.setState({
+        options: matchList
+      });
+    } else {
+      this.setState({
+        options: []
+      });
+    }
   }
 
   componentWillReceiveProps() {
@@ -52,29 +86,56 @@ export default class SubjectSelector extends React.Component {
     return (
       <div>
         <h6 className="text-center">Subjects</h6>
+          <input
+            type="text"
+            className="form-control"
+            onInput={this.handleInput}>
+          </input>
         {
           this.props.searchCriteria.avalibility.name == null ? (
             <div className="text-center">
               <small >Choose avalibility.</small>
             </div>
           ) : (
-            <ul className="list-group">
-              {
-                this.state.subjects.map(subject => {
-                  return (
-                    <FilterButton
-                      active={subject.active}
-                      name={subject.name}
-                      key={subject.key}
-                      onClick={()=> {
-                          this.handleClick(subject)
+            <div>
+              <ul className="list-group">
+                {
+                  this.state.options.map(subject => {
+                    return (
+                      <FilterButton
+                        name={subject.name}
+                        key={subject.key}
+                        onClick={()=> {
+                            this.handleClick(subject)
+                          }
                         }
-                      }
-                    />
-                  )
-                })
-              }
-            </ul>
+                      />
+                    )
+                  })
+                }
+              </ul>
+              <br/>
+              <ul className="list-group">
+                {
+                  this.state.subjects.map(subject => {
+                    if (subject.active) {
+                      return (
+                        <FilterButton
+                          name={subject.name}
+                          key={subject.key}
+                          onClick={()=> {
+                              this.handleClick(subject)
+                            }
+                          }
+                        />
+                      );
+                    } else {
+                      return ('');
+                    }
+                  })
+                }
+              </ul>
+            </div>
           )
         }
 
