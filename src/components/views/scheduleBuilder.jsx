@@ -87,16 +87,27 @@ export default class ScheduleBuilder extends React.Component {
       <div>
         <ul className="nav justify-content-center">
           <li className="nav-item">
-            <button className="nav-link btn btn-link" onClick={() => this.setView("startup")}>Startup</button>
+            <button
+              className="nav-link btn btn-link"
+              onClick={() => this.setView("startup")}>Startup</button>
           </li>
           <li className="nav-item">
-            <button className="nav-link btn btn-link" onClick={() => this.setView("explorer")}>Explorer</button>
+            <button
+              className="nav-link btn btn-link"
+              disabled={this.state.config.term.name ? false : true}
+              onClick={() => this.setView("explorer")}>Explorer</button>
           </li>
           <li className="nav-item">
-            <button className="nav-link btn btn-link" onClick={() => this.setView("planner")}>Planner</button>
+            <button
+              className="nav-link btn btn-link"
+              disabled={this.state.config.term.name ? false : true}
+              onClick={() => this.setView("planner")}>Planner</button>
           </li>
           <li className="nav-item">
-            <button className="nav-link btn btn-link" onClick={() => this.setView("builder")}>Builder</button>
+            <button
+              className="nav-link btn btn-link"
+              disabled={this.state.config.term.name ? false : true}
+              onClick={() => this.setView("builder")}>Builder</button>
           </li>
         </ul>
         {  this.renderSection()}
