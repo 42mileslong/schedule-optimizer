@@ -10,6 +10,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 require('./stylesheets/base.scss');
 require('./stylesheets/explorer.scss');
 
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+
+
+  render() {
+    //  routes(this) passes modification methods to Routes
+    return (
+      <Router
+        history={browserHistory}
+        routes={routes(this)} />
+    )
+  }
+}
+
 ReactDom.render(
-    <Router history={browserHistory} routes={routes} />,document.querySelector('#app')
+    <App />,
+    document.querySelector('#app')
 );

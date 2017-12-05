@@ -42,7 +42,7 @@ export default class AvalibilitySelector extends React.Component {
   render() {
     return (
       <div>
-        <h6 className="text-center">Availability</h6>
+        <h6 className="text-center">Term</h6>
         <ul className="list-group">
           {
             this.state.terms.map(term => {

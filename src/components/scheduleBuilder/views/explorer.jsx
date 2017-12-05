@@ -19,8 +19,11 @@ export default class Schedule extends React.Component {
     }
     this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
   }
+
   componentDidMount() {
-      browserHistory.push('/explorer');
+    var searchCriteria = this.state.searchCriteria;
+    searchCriteria.avalibility = this.props.config.term;
+    this.updateSearchCriteria(searchCriteria);
   }
 
   updateSearchCriteria(searchCriteria) {
@@ -44,19 +47,38 @@ export default class Schedule extends React.Component {
     return (
       <div className="container-fluid schedule">
         <br />
-        <h1 className="text-center">Explorer</h1>
+        <div className="row">
+          <div className="col-4 mx-auto">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              onClick={() => this.props.setView("startup")}>Previous Step: Startup</button>
+          </div>
+          <div className="col-4">
+            <h1 className="text-center">Explorer</h1>
+          </div>
+          <div className="col-4">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              onClick={() => this.props.setView("planner")}>Next Step: Planner</button>
+          </div>
+        </div>
         <br />
         <div className="row">
         </div>
         <div className="row">
           <Filter
             searchCriteria={this.state.searchCriteria}
-            onChange={this.updateSearchCriteria}/>
+            onChange={this.updateSearchCriteria}
+            config={this.props.config}/>
 
           {
             this.hasSearchCriteria() ? (
               <CourseList
                 searchCriteria={this.state.searchCriteria}
+                selectCourses={this.props.selectCourses}
+                courseWork={this.props.courseWork}
                 />
             ) : (
               <FeaturedCourses />
