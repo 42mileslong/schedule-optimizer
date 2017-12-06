@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
+var Head = require('./head.js')
 
 // A model for the section object
 var SectionSchema = new Schema({
@@ -33,4 +34,12 @@ var SectionSchema = new Schema({
     iteration: Number
 });
 
-module.exports = mongoose.model('Section', SectionSchema, 'sections');
+var SectionModel = mongoose.model('Section', SectionSchema, 'sections');
+module.exports = SectionModel;
+
+module.exports.findCurrent = function(params, callback) {
+  Head.getHead(function(err, head) {
+    params['iteration'] = head.iter_id;
+    return SectionModel.find(params, callback);
+  });
+}

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var Term = require('./term.js')
+var Head = require('./head.js')
 
 // A model for the year object
 var YearSchema = new Schema({
@@ -9,18 +9,12 @@ var YearSchema = new Schema({
     iteration: Number
 });
 
-YearSchema.methods.getChildren = function(callback) {
-    return Term.find({
-         '_id' : { $in : this.children }
-     }, callback);
-};
+var YearModel = mongoose.model('Year', YearSchema, 'years');
+module.exports = YearModel;
 
-YearSchema.methods.getChildWhere = function(fieldName, value, callback) {
-    var query = {
-         '_id' : { $in : this.children }
-    };
-    query[fieldName] = value;
-    return Term.findOne(query, callback);
-};
-
-module.exports = mongoose.model('Year', YearSchema, 'years');
+module.exports.findCurrent = function(params, callback) {
+  Head.getHead(function(err, head) {
+    params['iteration'] = head.iter_id;
+    return YearModel.find(params, callback);
+  });
+}

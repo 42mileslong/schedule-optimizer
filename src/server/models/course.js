@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var Section = require('./section.js')
+var Head = require('./head.js')
 
 // A model for the sbuject object
 var CourseSchema = new Schema({
@@ -19,18 +19,12 @@ var CourseSchema = new Schema({
     iteration: Number
 });
 
-CourseSchema.methods.getChildren = function(callback) {
-    return Section.find({
-         '_id' : { $in : this.children }
-     }, callback);
-};
+var CourseModel = mongoose.model('Course', CourseSchema, 'courses');
+module.exports = CourseModel;
 
-CourseSchema.methods.getChildWhere = function(fieldName, value, callback) {
-    var query = {
-         '_id' : { $in : this.children }
-    };
-    query[fieldName] = value;
-    return Section.findOne(query, callback);
-};
-
-module.exports = mongoose.model('Course', CourseSchema, 'courses');
+module.exports.findCurrent = function(params, callback) {
+  Head.getHead(function(err, head) {
+    params['iteration'] = head.iter_id;
+    return CourseModel.find(params, callback);
+  });
+}
