@@ -27,14 +27,14 @@ export default class Filter extends React.Component {
   }
 
   render() {
-
+    var term = this.props.config.term.name + " " + this.props.config.term.year;
+    var termMessage = this.props.config.term.name ? term : "Select a term on the Startup page.";
     return (
       <div className="col-3">
         <h4 className="text-center">Filter Courses</h4>
         <br/>
-        <AvalibilitySelector
-          selectFilterCriteria={this.selectFilterCriteria}
-          searchCriteria={this.props.searchCriteria}/>
+        <h6 className="text-center">Term</h6>
+        <p className="text-center">{termMessage}</p>
         <br/>
         <SearchSelector
           selectFilterCriteria={this.selectFilterCriteria}

@@ -7,10 +7,16 @@ export default class CourseList extends React.Component {
     super(props);
     this.state = {
       courses: [],
-      viewType: 'grid'
+      viewType: 'grid',
+      courseWork: {
+        requiredCourses: [],
+        preferredCourses: []
+      }
     }
     this.handleGridToggle = this.handleGridToggle.bind(this);
     this.handleListToggle = this.handleListToggle.bind(this);
+    this.addCourse = this.addCourse.bind(this);
+    this.removeCourse = this.removeCourse.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -36,6 +42,29 @@ export default class CourseList extends React.Component {
       url += '&credit_hours=' + creditHour.name;
     });
 
+    var lowerNumberBound = null;
+    var upperNumberBound = null;
+
+    var courseNumberFinder = /[><]\d+/g;
+    var match = courseNumberFinder.exec(textSearch);
+    while (match != null) {
+      if (match[0][0] == '>') {
+        lowerNumberBound = match[0].slice(1);
+      } else {
+        upperNumberBound = match[0].slice(1);
+      }
+      match = courseNumberFinder.exec(textSearch);
+    }
+    textSearch = textSearch.replace(courseNumberFinder, '').trim();
+
+    if (lowerNumberBound !== null) {
+      url += '&min_course_num=' + lowerNumberBound;
+    }
+
+    if (upperNumberBound !== null) {
+      url += '&max_course_num=' + upperNumberBound;
+    }
+
     if (textSearch.length > 0) {
       url += '&search=' + textSearch;
     }
@@ -57,6 +86,44 @@ export default class CourseList extends React.Component {
       });
     }
 
+  }
+
+  addCourse(type, course) {
+    var courseWork = this.props.courseWork;
+    var typedWork = courseWork[type];
+
+    var index = -1;
+    for (var i = 0; i < typedWork.length; i++) {
+      if (typedWork[i]._id == course._id) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index == -1) {
+      typedWork.push(course);
+    }
+
+    this.props.selectCourses(type, typedWork);
+  }
+
+  removeCourse(type, course) {
+    var courseWork = this.props.courseWork;
+    var typedWork = courseWork[type];
+
+    var index = -1;
+    for (var i = 0; i < typedWork.length; i++) {
+      if (typedWork[i]._id == course._id) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index != -1) {
+      typedWork.splice(index, 1);
+    }
+
+    this.props.selectCourses(type, typedWork);
   }
 
   handleGridToggle() {
@@ -91,9 +158,17 @@ export default class CourseList extends React.Component {
           <br/>
           {
             this.state.viewType == 'grid' ? (
-              <GridView courses={this.state.courses}/>
+              <GridView
+                courseWork={this.props.courseWork}
+                courses={this.state.courses}
+                addCourse={this.addCourse}
+                removeCourse={this.removeCourse}/>
             ) : (
-              <ListView courses={this.state.courses} />
+              <ListView
+                courseWork={this.props.courseWork}
+                courses={this.state.courses}
+                addCourse={this.addCourse}
+                removeCourse={this.removeCourse}/>
             )
 
           }

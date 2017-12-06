@@ -9,6 +9,7 @@ var SubjectSchema = new Schema({
     name_verbose: String,
     year: String,
     term: String,
+    college_code: String,
     iteration: Number
 });
 

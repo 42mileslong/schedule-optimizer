@@ -15,10 +15,7 @@ export default class NavBar extends React.Component {
                         <a className="nav-link" href="/">Home</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="explorer">Explorer</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="planner">Planner</a>
+                        <a className="nav-link" href="scheduleBuilder">Schedule Builder</a>
                     </li>
                 </ul>
 

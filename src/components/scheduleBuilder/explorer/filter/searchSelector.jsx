@@ -4,11 +4,22 @@ export default class SearchSelector extends React.Component {
   constructor(props) {
     super(props);
     this.handleInput = this.handleInput.bind(this);
+    this.triggerChange = this.triggerChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.timer = null;
+    this.text = null;
   }
 
   handleInput(event) {
-    var text = event.target.value;
-    this.props.selectFilterCriteria("textSearch", text);
+    this.text = event.target.value;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(this.triggerChange, 250);
+  }
+
+  triggerChange() {
+    this.props.selectFilterCriteria("textSearch", this.text);
   }
 
   render() {

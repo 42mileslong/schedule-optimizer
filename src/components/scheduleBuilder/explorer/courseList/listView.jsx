@@ -14,7 +14,11 @@ export default class GridView extends React.Component {
           {
             this.props.courses.map(course => {
               return (
-                <ListViewItem course={course} />
+                <ListViewItem
+                  courseWork={this.props.courseWork}
+                  course={course}
+                  addCourse={this.props.addCourse}
+                  removeCourse={this.props.removeCourse}/>
               )
 
             })
