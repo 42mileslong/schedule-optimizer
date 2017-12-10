@@ -89,7 +89,7 @@ function oneRecursiveBoi(topC, i, classList) {
 
       if (i == classList.length){
         for (var i = 0; i < topC.length; i++){
-              secListId.push(topC[i]._id);
+              secListId.push(topC[i].number);
             }
       } else {
           var k = 0;

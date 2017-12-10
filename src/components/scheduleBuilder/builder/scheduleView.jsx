@@ -40,6 +40,8 @@ export default class ScheduleView extends React.Component {
     }).then(res => {
         return res.json()
     }).then(section_ids => {
+        console.log('ids:');
+        console.log(section_ids);
         var url = 'api/section'
             + '?year=' + '2018'
             + '&term=Spring';
