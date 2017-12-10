@@ -88,9 +88,11 @@ function oneRecursiveBoi(topC, i, classList) {
   function funBoi(topC, i, classList){
 
       if (i == classList.length){
+        temp = []
         for (var i = 0; i < topC.length; i++){
-              secListId.push(topC[i].number);
-            }
+              temp.push(topC[i].number);
+        }
+        secListId.push(temp)
       } else {
           var k = 0;
           var next = nextNonConflict(topC, classList[i], k);
@@ -109,7 +111,9 @@ function oneRecursiveBoi(topC, i, classList) {
 
   funBoi(topC, i, classList);
 
-  return secListId;
+  console.log(secListId);
+
+  return secListId[0];
 }
 
 
