@@ -50,9 +50,13 @@ export default class SectionView extends React.Component {
           <tbody>
           {
             sections.map(section => {
-              return (
-                <SectionViewItem section={section}/>
-              )
+              if (section.number == this.props.section) {
+                return (
+                  <SectionViewItem section={section}/>
+                );
+              } else {
+                return "";
+              }
             })
           }
           </tbody>

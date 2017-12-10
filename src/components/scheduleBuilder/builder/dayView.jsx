@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DayView from './dayView';
+import ScheduleCourse from './scheduleCourse';
 
 export default class ScheduleView extends React.Component {
 
@@ -24,16 +24,13 @@ export default class ScheduleView extends React.Component {
                 if (days.includes(this.props.day)) {
                   var start_time = this.props.timeToInt(section.meetings[0].start_time);
                   var end_time = this.props.timeToInt(section.meetings[0].end_time);
-                  var type = section.meetings[0].type_verbose;
-                  var display_name = section.subject + ' ' + section.course_number + ' ' + type;
+
                   var style = {
                     top: (start_time + 'px'),
                     height: ((end_time - start_time) + 'px')
                   }
                   return (
-                    <div
-                      className = 'card-body card course'
-                      style = {style}>{display_name}</div>
+                    <ScheduleCourse style={style} section={section}/>
                   );
                 } else {
                   return ('');

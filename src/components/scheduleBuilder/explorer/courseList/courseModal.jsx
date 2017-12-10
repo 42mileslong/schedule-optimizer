@@ -1,7 +1,7 @@
 import React from 'react';
 import SectionView from './sectionView';
 
-export default class GridViewItem extends React.Component {
+export default class CourseModal extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -41,7 +41,7 @@ export default class GridViewItem extends React.Component {
                   </p>
                 ) : ''
               }
-              <SectionView course={course}/>
+              <SectionView course={course} section={this.props.section}/>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
