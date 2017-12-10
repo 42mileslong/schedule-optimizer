@@ -6,6 +6,8 @@ $blueAccent: #1E30AE;
 $orangeAccent: #E84E01;
 $dark: #1E1F1E;
 
+$buttonBlue: #007bff;
+
 #explorer {
   background-color: $primary;
 }
@@ -20,4 +22,107 @@ $dark: #1E1F1E;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: .75rem;
+}
+
+.explorer-card.card-body {
+  margin-bottom: 38px;
+}
+
+
+.term-selector .btn {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+// Explorer view
+
+.course-box-buttons {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 1.25rem;
+}
+
+.add-course-group, .remove-course {
+  float: right;
+}
+
+@media (min-width: 1300px) {
+  .modal-lg {
+      max-width: 1200px;
+  }
+}
+
+// Builder view
+
+.course-container {
+  position: absolute;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  left: 0px;
+  top: 60px;
+  bottom: 0px;
+}
+
+.course-container-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.course {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  background-color: $buttonBlue;
+  color: #fff;
+  padding: 0;
+  padding-top: .5rem;
+  cursor: pointer;
+}
+
+.hour-number, .hour-delimiter, .day-name {
+  height: 60px;
+  border-bottom: 1px solid #BABDB6;
+  border-right: 1px solid #BABDB6;
+  display: block;
+  box-sizing: border-box;
+}
+
+.hours .day-name {
+  border-left: 1px solid #BABDB6;
+}
+
+.day-name {
+  border-top: 1px solid #BABDB6;
+  text-align: center;
+  background-color: #868e96;
+  color: #ffffff;
+  font-size: 1.25rem;
+  line-height: 60px;
+}
+
+.hours {
+  margin-left: 4.166666%;
+}
+
+.hour-number {
+  text-align: right;
+  border-left: 1px solid #BABDB6;
+  box-sizing: border-box;
+  padding: 10px;
+  font-weight: bold;
+  background-color: #f8f9fa;
+}
+
+.hour-delimiter.top-half,
+.hour-delimiter.bottom-half {
+  height: 30px;
+}
+
+.hour-delimiter.top-half {
+  border-bottom-style: dashed;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionView from './sectionView';
+import CourseModal from './courseModal';
 
 export default class GridViewItem extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class GridViewItem extends React.Component {
     if (isSelected) {
       return (
         <button type="button"
-          className="btn btn-danger"
+          className="btn btn-danger remove-course"
           onClick={() => {
             this.removeCourse("requiredCourses");
             this.removeCourse("preferredCourses");
@@ -48,7 +49,7 @@ export default class GridViewItem extends React.Component {
       )
     } else {
       return (
-        <div className="btn-group">
+        <div className="btn-group add-course-group">
           <button type="button"
             className="btn btn-success"
             onClick={() => {
@@ -75,14 +76,17 @@ export default class GridViewItem extends React.Component {
       <div>
         <h5 className="card-subtitle">{course.name}</h5>
         <p>{course.description}</p>
-        <button type="button"
-          className="btn btn-primary"
-          data-toggle="modal"
-          data-target={"#Modal" + this.state.id}>Details</button>
 
-        {
-          this.renderSelectorButton()
-        }
+        <div className="course-box-buttons">
+          <button type="button"
+            className="btn btn-primary"
+            data-toggle="modal"
+            data-target={"#Modal" + this.state.id}>Details</button>
+
+          {
+            this.renderSelectorButton()
+          }
+        </div>
 
 
       </div>
@@ -107,36 +111,13 @@ export default class GridViewItem extends React.Component {
     var course = this.props.course;
     return (
       <div className="card">
-        <div className="card-body">
+        <div className="explorer-card card-body">
           <h4 className="card-title">{course.subject + " " + course.number}</h4>
           {
             this.renderCardDetails()
           }
         </div>
-        <div className="modal fade"
-          id={"Modal" + this.state.id}
-          tabIndex="-1" role="dialog"
-          aria-labelledby={"Modal" + this.state.id}
-          aria-hidden="true">
-          <div className="modal-dialog modal-lg" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{course.subject + " " + course.number + " " + course.name}</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {
-                  this.renderModalDetails()
-                }
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CourseModal course={this.props.course} modalId={this.state.id}/>
       </div>
     )
   }
