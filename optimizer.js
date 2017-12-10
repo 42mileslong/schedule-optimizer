@@ -5,12 +5,17 @@ var mongoose = require('mongoose');
 var promise = require('request-promise');
 var request = require("request");
 
+
+//##################################################################//
 //what options are given to the users, 
 
 //what are the factors of the optimization : travel time ? starting time ? instructor ?
-//name of the collection? ( is it all in one collection?)
 
-//should i generate every possible schedule ? 
+//is there a way to know the current free spots in each classes? ( probably have to scrape the course management website)
+
+//TODO: alpri is already sending the data for each course so >>> only make api calls to server to get section data.
+//##################################################################//
+
 
 
 // app.set('views', __dirname + '/views');
@@ -65,8 +70,15 @@ function Schedule(arr){
     return property;
 }
 
+//array to hold the courses the user requireds
+var reqCourses = []
+
+//array to hold the user's optional courses
+var optCourses = []
+
+//2D array to hold generated schedules
 var schedules = [];
-console.log("working");
+console.log("Working");
 samCourses = [{
     year: '2018',
     term: 'Summer',
@@ -78,7 +90,27 @@ samCourses = [{
     subject: 'CSE',
     code: '440',
 }];
-var p = getAvailableCourses(samCourses);
+
+//data{
+//     courseWork: {
+//         requiredCourses: [],    >> look at Ben's code to figure out the properties of course objects.
+//         preferredCourses: [],
+//     }
+//     config: {
+//         maxCreditHours: int,
+//         minCreditHours: int
+//         term: {} ???
+//     }
+// }
+
+socket.on("connection", )
+socket.on("scheduleData", function(data){
+    reqCourses = data.courseWork.requiredCourses
+    optCourses = data.courseWork.preferredCourses
+});
+
+
+var p = getAvailableCourses(reqCourses);
 //console.log(p);
 generate();
 
@@ -93,10 +125,15 @@ function generate(){
     classList.push([{startTime:0, finishTime: 1},{startTime: 2, finishTime: 6}]);
     classList.push([{startTime: 1, finishTime: 4},{startTime: 7, finishTime: 8}]);
 
-    oneRecursiveBoi([], 0, classList);
+    generateSchedule(classList);
+
 }
 //topC : the list of courses from upper for loops, it's empty if we are on first course
 //i : the index of the class we want to pick courses
+
+function generateSchedule(classList){
+    oneRecursiveBoi([], 0, classList);
+}
 function oneRecursiveBoi(topC, i, classList){
 
     if (i == classList.length){
@@ -139,6 +176,8 @@ function oneRecursiveBoi(topC, i, classList){
 //     }
 // }
 
+//checks if there is a conflict in the givven schedule
+//arr : the
 function noConflict(arr){
     arr = sort(arr);
     for (var i = 1; i < arr.length; i++){
@@ -149,8 +188,11 @@ function noConflict(arr){
     return true;
 }
 
-//Finds the next course from the courses in arr from k index 
+//Finds the INDEX of the next course from the courses in courseList from k index 
 //and onward that doesn't conflict with the current courses in schedule
+//schedule: the current schedule
+//courseList: list of courses we are searching thu
+//k: index of the courseList we are starting the search from
 function nextNonConflict(schedule, courseList, k){
     for (var i = k; i < courseList.length; i++){
         schedule.push(courseList[i]);
@@ -227,15 +269,27 @@ function getAvailableCourses(arr){
     return allCourses;
 }
 
-
+//allCourses: 2d array of all courses: rows represent different courses and columns represent different classes of each course
+//arr: list of desired courses
+//add: address of the request
+//i : the index of the course we are currently getting information for
 function sendRequest(allCourses, arr, add, i){
     request(add, function(err, response, chunk) {
-        console.log("Res " + "i " + "received");
+        console.log("Res " + i  + " received");
         var obj = JSON.parse(chunk);
 
         for (k in obj){
-            allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, 0, 1, obj[k].start_date, obj[k].end_date));
-            console.log(allCourses[i][k]);
+            if (meetsFilter(k)){
+                allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, obj[k].meetings[0].start_time, obj[k].meetings[0].end_time, obj[k].start_date, obj[k].end_date));
+                console.log(allCourses[i][k]);
+            }
         }
     });
+}
+
+
+//checks if the given class meets the filters given by
+//the class we want to check 
+function meetsFilter(class){
+    //come up with a way to store the periods of time the users wants to take courses. ( maybe ?? dictionary??)
 }
