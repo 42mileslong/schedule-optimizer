@@ -4,7 +4,7 @@ var db_url;
 try {
     var secrets = require('../../../secrets.js');
     db_url = secrets.db_url;
-} catch {
+} catch (e) {
     db_url = process.env.DB_URL
 }
 
