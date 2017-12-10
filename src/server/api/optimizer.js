@@ -80,26 +80,32 @@ function generate(courseList) {
 
 //topC : the list of courses from upper for loops, it's empty if we are on first course
 //i : the index of the class we want to pick courses
-function oneRecursiveBoi(topC, i, classList){
 
-    if (i == classList.length){
-            schedules.push(Schedule(topC));
-            console.log("one Schedule: ");
-            //for (i in topC) console.log(topC[i]);
-    } else {
-        var k = 0;
-        var next = nextNonConflict(topC, classList[i], k);
-        while (next != -1){
-            var currentSch = topC;
-            currentSch.push(classList[i][next]);
+function boiRapper(){
+  secListId = []
+  function oneRecursiveBoi(topC, i, classList){
 
-            oneRecursiveBoi(currentSch, i + 1, classList);
+      if (i == classList.length){
+        for (var i = 0; i < topC.length; i++){
+              secListId.push(topC[i]._id);
+            }
+      } else {
+          var k = 0;
+          var next = nextNonConflict(topC, classList[i], k);
+          while (next != -1){
+              var currentSch = topC;
+              currentSch.push(classList[i][next]);
 
-            currentSch.pop();
-            k = next + 1;
-            next = nextNonConflict(topC, classList[i], k);
-        }
-    }
+              oneRecursiveBoi(currentSch, i + 1, classList);
+
+              currentSch.pop();
+              k = next + 1;
+              next = nextNonConflict(topC, classList[i], k);
+          }
+      }
+  }
+
+  return secListId;
 }
 
 
