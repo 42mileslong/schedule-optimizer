@@ -45,7 +45,7 @@ export default class ListViewItem extends React.Component {
     if (isSelected) {
       return (
         <button type="button"
-          className="btn btn-danger"
+          className="btn btn-danger remove-course"
           onClick={() => {
             this.removeCourse("requiredCourses");
             this.removeCourse("preferredCourses");
@@ -53,7 +53,7 @@ export default class ListViewItem extends React.Component {
       )
     } else {
       return (
-        <div className="btn-group">
+        <div className="btn-group add-course-group">
           <button type="button"
             className="btn btn-success"
             onClick={() => {
@@ -83,7 +83,6 @@ export default class ListViewItem extends React.Component {
         <h5>{course.name}</h5>
         <p>{course.description}</p>
 
-        // We should add icons for this later
         {
           course.gen_ed_categories.length > 0 ? (
             <p>Satisfies the following general education categories:

@@ -24,6 +24,30 @@ $buttonBlue: #007bff;
   margin-bottom: .75rem;
 }
 
+.explorer-card.card-body {
+  margin-bottom: 38px;
+}
+
+
+.term-selector .btn {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+// Explorer view
+
+.course-box-buttons {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 1.25rem;
+}
+
+.add-course-group, .remove-course {
+  float: right;
+}
+
 
 // Builder view
 

@@ -13,7 +13,7 @@ export default class Builder extends React.Component {
               className="btn btn-primary btn-lg"
               onClick={() => this.props.setView("planner")}>Previous Step: Planner</button>
           </div>
-          <div className="col-4">
+          <div className="col-4" style={{'text-align' : 'right'}}>
             <h1 className="text-center">Builder</h1>
           </div>
         </div>
