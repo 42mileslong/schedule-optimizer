@@ -9,20 +9,20 @@ export default class ScheduleView extends React.Component {
     this.state = {
       sections: []
     }
-    this.base_time = 6;
-    this.num_hours = 16;
+    this.baseTime = 6;
+    this.numHours = 16;
     this.timeToInt = this.timeToInt.bind(this);
   }
 
   timeToInt(time) {
-    var start_am_pm = time.split(' ')[1];
-    var start_clock = time.split(' ')[0];
-    var start_hour = parseInt(start_clock.split(':')[0]) - this.base_time;
-    if (start_am_pm === 'PM') {
-      start_hour += 12;
+    var startAmPm = time.split(' ')[1];
+    var startClock = time.split(' ')[0];
+    var startHour = parseInt(startClock.split(':')[0]) - this.baseTime;
+    if (startAmPm === 'PM' && startClock.split(':')[0] !== '12') {
+      startHour += 12;
     }
-    var start_minute = parseInt(start_clock.split(':')[1]);
-    return start_hour * 60 + start_minute;
+    var startMinute = parseInt(startClock.split(':')[1]);
+    return startHour * 60 + startMinute;
   }
 
 
@@ -39,15 +39,15 @@ export default class ScheduleView extends React.Component {
         body: JSON.stringify(this.props.courses)
     }).then(res => {
         return res.json()
-    }).then(section_ids => {
+    }).then(sectionIds => {
         console.log('ids:');
-        console.log(section_ids);
+        console.log(sectionIds);
         var url = 'api/section'
             + '?year=' + '2018'
             + '&term=Spring';
 
-        section_ids.forEach(section_id => {
-          url += '&number=' + section_id;
+        sectionIds.forEach(sectionId => {
+          url += '&number=' + sectionId;
         });
 
         fetch(url)
@@ -70,29 +70,30 @@ export default class ScheduleView extends React.Component {
     }
     return (
       <div className='row' style={{'margin': '0px'}}>
-        <div className='col-1'>
-        {
-          Array.from(Array(this.num_hours).keys()).map(i => {
-            var hour = (this.base_time + i);
-            var ampm = 'AM';
-            if (hour > 12) {
-              hour -= 12;
-              ampm = 'PM';
-            } else if (hour == 12) {
-              ampm = 'PM';
-            }
+        <div className='col-1 hours'>
+          <div className='row day-name'></div>
+          {
+            Array.from(Array(this.numHours).keys()).map(i => {
+              var hour = (this.baseTime + i);
+              var ampm = 'AM';
+              if (hour > 12) {
+                hour -= 12;
+                ampm = 'PM';
+              } else if (hour == 12) {
+                ampm = 'PM';
+              }
 
-            return (
-              <div className='row' style={{'height':'60px'}}>{hour + ' ' + ampm}</div>
-            )
-          })
-        }
+              return (
+                <div className='row hour-number'>{hour + ' ' + ampm}</div>
+              )
+            })
+          }
         </div>
-        <DayView day='M' sections={sections} timeToInt={this.timeToInt}/>
-        <DayView day='T' sections={sections} timeToInt={this.timeToInt}/>
-        <DayView day='W' sections={sections} timeToInt={this.timeToInt}/>
-        <DayView day='R' sections={sections} timeToInt={this.timeToInt}/>
-        <DayView day='F' sections={sections} timeToInt={this.timeToInt}/>
+        <DayView day='M' dayName='Monday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+        <DayView day='T' dayName='Tuesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+        <DayView day='W' dayName='Wednesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+        <DayView day='R' dayName='Thursday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+        <DayView day='F' dayName='Friday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
       </div>
     )
   }

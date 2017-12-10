@@ -57,7 +57,7 @@ export default class Schedule extends React.Component {
           <div className="col-4">
             <h1 className="text-center">Explorer</h1>
           </div>
-          <div className="col-4">
+          <div className="col-4" style={{'text-align' : 'right'}}>
             <button
               type="button"
               className="btn btn-primary btn-lg"

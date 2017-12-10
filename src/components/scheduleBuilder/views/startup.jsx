@@ -14,7 +14,7 @@ export default class Startup extends React.Component {
           <div className="col-4 offset-md-4 text-center">
             <h1>Startup</h1>
           </div>
-          <div className="col-4">
+          <div className="col-4" style={{'text-align' : 'right'}}>
             <button
               type="button"
               className="btn btn-primary btn-lg"

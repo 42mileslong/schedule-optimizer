@@ -33,9 +33,6 @@ export default class Filter extends React.Component {
       <div className="col-3">
         <h4 className="text-center">Filter Courses</h4>
         <br/>
-        <h6 className="text-center">Term</h6>
-        <p className="text-center">{termMessage}</p>
-        <br/>
         <SearchSelector
           selectFilterCriteria={this.selectFilterCriteria}
           searchCriteria={this.props.searchCriteria}/>

@@ -33,7 +33,7 @@ export default class TermSelector extends React.Component {
 
   render() {
     return (
-      <div className="col-12">
+      <div className="col-12 term-selector">
         <h4 className="text-center">Term</h4>
         <br />
         <div className="row justify-content-center">

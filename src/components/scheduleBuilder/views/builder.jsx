@@ -8,13 +8,13 @@ export default class Builder extends React.Component {
       <div className="container-fluid">
         <br />
         <div className="row">
-          <div className="col-4 mx-auto">
+          <div className="col-4">
             <button
               type="button"
               className="btn btn-primary btn-lg"
               onClick={() => this.props.setView("planner")}>Previous Step: Planner</button>
           </div>
-          <div className="col-4">
+          <div className="col-4" style={{'text-align' : 'right'}}>
             <h1 className="text-center">Builder</h1>
           </div>
         </div>
