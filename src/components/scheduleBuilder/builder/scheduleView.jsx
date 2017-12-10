@@ -35,7 +35,7 @@ export default class ScheduleView extends React.Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(this.props.courses)
+        body: this.props.courses
     }).then(res => {
         return res.json()
     }).then(section_ids => {
