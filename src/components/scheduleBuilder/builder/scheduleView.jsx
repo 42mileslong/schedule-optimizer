@@ -28,6 +28,7 @@ export default class ScheduleView extends React.Component {
 
   componentDidMount() {
     console.log('test test');
+    console.log(JSON.stringify(this.props.courses));
 
     fetch('/api/optimize', {
         method: 'POST',
@@ -35,11 +36,10 @@ export default class ScheduleView extends React.Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: this.props.courses
+        body: JSON.stringify(this.props.courses)
     }).then(res => {
         return res.json()
     }).then(section_ids => {
-        console.log(section_ids);
         var url = 'api/section'
             + '?year=' + '2018'
             + '&term=Spring';

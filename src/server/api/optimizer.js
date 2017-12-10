@@ -17,6 +17,7 @@ module.exports.generate = function(courseList, callback) {
   console.log('send help im bad');
 
   getAvailableSectionsForCourses(courseList, function(sectionList) {
+    //callback(sectionList[0]);
     callback(generate(sectionList));
   });
 };
@@ -57,12 +58,11 @@ function getAvailableSectionsForCourses(courseList, callback) {
   * @param {Function} callback  Callback that will be evoked when finished
   */
 function getCourseSections(allSections, course, i, callback) {
-    var searchParams = course;
-
-    // Course object can be used as search parameters for database - but
-    // course's number must be put into 'course_number'
-    searchParams['course_number'] = searchParams['number'];
-    delete searchParams['number'];
+    var searchParams = {};
+    searchParams['course_number'] = course['number'];
+    searchParams['term'] = course['term'];
+    searchParams['year'] = course['year'];
+    searchParams['subject'] = course['subject'];
 
     // Get current sections that correspond with search parameters
     database.Section.findCurrent(
