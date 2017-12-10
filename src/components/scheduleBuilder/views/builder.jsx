@@ -7,7 +7,7 @@ export default class Builder extends React.Component {
       <div className="container-fluid">
         <br />
         <div className="row">
-          <div className="col-4 mx-auto">
+          <div className="col-4">
             <button
               type="button"
               className="btn btn-primary btn-lg"

@@ -16,29 +16,39 @@ export default class ScheduleView extends React.Component {
     }
     return (
       <div className="col-2">
-        {
-          sections.map(section => {
-            var days = section.meetings[0].days;
-            if (days.includes(this.props.day)) {
-              var start_time = this.props.timeToInt(section.meetings[0].start_time);
-              var end_time = this.props.timeToInt(section.meetings[0].end_time);
-              var type = section.meetings[0].type_verbose;
-              var display_name = section.subject + ' ' + section.course_number + ' ' + type;
-              var style = {
-                position: 'absolute',
-                top: (start_time + 'px'),
-                height: ((end_time - start_time) + 'px'),
-                width: '100%'
-              }
-              return (
-                <div
-                  className = 'card-body card'
-                  style = {style}>{display_name}</div>
-              );
-            } else {
-              return ('');
-            }
+        <div className="course-container">
+          <div className="course-container-inner">
+            {
+              sections.map(section => {
+                var days = section.meetings[0].days;
+                if (days.includes(this.props.day)) {
+                  var start_time = this.props.timeToInt(section.meetings[0].start_time);
+                  var end_time = this.props.timeToInt(section.meetings[0].end_time);
+                  var type = section.meetings[0].type_verbose;
+                  var display_name = section.subject + ' ' + section.course_number + ' ' + type;
+                  var style = {
+                    top: (start_time + 'px'),
+                    height: ((end_time - start_time) + 'px')
+                  }
+                  return (
+                    <div
+                      className = 'card-body card course'
+                      style = {style}>{display_name}</div>
+                  );
+                } else {
+                  return ('');
+                }
 
+              })
+            }
+          </div>
+        </div>
+        <div className='row day-name'>{this.props.dayName}</div>
+        {
+          Array.from(Array(this.props.numHours).keys()).map(i => {
+            return (
+              <div className='row hour-delimiter'></div>
+            )
           })
         }
         <br/>
