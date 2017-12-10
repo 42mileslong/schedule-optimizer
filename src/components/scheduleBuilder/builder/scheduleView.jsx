@@ -27,23 +27,36 @@ export default class ScheduleView extends React.Component {
 
 
   componentDidMount() {
-    var section_ids = ['31208', '31218', '31187', '39311'] // TODO make this real
-    var url = 'api/section'
-        + '?year=' + '2018'
-        + '&term=Spring';
+    console.log('test test');
 
-    section_ids.forEach(section_id => {
-      url += '&number=' + section_id;
-    });
-
-    fetch(url)
-      .then(res => {
+    fetch('/api/optimize', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: this.props.courses
+    }).then(res => {
         return res.json()
-      })
-      .then(sections => {
-        this.setState({
-          sections: sections
+    }).then(section_ids => {
+        console.log(section_ids);
+        var url = 'api/section'
+            + '?year=' + '2018'
+            + '&term=Spring';
+
+        section_ids.forEach(section_id => {
+          url += '&number=' + section_id;
         });
+
+        fetch(url)
+          .then(res => {
+            return res.json()
+          })
+          .then(sections => {
+            this.setState({
+              sections: sections
+            });
+          });
       });
   }
 

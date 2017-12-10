@@ -14,9 +14,10 @@ var database = require('../database')
   * @param {Function} callback  Callback that will be evoked when finished
   */
 module.exports.generate = function(courseList, callback) {
+  console.log('send help im bad');
+
   getAvailableSectionsForCourses(courseList, function(sectionList) {
-    var schedule = getAvailableSectionsForCourses(courseList, generate());
-    callback(schedule);
+    callback(generate(sectionList));
   });
 };
 
@@ -74,16 +75,17 @@ function getCourseSections(allSections, course, i, callback) {
 }
 
 function generate(courseList) {
-    oneRecursiveBoi([], 0, courseList);
-    return courseList;
+    return oneRecursiveBoi([], 0, courseList);
+
 }
 
 //topC : the list of courses from upper for loops, it's empty if we are on first course
 //i : the index of the class we want to pick courses
 
-function boiRapper(){
+function oneRecursiveBoi(topC, i, classList) {
   secListId = []
-  function oneRecursiveBoi(topC, i, classList){
+
+  function funBoi(topC, i, classList){
 
       if (i == classList.length){
         for (var i = 0; i < topC.length; i++){
@@ -96,7 +98,7 @@ function boiRapper(){
               var currentSch = topC;
               currentSch.push(classList[i][next]);
 
-              oneRecursiveBoi(currentSch, i + 1, classList);
+              funBoi(currentSch, i + 1, classList);
 
               currentSch.pop();
               k = next + 1;
@@ -104,6 +106,8 @@ function boiRapper(){
           }
       }
   }
+
+  funBoi(topC, i, classList);
 
   return secListId;
 }
@@ -134,7 +138,7 @@ function nextNonConflict(schedule, courseList, k){
 }
 
 
-function sort(courses){  // has start time, finish time, and weight 
+function sort(courses){  // has start time, finish time, and weight
    if (courses.length < 2){
         return courses;
     }
@@ -142,7 +146,6 @@ function sort(courses){  // has start time, finish time, and weight
     var middle = parseInt(courses.length / 2);
     var left   = courses.slice(0, middle);
     var right  = courses.slice(middle, courses.length);
-
     return merge(sort(left), sort(right));
 }
 
@@ -150,7 +153,7 @@ function merge(left, right) {
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0].end_time <= right[0].end_time) {
+        if (left[0].meetings[0].end_time <= right[0].meetings[0].end_time) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
