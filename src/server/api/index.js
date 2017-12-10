@@ -106,7 +106,6 @@ router.get('/course', function(req, res) {
             });
         }
     });
-  }
 });
 
 
