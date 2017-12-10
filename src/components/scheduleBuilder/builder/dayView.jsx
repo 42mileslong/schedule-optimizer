@@ -47,7 +47,10 @@ export default class ScheduleView extends React.Component {
         {
           Array.from(Array(this.props.numHours).keys()).map(i => {
             return (
-              <div className='row hour-delimiter'></div>
+              <div>
+                <div className='row hour-delimiter top-half'></div>
+                <div className='row hour-delimiter bottom-half'></div>
+              </div>
             )
           })
         }

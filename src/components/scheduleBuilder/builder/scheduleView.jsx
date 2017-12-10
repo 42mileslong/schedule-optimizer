@@ -21,17 +21,16 @@ export default class ScheduleView extends React.Component {
     if (startAmPm === 'PM' && startClock.split(':')[0] !== '12') {
       startHour += 12;
     }
-    console.log(startAmPm + " " + startHour);
     var startMinute = parseInt(startClock.split(':')[1]);
     return startHour * 60 + startMinute;
   }
 
 
   componentDidMount() {
-    var sectionIds = ['30792'] // TODO make this real
+    var sectionIds = ['31208', '31218', '31187', '39311'] // TODO make this real
     var url = 'api/section'
         + '?year=' + '2018'
-        + '&term=Summer';
+        + '&term=Spring';
 
     sectionIds.forEach(sectionId => {
       url += '&number=' + sectionId;

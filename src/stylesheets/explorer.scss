@@ -48,6 +48,11 @@ $buttonBlue: #007bff;
   float: right;
 }
 
+@media (min-width: 1300px) {
+  .modal-lg {
+      max-width: 1200px;
+  }
+}
 
 // Builder view
 
@@ -74,6 +79,8 @@ $buttonBlue: #007bff;
   left: 0px;
   background-color: $buttonBlue;
   color: #fff;
+  padding: 0;
+  padding-top: .5rem;
 }
 
 .hour-number, .hour-delimiter, .day-name {
@@ -108,4 +115,13 @@ $buttonBlue: #007bff;
   padding: 10px;
   font-weight: bold;
   background-color: #f8f9fa;
+}
+
+.hour-delimiter.top-half,
+.hour-delimiter.bottom-half {
+  height: 30px;
+}
+
+.hour-delimiter.top-half {
+  border-bottom-style: dashed;
 }
