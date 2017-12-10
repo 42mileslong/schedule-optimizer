@@ -14,6 +14,8 @@ var database = require('../database')
   * @param {Function} callback  Callback that will be evoked when finished
   */
 module.exports.generate = function(courseList, callback) {
+  console.log('send help im bad');
+
   getAvailableSectionsForCourses(courseList, function(sectionList) {
     var schedule = getAvailableSectionsForCourses(courseList, generate());
     callback(schedule);
@@ -91,7 +93,7 @@ function oneRecursiveBoi(topC, i, classList){
         var next = nextNonConflict(topC, classList[i], k);
         while (next != -1){
             var currentSch = topC;
-            currentSch.push(classList[i][next]);
+            currentSch.push(classList[i][next].number);
 
             oneRecursiveBoi(currentSch, i + 1, classList);
 
@@ -144,7 +146,7 @@ function merge(left, right) {
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0].end_time <= right[0].end_time) {
+        if (left[0].meetings[0].end_time <= right[0].meetings[0].end_time) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
