@@ -6,10 +6,20 @@ export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: ""
+      id: "",
+      modalLoaded: false
     }
     this.renderCardDetails = this.renderCardDetails.bind(this);
     this.renderModalDetails = this.renderModalDetails.bind(this);
+  }
+
+  loadModal() {
+    this.setState({
+      modalLoaded: true
+    });
+    setTimeout(() => {
+      $("#Modal" + this.state.id).modal('show');
+    }, 5);
   }
 
   componentDidMount() {
@@ -81,7 +91,8 @@ export default class GridViewItem extends React.Component {
           <button type="button"
             className="btn btn-primary"
             data-toggle="modal"
-            data-target={"#Modal" + this.state.id}>Details</button>
+            data-target={"#Modal" + this.state.id}
+            onClick={() => {this.loadModal()}}>Details</button>
 
           {
             this.renderSelectorButton()
@@ -117,7 +128,13 @@ export default class GridViewItem extends React.Component {
             this.renderCardDetails()
           }
         </div>
-        <CourseModal course={this.props.course} modalId={this.state.id}/>
+        {
+          this.state.modalLoaded ? (
+            <CourseModal course={this.props.course} modalId={this.state.id}/>
+          ) : (
+            ""
+          )
+        }
       </div>
     )
   }

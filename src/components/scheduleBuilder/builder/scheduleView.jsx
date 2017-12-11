@@ -44,27 +44,50 @@ export default class ScheduleView extends React.Component {
     }).then(sectionIds => {
 
         this.setState({
-          schedules: sectionIds
+          schedules: sectionIds,
+          scheduleNum: 0
         });
 
-        var url = 'api/section'
-            + '?year=' + '2018'
-            + '&term=Spring';
+        this.updateSections();
+      });
+  }
 
-        sectionIds[0].forEach(sectionId => {
-          url += '&number=' + sectionId;
+  nextSection() {
+    if (this.state.scheduleNum < this.state.schedules.length - 1) {
+      this.setState({
+        scheduleNum: this.state.scheduleNum + 1
+      });
+      this.updateSections();
+    }
+  }
+
+  prevSection() {
+    if (this.state.scheduleNum > 0) {
+      this.setState({
+        scheduleNum: this.state.scheduleNum - 1
+      });
+      this.updateSections();
+    }
+  }
+
+  updateSections() {
+    var sectionIds = this.state.schedules[this.state.scheduleNum];
+    var url = 'api/section'
+        + '?year=' + '2018'
+        + '&term=Spring';
+
+    sectionIds.forEach(sectionId => {
+      url += '&number=' + sectionId;
+    });
+
+    fetch(url)
+      .then(res => {
+        return res.json()
+      })
+      .then(sections => {
+        this.setState({
+          sections: sections
         });
-
-        fetch(url)
-          .then(res => {
-            return res.json()
-          })
-          .then(sections => {
-            this.setState({
-              sections: sections,
-              scheduleNum: 0
-            });
-          });
       });
   }
 
@@ -81,10 +104,14 @@ export default class ScheduleView extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                >Prev</button>
+                onClick={() => {this.prevSection()}}>&lt;</button>
               <span className="schedule-num">
                 Schedule {this.state.scheduleNum + 1} of {this.state.schedules.length}
               </span>
+              <button
+                type="button"
+                className="btn btn-primary btn-lg"
+                onClick={() => {this.nextSection()}}>&gt;</button>
             </div>
         </div>
         <br/>
