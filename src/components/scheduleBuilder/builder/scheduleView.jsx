@@ -75,6 +75,9 @@ export default class ScheduleView extends React.Component {
 
   updateSections(newScheduleNum) {
 
+    var year = this.props.config.term.year;
+    var term = this.props.config.term.name;
+
     // Check to see if the Section objects for this schedule have been
     // saved before, otherwise load from API
     var cachedSections = this.state.sectionsForSchedule[newScheduleNum];
@@ -86,8 +89,8 @@ export default class ScheduleView extends React.Component {
       // Get all section IDs for this schedule
       var sectionIds = this.state.schedules[newScheduleNum];
       var url = 'api/section'
-          + '?year=' + '2018'
-          + '&term=Spring';
+          + '?year=' + year
+          + '&term=' + term;
 
       sectionIds.forEach(sectionId => {
         url += '&number=' + sectionId;
