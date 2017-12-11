@@ -117,7 +117,7 @@ function oneRecursiveBoi(topC, i, classList) {
 function noConflict(arr) {
     arr = sort(arr);
     for (var i = 1; i < arr.length; i++) {
-        if (!arr[i - 1].start_time === "ARRANGED" && !arr[i].start_time) {
+        if (!arr[i - 1].start_time === "ARRANGED" && !arr[i].start_time === "ARRANGED") {
             if (arr[i - 1].end_time > arr[i].start_time) {
                 return false;
             }
