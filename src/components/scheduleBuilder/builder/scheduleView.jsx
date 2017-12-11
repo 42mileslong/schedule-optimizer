@@ -9,6 +9,7 @@ export default class ScheduleView extends React.Component {
     this.state = {
       sections: [],
       schedules: [],
+      sectionsForSchedule: [],
       scheduleNum: 0
     }
     this.baseTime = 6;
@@ -16,6 +17,7 @@ export default class ScheduleView extends React.Component {
     this.timeToInt = this.timeToInt.bind(this);
   }
 
+  // Converts a time in the format XX:XX AM to an integer, for display purposes
   timeToInt(time) {
     var startAmPm = time.split(' ')[1];
     var startClock = time.split(' ')[0];
@@ -27,11 +29,9 @@ export default class ScheduleView extends React.Component {
     return startHour * 60 + startMinute;
   }
 
-
   componentDidMount() {
-    console.log('test test');
-    console.log(JSON.stringify(this.props.courses));
 
+    // Generate schedules based on given courses
     fetch('/api/optimize', {
         method: 'POST',
         headers: {
@@ -45,6 +45,7 @@ export default class ScheduleView extends React.Component {
 
         this.setState({
           schedules: sectionIds,
+          sectionsForSchedule: new Array(sectionIds.length),
           scheduleNum: 0
         });
 
@@ -74,24 +75,38 @@ export default class ScheduleView extends React.Component {
 
   updateSections(newScheduleNum) {
 
-    var sectionIds = this.state.schedules[newScheduleNum];
-    var url = 'api/section'
-        + '?year=' + '2018'
-        + '&term=Spring';
-
-    sectionIds.forEach(sectionId => {
-      url += '&number=' + sectionId;
-    });
-
-    fetch(url)
-      .then(res => {
-        return res.json()
-      })
-      .then(sections => {
-        this.setState({
-          sections: sections
-        });
+    // Check to see if the Section objects for this schedule have been
+    // saved before, otherwise load from API
+    var cachedSections = this.state.sectionsForSchedule[newScheduleNum];
+    if (cachedSections !== undefined) {
+      this.setState({
+        sections: cachedSections
       });
+    } else {
+      // Get all section IDs for this schedule
+      var sectionIds = this.state.schedules[newScheduleNum];
+      var url = 'api/section'
+          + '?year=' + '2018'
+          + '&term=Spring';
+
+      sectionIds.forEach(sectionId => {
+        url += '&number=' + sectionId;
+      });
+
+      fetch(url)
+        .then(res => {
+          return res.json()
+        })
+        .then(sections => {
+          // Pull Section objects from API, display them, and cache for later
+          this.state.sectionsForSchedule[newScheduleNum] = sections;
+
+          this.setState({
+            sections: sections,
+            sectionsForSchedule: this.state.sectionsForSchedule
+          });
+        });
+    }
   }
 
 

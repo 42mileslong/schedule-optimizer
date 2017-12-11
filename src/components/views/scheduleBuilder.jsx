@@ -106,7 +106,11 @@ export default class ScheduleBuilder extends React.Component {
           <li className="nav-item">
             <button
               className="nav-link btn btn-link"
-              disabled={this.state.config.term.name ? false : true}
+              disabled={
+                this.state.config.term.name ? (
+                  this.state.courseWork.requiredCourses.length > 0 ? false : true
+                ) : true
+              }
               onClick={() => this.setView("builder")}>Builder</button>
           </li>
         </ul>
