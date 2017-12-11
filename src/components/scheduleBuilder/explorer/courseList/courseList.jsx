@@ -34,7 +34,7 @@ export default class CourseList extends React.Component {
 
     // Add multiple &subject parameters, one for each desired subject
     subjects.forEach(subject => {
-      url += '&subject=' + subject.name;
+      url += '&subject=' + subject;
     });
 
     // Add multiple &subject parameters, one for each desired subject
