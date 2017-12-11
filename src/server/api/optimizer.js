@@ -111,9 +111,7 @@ function oneRecursiveBoi(topC, i, classList) {
 
   funBoi(topC, i, classList);
 
-  console.log(secListId);
-
-  return secListId[0];
+  return secListId;
 }
 
 
