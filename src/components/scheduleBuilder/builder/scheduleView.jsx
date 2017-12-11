@@ -110,6 +110,28 @@ export default class ScheduleView extends React.Component {
           });
         });
     }
+
+    // Load the next schedule too, to reduce perceived latency
+    if (newScheduleNum < this.state.schedules.length - 1
+        && this.state.sectionsForSchedule[newScheduleNum + 1] === undefined) {
+          var sectionIds = this.state.schedules[newScheduleNum + 1];
+          var url = 'api/section'
+              + '?year=' + year
+              + '&term=' + term;
+
+          sectionIds.forEach(sectionId => {
+            url += '&number=' + sectionId;
+          });
+
+          fetch(url)
+            .then(res => {
+              return res.json()
+            })
+            .then(sections => {
+              // Pull Section objects from API, display them, and cache for later
+              this.state.sectionsForSchedule[newScheduleNum + 1] = sections;
+            });
+    }
   }
 
 
@@ -125,14 +147,16 @@ export default class ScheduleView extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                onClick={() => {this.prevSection()}}>&lt;</button>
+                onClick={() => {this.prevSection()}}
+                disabled={this.state.scheduleNum > 0 ? false : true}>&lt;</button>
               <span className="schedule-num">
                 Schedule {this.state.scheduleNum + 1} of {this.state.schedules.length}
               </span>
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                onClick={() => {this.nextSection()}}>&gt;</button>
+                onClick={() => {this.nextSection()}}
+                disabled={this.state.scheduleNum < this.state.schedules.length - 1 ? false : true}>&gt;</button>
             </div>
         </div>
         <br/>
@@ -151,7 +175,7 @@ export default class ScheduleView extends React.Component {
                 }
 
                 return (
-                  <div className='row hour-number'>{hour + ' ' + ampm}</div>
+                  <div key={i} className='row hour-number'>{hour + ' ' + ampm}</div>
                 )
               })
             }

@@ -77,7 +77,6 @@ export default class ListViewItem extends React.Component {
 
   renderCourseDetails() {
     var course = this.props.course;
-    console.log(course);
     return (
       <div>
         <h5>{course.name}</h5>
@@ -89,7 +88,7 @@ export default class ListViewItem extends React.Component {
               {
                  course.gen_ed_categories.map(category => {
                    return (
-                     <span>
+                     <span key={category}>
                        <br/>
                        {category}
                      </span>

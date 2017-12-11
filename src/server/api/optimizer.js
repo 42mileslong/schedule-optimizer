@@ -14,8 +14,6 @@ var database = require('../database')
   * @param {Function} callback  Callback that will be evoked when finished
   */
 module.exports.generate = function(courseList, callback) {
-  console.log('send help im bad');
-
   getAvailableSectionsForCourses(courseList, function(sectionList) {
     //callback(sectionList[0]);
     callback(generate(sectionList));

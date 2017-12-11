@@ -12,6 +12,10 @@ $buttonBlue: #007bff;
   background-color: $primary;
 }
 
+.btn:not([disabled]) {
+  cursor: pointer;
+}
+
 .card-columns {
   column-count: 2;
 }
