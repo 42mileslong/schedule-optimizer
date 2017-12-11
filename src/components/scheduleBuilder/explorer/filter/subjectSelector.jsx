@@ -84,11 +84,20 @@ export default class SubjectSelector extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="subject-selector"
+        onFocus={() => {
+          $(".subject-selector").addClass("focused");
+        }}
+        onBlur={() => {
+          setTimeout(() => {
+            $(".subject-selector").removeClass("focused");
+          }, 100);
+        }}>
         <h6 className="text-center">Subjects</h6>
           <input
             type="text"
             className="form-control"
+            placeholder="Add subject filter"
             onInput={this.handleInput}>
           </input>
         {
@@ -98,30 +107,31 @@ export default class SubjectSelector extends React.Component {
             </div>
           ) : (
             <div>
-              <ul className="list-group">
-                {
-                  this.state.options.map(subject => {
-                    return (
-                      <FilterButton
-                        name={subject.name_verbose + ' (' + subject.name + ')'}
-                        key={subject.key}
-                        onClick={()=> {
-                            this.handleClick(subject)
+              <div className="subject-search-wrapper">
+                <ul className="list-group subject-search">
+                  {
+                    this.state.options.map(subject => {
+                      return (
+                        <FilterButton
+                          name={subject.name_verbose + ' (' + subject.name + ')'}
+                          key={subject.key}
+                          onClick={()=> {
+                              this.handleClick(subject)
+                            }
                           }
-                        }
-                      />
-                    )
-                  })
-                }
-              </ul>
+                        />
+                      )
+                    })
+                  }
+                </ul>
+              </div>
               <br/>
-              <ul className="list-group">
+              <ul className="list-group selected-subjects">
                 {
                   this.state.subjects.map(subject => {
                     if (subject.active) {
                       return (
                         <FilterButton
-                          active={true}
                           name={subject.name_verbose + ' (' + subject.name + ')'}
                           key={subject.key}
                           onClick={()=> {
