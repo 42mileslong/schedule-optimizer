@@ -8,7 +8,7 @@ export default class Startup extends React.Component {
   }
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid startup-content">
         <br />
         <div className="row">
           <div className="col-4 offset-md-4 text-center">
