@@ -48,30 +48,33 @@ export default class ScheduleView extends React.Component {
           scheduleNum: 0
         });
 
-        this.updateSections();
+        this.updateSections(0);
       });
   }
 
   nextSection() {
     if (this.state.scheduleNum < this.state.schedules.length - 1) {
+      var newScheduleNum = this.state.scheduleNum + 1;
       this.setState({
-        scheduleNum: this.state.scheduleNum + 1
+        scheduleNum: newScheduleNum
       });
-      this.updateSections();
+      this.updateSections(newScheduleNum);
     }
   }
 
   prevSection() {
     if (this.state.scheduleNum > 0) {
+      var newScheduleNum = this.state.scheduleNum - 1;
       this.setState({
-        scheduleNum: this.state.scheduleNum - 1
+        scheduleNum: newScheduleNum
       });
-      this.updateSections();
+      this.updateSections(newScheduleNum);
     }
   }
 
-  updateSections() {
-    var sectionIds = this.state.schedules[this.state.scheduleNum];
+  updateSections(newScheduleNum) {
+
+    var sectionIds = this.state.schedules[newScheduleNum];
     var url = 'api/section'
         + '?year=' + '2018'
         + '&term=Spring';
