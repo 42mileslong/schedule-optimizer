@@ -97,6 +97,7 @@ export default class SubjectSelector extends React.Component {
           <input
             type="text"
             className="form-control"
+            placeholder="Add subject filter"
             onInput={this.handleInput}>
           </input>
         {

@@ -29,6 +29,7 @@ export default class SearchSelector extends React.Component {
         <input
           type="text"
           className="form-control"
+          placeholder="Search for a course"
           onInput={this.handleInput}>
         </input>
       </div>
