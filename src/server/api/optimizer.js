@@ -33,7 +33,7 @@ function getAvailableSectionsForCourses(courseList, callback) {
     var allSections = [];
     var numCourses = courseList.length;
 
-    for (var i = 0; i < courseList.length; i++){
+    for (var i = 0; i < courseList.length; i++) {
         var course = courseList[i];
 
         // Call method for each individual section
@@ -85,18 +85,18 @@ function generate(courseList) {
 function oneRecursiveBoi(topC, i, classList) {
   secListId = []
 
-  function funBoi(topC, i, classList){
+  function funBoi(topC, i, classList) {
 
-      if (i == classList.length){
+      if (i == classList.length) {
         temp = []
-        for (var i = 0; i < topC.length; i++){
+        for (var i = 0; i < topC.length; i++) {
               temp.push(topC[i].number);
         }
         secListId.push(temp)
       } else {
           var k = 0;
           var next = nextNonConflict(topC, classList[i], k);
-          while (next != -1){
+          while (next != -1) {
               var currentSch = topC;
               currentSch.push(classList[i][next]);
 
@@ -115,10 +115,10 @@ function oneRecursiveBoi(topC, i, classList) {
 }
 
 
-function noConflict(arr){
+function noConflict(arr) {
     arr = sort(arr);
-    for (var i = 1; i < arr.length; i++){
-        if (arr[i - 1].end_time > arr[i].start_time){
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i - 1].end_time > arr[i].start_time) {
             return false;
         }
     }
@@ -127,10 +127,10 @@ function noConflict(arr){
 
 //Finds the next course from the courses in arr from k index
 //and onward that doesn't conflict with the current courses in schedule
-function nextNonConflict(schedule, courseList, k){
-    for (var i = k; i < courseList.length; i++){
+function nextNonConflict(schedule, courseList, k) {
+    for (var i = k; i < courseList.length; i++) {
         schedule.push(courseList[i]);
-        if (noConflict(schedule)){
+        if (noConflict(schedule)) {
             schedule.pop();
             return i;
         }
@@ -140,8 +140,8 @@ function nextNonConflict(schedule, courseList, k){
 }
 
 
-function sort(courses){  // has start time, finish time, and weight
-   if (courses.length < 2){
+function sort(courses) {  // has start time, finish time, and weight
+   if (courses.length < 2) {
         return courses;
     }
 
@@ -162,11 +162,11 @@ function merge(left, right) {
         }
     }
 
-    while (left.length){
+    while (left.length) {
         result.push(left.shift());
     }
 
-    while (right.length){
+    while (right.length) {
         result.push(right.shift());
     }
 

@@ -5,7 +5,7 @@ try {
     var secrets = require('../../../secrets.js');
     db_url = secrets.db_url;
 } catch (e) {
-    db_url = process.env.DB_URL
+    db_url = process.env.DB_URL;
 }
 
 // Connects to the MongoDB and stores references to all models
