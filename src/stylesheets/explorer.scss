@@ -12,6 +12,10 @@ $buttonBlue: #007bff;
   background-color: $primary;
 }
 
+.clickable {
+  cursor:pointer;
+}
+
 .btn:not([disabled]) {
   cursor: pointer;
 }
