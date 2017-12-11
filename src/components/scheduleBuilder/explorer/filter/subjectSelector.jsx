@@ -128,21 +128,17 @@ export default class SubjectSelector extends React.Component {
               <br/>
               <ul className="list-group selected-subjects">
                 {
-                  this.state.subjects.map(subject => {
-                    if (subject.active) {
-                      return (
-                        <FilterButton
-                          name={subject.name_verbose + ' (' + subject.name + ')'}
-                          key={subject.key}
-                          onClick={()=> {
-                              this.handleClick(subject)
-                            }
+                  this.props.searchCriteria.subjects.map(subject => {
+                    return (
+                      <FilterButton
+                        name={subject.name_verbose + ' (' + subject.name + ')'}
+                        key={subject.key}
+                        onClick={()=> {
+                            this.handleClick(subject)
                           }
-                        />
-                      );
-                    } else {
-                      return ('');
-                    }
+                        }
+                      />
+                    );
                   })
                 }
               </ul>

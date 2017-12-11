@@ -9,35 +9,25 @@ export default class Schedule extends React.Component {
   constructor() {
     super()
     this.state = {
-      searchCriteria: {
-        avalibility: {},
-        subjects: [],
-        creditHours: [],
-        textSearch: ""
-      },
       coursesToDisplay: []
     }
-    this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
   }
 
   componentDidMount() {
-    var searchCriteria = this.state.searchCriteria;
+    var searchCriteria = this.props.searchCriteria;
+    console.log(searchCriteria);
     searchCriteria.avalibility = this.props.config.term;
-    this.updateSearchCriteria(searchCriteria);
+    this.props.updateSearchCriteria(searchCriteria);
   }
 
-  updateSearchCriteria(searchCriteria) {
-    this.setState({
-      searchCriteria: searchCriteria,
-    });
-  }
+
 
   hasSearchCriteria() {
     var hasSearchCriteria = false;
-    if (this.state.searchCriteria.avalibility.year !== undefined) {
+    if (this.props.searchCriteria.avalibility.year !== undefined) {
       hasSearchCriteria = true;
     }
-    if (this.state.searchCriteria.subjects.length > 0) {
+    if (this.props.searchCriteria.subjects.length > 0) {
       hasSearchCriteria = true;
     }
     return hasSearchCriteria;
@@ -69,14 +59,14 @@ export default class Schedule extends React.Component {
         </div>
         <div className="row">
           <Filter
-            searchCriteria={this.state.searchCriteria}
-            onChange={this.updateSearchCriteria}
+            searchCriteria={this.props.searchCriteria}
+            onChange={this.props.updateSearchCriteria}
             config={this.props.config}/>
 
           {
             this.hasSearchCriteria() ? (
               <CourseList
-                searchCriteria={this.state.searchCriteria}
+                searchCriteria={this.props.searchCriteria}
                 selectCourses={this.props.selectCourses}
                 courseWork={this.props.courseWork}
                 />
