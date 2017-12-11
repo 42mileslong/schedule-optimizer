@@ -29,10 +29,22 @@ module.exports.generate = function(courseList, callback) {
   */
 function getAvailableSectionsForCourses(courseList, callback) {
     var allSections = [];
-    var numCourses = courseList.length;
 
+    var elementList = [];
     for (var i = 0; i < courseList.length; i++) {
-        var course = courseList[i];
+      var course = courseList[i];
+
+      course.section_types.forEach(sectionType => {
+        var element = Object.assign({}, course);
+        element.section_type = sectionType;
+        elementList.push(element);
+      });
+    }
+
+    var numCourses = elementList.length;
+
+    for (var i = 0; i < elementList.length; i++) {
+        var course = elementList[i];
 
         // Call method for each individual section
         getCourseSections(allSections, course, i, function() {

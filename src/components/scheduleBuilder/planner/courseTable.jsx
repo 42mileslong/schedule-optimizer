@@ -7,25 +7,38 @@ export default class CourseTable extends React.Component {
       courses = [];
     }
     return (
-      <table className="table">
+      <table className="table course-table">
         <thead>
           <tr>
             <th scope="col">Course</th>
             <th scope="col">Title</th>
             <th scope="col">Credits</th>
           </tr>
-          {
-            courses.map(course => {
-              return (
-                <tr key={course._id + "-" + course.section_type}>
+        </thead>
+        {
+          courses.map(course => {
+            return (
+              <tbody key={course._id}>
+                <tr>
                   <td>{course.subject + " " + course.number}</td>
-                  <td>{course.name + " (" + course.section_type + ")"}</td>
+                  <td>{course.name}</td>
                   <td>{course.credit_hours}</td>
                 </tr>
-              )
-            })
-          }
-        </thead>
+                {
+                  course.section_types.map(section_type => {
+                    return (
+                      <tr className = "section" key={course._id + "-" + section_type}>
+                        <td>{section_type}</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            )
+          })
+        }
       </table>
 
     )
