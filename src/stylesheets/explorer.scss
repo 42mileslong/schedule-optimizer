@@ -86,12 +86,12 @@ $buttonBlue: #007bff;
   background-color: $buttonBlue;
   color: #fff;
   padding: 0;
-  padding-top: .5rem;
+  padding-top: .25rem;
   cursor: pointer;
 }
 
 .hour-number, .hour-delimiter, .day-name {
-  height: 60px;
+  height: 40px;
   border-bottom: 1px solid #BABDB6;
   border-right: 1px solid #BABDB6;
   display: block;
@@ -108,7 +108,7 @@ $buttonBlue: #007bff;
   background-color: #868e96;
   color: #ffffff;
   font-size: 1.25rem;
-  line-height: 60px;
+  line-height: 40px;
 }
 
 .hours {
@@ -126,7 +126,7 @@ $buttonBlue: #007bff;
 
 .hour-delimiter.top-half,
 .hour-delimiter.bottom-half {
-  height: 30px;
+  height: 20px;
 }
 
 .hour-delimiter.top-half {
