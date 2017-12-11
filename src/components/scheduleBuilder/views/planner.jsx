@@ -43,11 +43,17 @@ export default class Planner extends React.Component {
             <div className="row">
               <div className="col-6">
                 <h3 className="text-center">Required Courses</h3>
-                <CourseTable courses={courseWork.requiredCourses}/>
+                <CourseTable
+                  courseType="requiredCourses"
+                  courseWork={this.props.courseWork}
+                  selectCourses={this.props.selectCourses}/>
               </div>
               <div className="col-6">
                 <h3 className="text-center">Preferred Courses</h3>
-                <CourseTable courses={courseWork.preferredCourses}/>
+                <CourseTable
+                  courseType="preferredCourses"
+                  courseWork={this.props.courseWork}
+                  selectCourses={this.props.selectCourses}/>
               </div>
             </div>
           </div>

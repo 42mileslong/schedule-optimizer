@@ -34,9 +34,9 @@ export default class ListViewItem extends React.Component {
         return res.json();
       })
       .then(sections => {
-        var sectionTypes = new Set(sections.map(section => {
+        var sectionTypes = Array.from(new Set(sections.map(section => {
           return section.meetings[0].type_verbose;
-        }));
+        })));
         callback(sectionTypes);
       })
   }
@@ -44,11 +44,9 @@ export default class ListViewItem extends React.Component {
   addCourse(type) {
     this.getSectionTypes(sectionTypes => {
       console.log(sectionTypes);
-      sectionTypes.forEach(sectionType => {
-        var courseObject = Object.assign({}, this.props.course);
-        courseObject.section_type = sectionType;
-        this.props.addCourse(type, courseObject);
-      })
+      var courseObject = Object.assign({}, this.props.course);
+      courseObject.section_types = sectionTypes;
+      this.props.addCourse(type, courseObject);
     });
   }
 
