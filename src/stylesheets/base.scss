@@ -1,11 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans:300,300i,400,600,800');
+
 /* Theme Colors */
 $primary: #EDEDED;
 $secondary: #1471FF;
+$lightText: #FAFAFA;
 
 $blueAccent: #1E30AE;
 $orangeAccent: #E84E01;
 $dark: #1E1F1E;
 
 body {
-  color: $dark;
+  background-color: $dark;
+  color: $lightText
+}
+
+.section {
+  height: 95vh;
+}
+.section-content {
+  padding: 30px;
+  font-family: 'Open Sans';
+}
+.section-header {
+  font-weight: 600;
+}
+.opener {
+  background-color: rgba(29,66,174,.4);
+  height: 95vh;
+}
+.opener-title {
+  font-family: 'Fjalla One';
+}
+.opener-subtitle {
+  font-family: 'Open Sans';
+  font-weight: 300;
+}
+.opener-button {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  padding: 30px;
+  font-size: 30px;
+}
+.opener-button:hover {
+  color: white;
+  background-color: rgba(232,114,32,.5);
+  border-color: rgba(232,114,32,.5);
+}
+
+.opener-background {
+  background-image:
+    url("https://freight.cargocollective.com/t/original/i/9e4392f7f89ea6ec01658c3d12ad04baf8bd832cdc09f93e67477ad6b316cab4/DSC_0474-copy.JPG");
+  background-size:     cover;                      /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center;
+  height: 95vh;
+
 }
