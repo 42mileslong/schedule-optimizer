@@ -109,15 +109,17 @@ function oneRecursiveBoi(topC, i, classList) {
 
   funBoi(topC, i, classList);
 
-  return secListId;
+  return secListId.slice(0, 25);
 }
 
 
 function noConflict(arr) {
     arr = sort(arr);
     for (var i = 1; i < arr.length; i++) {
-        if (arr[i - 1].end_time > arr[i].start_time) {
-            return false;
+        if (!arr[i - 1].start_time === "ARRANGED" && !arr[i].start_time) {
+            if (arr[i - 1].end_time > arr[i].start_time) {
+                return false;
+            }
         }
     }
     return true;
@@ -153,7 +155,8 @@ function merge(left, right) {
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0].meetings[0].end_time <= right[0].meetings[0].end_time) {
+        if (left[0].meetings[0].start_time === "ARRANGED"
+          || (right[0].meetings[0].start_time !== "ARRANGED" && left[0].meetings[0].end_time <= right[0].meetings[0].end_time)) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
