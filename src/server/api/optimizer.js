@@ -109,7 +109,7 @@ function oneRecursiveBoi(topC, i, classList) {
 
   funBoi(topC, i, classList);
 
-  return secListId;
+  return secListId.slice(0, 25);
 }
 
 
