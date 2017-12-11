@@ -8,6 +8,12 @@ export default class ScheduleBuilder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchCriteria: {
+        avalibility: {},
+        subjects: [],
+        creditHours: [],
+        textSearch: ""
+      },
       courseWork: {
         requiredCourses: [],
         preferredCourses: []
@@ -18,9 +24,16 @@ export default class ScheduleBuilder extends React.Component {
       view: "startup"
     }
 
+    this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
     this.selectConfig = this.selectConfig.bind(this);
     this.selectCourses = this.selectCourses.bind(this);
     this.setView = this.setView.bind(this);
+  }
+
+  updateSearchCriteria(searchCriteria) {
+    this.setState({
+      searchCriteria: searchCriteria,
+    });
   }
 
   selectConfig(type, value) {
@@ -55,6 +68,8 @@ export default class ScheduleBuilder extends React.Component {
           selectCourses={this.selectCourses}
           courseWork={this.state.courseWork}
           config={this.state.config}
+          searchCriteria={this.state.searchCriteria}
+          updateSearchCriteria={this.updateSearchCriteria}
           setView={this.setView}/>
       );
     } else if (view == "planner") {

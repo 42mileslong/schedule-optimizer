@@ -15,13 +15,21 @@ export default class SubjectSelector extends React.Component {
   }
 
   handleClick(subject) {
-    subject.active = !subject.active;
+    var name = subject.name;
     var activeSubjects = [];
-    this.state.subjects.forEach((e) => {
-      if (e.active) {
-        activeSubjects.push(e);
+    var found = false;
+    this.props.searchCriteria.subjects.forEach(subject => {
+      if (subject !== name) {
+        activeSubjects.push(subject);
+      } else {
+        found = true;
       }
-    });
+    })
+
+    if (!found) {
+      activeSubjects.push(subject.name);
+    }
+
     this.props.selectFilterCriteria("subjects", activeSubjects);
     this.setState({
       options: []
@@ -69,10 +77,10 @@ export default class SubjectSelector extends React.Component {
         })
         .then(subjects => {
           subjects = subjects.map(subject => {
-            subject.active = false;
             subject.key = "subjectSelectorButton_" + subject.name;
             return subject;
           })
+          console.log(this.props.searchCriteria.subjects);
           this.setState({
             subjects: subjects,
             loadedTermName: termName,
@@ -80,15 +88,26 @@ export default class SubjectSelector extends React.Component {
           });
         })
     }
+
+
   }
 
   render() {
     return (
-      <div>
+      <div className="subject-selector"
+        onFocus={() => {
+          $(".subject-selector").addClass("focused");
+        }}
+        onBlur={() => {
+          setTimeout(() => {
+            $(".subject-selector").removeClass("focused");
+          }, 100);
+        }}>
         <h6 className="text-center">Subjects</h6>
           <input
             type="text"
             className="form-control"
+            placeholder="Add subject filter"
             onInput={this.handleInput}>
           </input>
         {
@@ -98,30 +117,12 @@ export default class SubjectSelector extends React.Component {
             </div>
           ) : (
             <div>
-              <ul className="list-group">
-                {
-                  this.state.options.map(subject => {
-                    return (
-                      <FilterButton
-                        name={subject.name_verbose + ' (' + subject.name + ')'}
-                        key={subject.key}
-                        onClick={()=> {
-                            this.handleClick(subject)
-                          }
-                        }
-                      />
-                    )
-                  })
-                }
-              </ul>
-              <br/>
-              <ul className="list-group">
-                {
-                  this.state.subjects.map(subject => {
-                    if (subject.active) {
+              <div className="subject-search-wrapper">
+                <ul className="list-group subject-search">
+                  {
+                    this.state.options.map(subject => {
                       return (
                         <FilterButton
-                          active={true}
                           name={subject.name_verbose + ' (' + subject.name + ')'}
                           key={subject.key}
                           onClick={()=> {
@@ -129,10 +130,30 @@ export default class SubjectSelector extends React.Component {
                             }
                           }
                         />
+                      )
+                    })
+                  }
+                </ul>
+              </div>
+              <br/>
+              <ul className="list-group selected-subjects">
+                {
+                  this.state.subjects.map(subject => {
+                    if (this.props.searchCriteria.subjects.includes(subject.name)) {
+                      return (
+                        <FilterButton
+                          name={subject.name_verbose + ' (' + subject.name + ')'}
+                          key={'selected-' + subject.key}
+                          onClick={()=> {
+                              this.handleClick(subject)
+                            }
+                          }
+                        />
                       );
                     } else {
-                      return ('');
+                      return '';
                     }
+
                   })
                 }
               </ul>

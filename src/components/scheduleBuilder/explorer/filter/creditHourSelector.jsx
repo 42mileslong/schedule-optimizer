@@ -15,7 +15,7 @@ export default class CreditHourSelector extends React.Component {
     var activeHours = [];
     this.state.hours.forEach((e) => {
       if (e.active) {
-        activeHours.push(e);
+        activeHours.push(e.name);
       }
     });
     this.props.selectFilterCriteria("creditHours", activeHours);
@@ -44,7 +44,11 @@ export default class CreditHourSelector extends React.Component {
             this.state.hours.map(hour => {
               return (
                 <FilterButton
-                  active={hour.active}
+                  active={
+                    this.props.searchCriteria.creditHours !== undefined ? (
+                      this.props.searchCriteria.creditHours.includes(hour.name)
+                    ) : false
+                  }
                   name={hour.name}
                   key={hour.key}
                   onClick={()=> {this.handleClick(hour)}

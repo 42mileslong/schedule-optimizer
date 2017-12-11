@@ -10,6 +10,7 @@ export default class SearchSelector extends React.Component {
   componentDidMount() {
     this.timer = null;
     this.text = null;
+    this.refs.searchBox.value = this.props.searchCriteria.textSearch;
   }
 
   handleInput(event) {
@@ -29,7 +30,9 @@ export default class SearchSelector extends React.Component {
         <input
           type="text"
           className="form-control"
-          onInput={this.handleInput}>
+          placeholder="Search for a course"
+          onInput={this.handleInput}
+          ref="searchBox">
         </input>
       </div>
     );
