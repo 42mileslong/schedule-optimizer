@@ -67,6 +67,7 @@ export default class ScheduleBuilder extends React.Component {
       return (
         <Startup
           selectConfig={this.selectConfig}
+          selectCourses={this.selectCourses}
           courseWork={this.state.courseWork}
           config={this.state.config}
           setView={this.setView}/>

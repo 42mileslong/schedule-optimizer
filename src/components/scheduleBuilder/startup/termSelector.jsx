@@ -28,7 +28,9 @@ export default class TermSelector extends React.Component {
   }
 
   selectTerm(term) {
-    this.props.selectConfig('term', term)
+    this.props.selectConfig('term', term);
+    this.props.selectCourses('requiredCourses', []);
+    this.props.selectCourses('preferredCourses', []);
   }
 
   render() {
