@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../database')
-
+var optimizer = require('./optimizer');
 
 var getHead = function(callback) {
     database.Head.findOne({}, callback);
@@ -9,7 +9,7 @@ var getHead = function(callback) {
 
 router.post('/optimize', function(req, res) {
     if (req.body.constructor !== Array) {
-        res.send([]);
+        res.send(['asdfasdf']);
     } else {
         optimizer.generate(req.body, function(schedules) {
             res.send(schedules);

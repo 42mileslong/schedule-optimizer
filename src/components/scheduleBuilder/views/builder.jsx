@@ -3,6 +3,7 @@ import ScheduleView from './../builder/scheduleView';
 
 export default class Builder extends React.Component {
   render() {
+    var courses = this.props.courseWork.requiredCourses;
     return (
       <div className="container-fluid">
         <br />
@@ -20,6 +21,7 @@ export default class Builder extends React.Component {
         <br />
         <ScheduleView
           config={this.props.config}
+          courses={courses}
           />
       </div>
     )
