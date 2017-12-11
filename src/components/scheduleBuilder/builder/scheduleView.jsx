@@ -147,14 +147,16 @@ export default class ScheduleView extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                onClick={() => {this.prevSection()}}>&lt;</button>
+                onClick={() => {this.prevSection()}}
+                disabled={this.state.scheduleNum > 0 ? false : true}>&lt;</button>
               <span className="schedule-num">
                 Schedule {this.state.scheduleNum + 1} of {this.state.schedules.length}
               </span>
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                onClick={() => {this.nextSection()}}>&gt;</button>
+                onClick={() => {this.nextSection()}}
+                disabled={this.state.scheduleNum < this.state.schedules.length - 1 ? false : true}>&gt;</button>
             </div>
         </div>
         <br/>
