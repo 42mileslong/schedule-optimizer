@@ -22,8 +22,8 @@ export default class ScheduleView extends React.Component {
               sections.map(section => {
                 var days = section.meetings[0].days;
                 if (days !== undefined && days.includes(this.props.day)) {
-                  var start_time = this.props.timeToInt(section.meetings[0].start_time);
-                  var end_time = this.props.timeToInt(section.meetings[0].end_time);
+                  var start_time = this.props.timeToInt(section.meetings[0].start_time) * (4/6.);
+                  var end_time = this.props.timeToInt(section.meetings[0].end_time) * (4/6.);
 
                   var style = {
                     top: (start_time + 'px'),
