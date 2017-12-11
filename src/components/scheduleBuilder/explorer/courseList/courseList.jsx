@@ -94,7 +94,7 @@ export default class CourseList extends React.Component {
 
     var index = -1;
     for (var i = 0; i < typedWork.length; i++) {
-      if (typedWork[i]._id == course._id) {
+      if (typedWork[i]._id == course._id && typedWork[i].section_type == course.section_type) {
         index = i;
         break;
       }
@@ -112,15 +112,10 @@ export default class CourseList extends React.Component {
     var typedWork = courseWork[type];
 
     var index = -1;
-    for (var i = 0; i < typedWork.length; i++) {
+    for (var i = typedWork.length - 1; i >= 0; i--) {
       if (typedWork[i]._id == course._id) {
-        index = i;
-        break;
+        typedWork.splice(i, 1);
       }
-    }
-
-    if (index != -1) {
-      typedWork.splice(index, 1);
     }
 
     this.props.selectCourses(type, typedWork);

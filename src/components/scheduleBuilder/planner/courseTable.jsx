@@ -17,9 +17,9 @@ export default class CourseTable extends React.Component {
           {
             courses.map(course => {
               return (
-                <tr key={course._id}>
+                <tr key={course._id + "-" + course.section_type}>
                   <td>{course.subject + " " + course.number}</td>
-                  <td>{course.name}</td>
+                  <td>{course.name + " (" + course.section_type + ")"}</td>
                   <td>{course.credit_hours}</td>
                 </tr>
               )

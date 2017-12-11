@@ -61,7 +61,8 @@ function getCourseSections(allSections, course, i, callback) {
     searchParams['term'] = course['term'];
     searchParams['year'] = course['year'];
     searchParams['subject'] = course['subject'];
-
+    searchParams['meetings'] = {'$elemMatch' : {'type_verbose' : course['section_type']}};
+    // children:{$elemMatch:{age: {$gte: 18}}}}
     // Get current sections that correspond with search parameters
     database.Section.findCurrent(
         searchParams,

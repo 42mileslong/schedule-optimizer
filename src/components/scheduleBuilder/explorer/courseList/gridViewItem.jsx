@@ -23,11 +23,38 @@ export default class GridViewItem extends React.Component {
   }
 
   componentDidMount() {
-    this.state.id = this.props.course.name.replace(/\s/g,''); // No render
+    this.state.id = this.props.course._id.replace(/\s/g,''); // No render
+  }
+
+  getSectionTypes(callback) {
+    var course = this.props.course;
+
+    var url = 'api/section'
+      + '?year=' + course.year
+      + '&term=' + course.term
+      + '&course_number=' + course.number;
+
+    fetch(url)
+      .then(res => {
+        return res.json();
+      })
+      .then(sections => {
+        var sectionTypes = new Set(sections.map(section => {
+          return section.meetings[0].type_verbose;
+        }));
+        callback(sectionTypes);
+      })
   }
 
   addCourse(type) {
-    this.props.addCourse(type, this.props.course);
+    this.getSectionTypes(sectionTypes => {
+      console.log(sectionTypes);
+      sectionTypes.forEach(sectionType => {
+        var courseObject = Object.assign({}, this.props.course);
+        courseObject.section_type = sectionType;
+        this.props.addCourse(type, courseObject);
+      })
+    });
   }
 
   removeCourse(type) {
