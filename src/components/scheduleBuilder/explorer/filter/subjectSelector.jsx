@@ -63,7 +63,7 @@ export default class SubjectSelector extends React.Component {
     var isNewYearOrTerm = (termName != this.state.loadedTermName)
             || (yearName != this.state.loadedYearName);
     if (typeof termName != 'undefined' && isNewYearOrTerm) {
-      fetch('/api/subject?year=2018&term=Summer')
+      fetch('/api/subject?year=' + yearName + '&term=' + termName)
         .then(res => {
           return res.json()
         })

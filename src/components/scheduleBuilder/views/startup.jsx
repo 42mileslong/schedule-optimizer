@@ -26,6 +26,7 @@ export default class Startup extends React.Component {
         <div className="row">
           <TermSelector
             selectConfig={this.props.selectConfig}
+            selectCourses={this.props.selectCourses}
             config={this.props.config}/>
         </div>
         <br />

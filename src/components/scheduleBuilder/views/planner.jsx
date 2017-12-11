@@ -33,6 +33,9 @@ export default class Planner extends React.Component {
                 <button
                   type="button"
                   className="btn btn-primary btn-lg"
+                  disabled={
+                    courseWork.requiredCourses.length > 0 ? false : true
+                  }
                   onClick={() => this.props.setView("builder")}>Next Step: Builder</button>
               </div>
             </div>
