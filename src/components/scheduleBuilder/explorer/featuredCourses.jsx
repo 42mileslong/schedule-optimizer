@@ -13,7 +13,6 @@ export default class CourseList extends React.Component {
     //  WILL EVENTUALLY FETCH FEATURED COURSE DATA, CURRENTLY DISPLAYS ALL COURSES IN SP18
     this.state.courses = [];
     var newCourses = [];
-    console.log('pls');
     fetch('api/courses')
       .then(res => {
         return res.json()

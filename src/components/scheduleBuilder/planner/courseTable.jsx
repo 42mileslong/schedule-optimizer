@@ -6,7 +6,6 @@ export default class CourseTable extends React.Component {
     if (typeof courses == 'undefined') {
       courses = [];
     }
-    console.log(courses);
     return (
       <table className="table">
         <thead>
@@ -18,7 +17,7 @@ export default class CourseTable extends React.Component {
           {
             courses.map(course => {
               return (
-                <tr>
+                <tr key={course._id}>
                   <td>{course.subject + " " + course.number}</td>
                   <td>{course.name}</td>
                   <td>{course.credit_hours}</td>

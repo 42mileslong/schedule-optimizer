@@ -52,7 +52,9 @@ export default class SectionView extends React.Component {
             sections.map(section => {
               if (this.props.section === undefined || section.number == this.props.section) {
                 return (
-                  <SectionViewItem section={section}/>
+                  <SectionViewItem
+                    key={section._id}
+                    section={section}/>
                 );
               } else {
                 return "";

@@ -30,7 +30,10 @@ export default class ScheduleView extends React.Component {
                     height: ((end_time - start_time) + 'px')
                   }
                   return (
-                    <ScheduleCourse style={style} section={section}/>
+                    <ScheduleCourse
+                      key={section._id}
+                      style={style}
+                      section={section}/>
                   );
                 } else {
                   return ('');
@@ -44,7 +47,7 @@ export default class ScheduleView extends React.Component {
         {
           Array.from(Array(this.props.numHours).keys()).map(i => {
             return (
-              <div>
+              <div key={i}>
                 <div className='row hour-delimiter top-half'></div>
                 <div className='row hour-delimiter bottom-half'></div>
               </div>

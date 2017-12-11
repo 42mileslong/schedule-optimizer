@@ -173,7 +173,7 @@ export default class ScheduleView extends React.Component {
                 }
 
                 return (
-                  <div className='row hour-number'>{hour + ' ' + ampm}</div>
+                  <div key={i} className='row hour-number'>{hour + ' ' + ampm}</div>
                 )
               })
             }

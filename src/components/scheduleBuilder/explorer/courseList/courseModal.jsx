@@ -31,7 +31,7 @@ export default class CourseModal extends React.Component {
                     {
                        course.gen_ed_categories.map(category => {
                          return (
-                           <span>
+                           <span key={category}>
                              <br/>
                              {category}
                            </span>
