@@ -26,6 +26,7 @@ export default class ListViewItem extends React.Component {
     var url = 'api/section'
       + '?year=' + course.year
       + '&term=' + course.term
+      + '&subject=' + course.subject
       + '&course_number=' + course.number;
 
     fetch(url)
