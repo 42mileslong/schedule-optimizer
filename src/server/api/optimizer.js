@@ -98,13 +98,17 @@ function getCourseSections(allSections, course, callback) {
  * @return {Array}            List of lists of sections where each sublist is a complete schedule
  */
 function generate(courseList) {
+    // INIT
+    
     // Schedules should be initialized as a list of lists where each list contains 1 value
     var schedules = [];
 
     for (var i = 0; i < courseList[0].length; i++) {
         schedules.push([courseList[0][i]]);
     }
-    
+
+
+    // CHECK
     for (var i = 1; i < courseList.length; i++) {
         var temp = []
         for (var j = 0; j < schedules.length; j++) {
