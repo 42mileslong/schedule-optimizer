@@ -29,6 +29,7 @@ Developed by:
 * Hassan Goodarzifarahani [hassang2]
 * Rafi Long [rlong2]
 * Benjamin Pankow [bpankow2]
+
 Project Managers:
 * Pooja Mikkilineni [pmikki2]
 * David Brewster [davidb2]
