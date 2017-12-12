@@ -23,7 +23,7 @@ export default class Planner extends React.Component {
               <div className="col-4 mx-auto">
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg"
+                  className="btn btn-outline-primary btn-lg"
                   onClick={() => this.props.setView("explorer")}>Previous Step: Explorer</button>
               </div>
               <div className="col-4">
@@ -32,7 +32,7 @@ export default class Planner extends React.Component {
               <div className="col-4" style={{'text-align' : 'right'}}>
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg"
+                  className="btn btn-outline-primary btn-lg"
                   disabled={
                     courseWork.requiredCourses.length > 0 ? false : true
                   }
