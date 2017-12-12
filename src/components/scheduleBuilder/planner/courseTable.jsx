@@ -1,6 +1,9 @@
 import React from 'react';
 
+// Displays all selected courses of a specific type (required, preferred)
 export default class CourseTable extends React.Component {
+
+  // Simple table view for each course that's selected
   render() {
     var courses = this.props.courses;
     if (typeof courses == 'undefined') {

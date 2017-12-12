@@ -1,6 +1,7 @@
 import React from 'react'
 import GridViewItem from './gridViewItem'
 
+// A grid-based list of courses
 export default class GridView extends React.Component {
   render() {
     return (

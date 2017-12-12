@@ -2,6 +2,7 @@ import React from 'react';
 import SectionView from './sectionView';
 import CourseModal from './courseModal';
 
+// A course 'card' for grid view
 export default class GridViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -10,9 +11,11 @@ export default class GridViewItem extends React.Component {
       modalLoaded: false
     }
     this.renderCardDetails = this.renderCardDetails.bind(this);
-    this.renderModalDetails = this.renderModalDetails.bind(this);
   }
 
+  /**
+    * Load the modal for this course
+    */
   loadModal() {
     this.setState({
       modalLoaded: true
@@ -26,14 +29,27 @@ export default class GridViewItem extends React.Component {
     this.state.id = this.props.course.name.replace(/\s/g,''); // No render
   }
 
+  /**
+    * Adds this course to the user's selected course list
+    *
+    * @param {String} type  The type of selection to make (requiredCourses, preferredCourses)
+    */
   addCourse(type) {
     this.props.addCourse(type, this.props.course);
   }
 
+  /**
+    * Removes this course from the user's selected course list
+    *
+    * @param {String} type  The type of selection to make (requiredCourses, preferredCourses)
+    */
   removeCourse(type) {
     this.props.removeCourse(type, this.props.course);
   }
 
+  /**
+    * Render the button to select this course
+    */
   renderSelectorButton() {
     var isSelected = false;
     var courseWork = this.props.courseWork;
@@ -80,6 +96,11 @@ export default class GridViewItem extends React.Component {
       )
     }
   }
+
+
+  /**
+    * Render the card internals
+    */
   renderCardDetails() {
     var course = this.props.course;
     return (
@@ -102,20 +123,6 @@ export default class GridViewItem extends React.Component {
 
       </div>
     )
-  }
-  renderModalDetails() {
-    if (typeof this.props.course.name != "undefined") {
-      var course = this.props.course;
-      return (
-        <div>
-          <p>{course.description}</p>
-        </div>
-      )
-    } else {
-      return (
-        <p>Loading...</p>
-      )
-    }
   }
 
   render() {

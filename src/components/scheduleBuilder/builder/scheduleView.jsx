@@ -2,14 +2,19 @@ import React from 'react';
 
 import DayView from './dayView';
 
+// Displays all a user's schedules
 export default class ScheduleView extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      // A list of current sections to display
       sections: [],
+      // All schedules, a 2d array of section ids
       schedules: [],
+      // A 2d array of section objects
       sectionsForSchedule: [],
+      // Currently viewed schedule
       scheduleNum: 0
     }
     this.baseTime = 6;
@@ -17,7 +22,11 @@ export default class ScheduleView extends React.Component {
     this.timeToInt = this.timeToInt.bind(this);
   }
 
-  // Converts a time in the format XX:XX AM to an integer, for display purposes
+  /**
+    * Converts a time in the format XX:XX AM to an integer, for display purposes
+    *
+    * @param {String} time The time to convert
+    */
   timeToInt(time) {
     var startAmPm = time.split(' ')[1];
     var startClock = time.split(' ')[0];
@@ -30,7 +39,6 @@ export default class ScheduleView extends React.Component {
   }
 
   componentDidMount() {
-
     // Generate schedules based on given courses
     fetch('/api/optimize', {
         method: 'POST',
@@ -43,6 +51,7 @@ export default class ScheduleView extends React.Component {
         return res.json()
     }).then(sectionIds => {
 
+        // Populate schedules, set up current sections to view
         this.setState({
           schedules: sectionIds,
           sectionsForSchedule: new Array(sectionIds.length),
@@ -53,7 +62,10 @@ export default class ScheduleView extends React.Component {
       });
   }
 
-  nextSection() {
+  /**
+    * Advances to the next generated schedule, if possible
+    */
+  nextSchedule() {
     if (this.state.scheduleNum < this.state.schedules.length - 1) {
       var newScheduleNum = this.state.scheduleNum + 1;
       this.setState({
@@ -63,7 +75,10 @@ export default class ScheduleView extends React.Component {
     }
   }
 
-  prevSection() {
+  /**
+    * Goes to the previous generated schedule, if possible
+    */
+  nextSection() {
     if (this.state.scheduleNum > 0) {
       var newScheduleNum = this.state.scheduleNum - 1;
       this.setState({
@@ -73,8 +88,11 @@ export default class ScheduleView extends React.Component {
     }
   }
 
+  /**
+    * Grabs the actual section data associated with the section ids for this
+    * schedule. Cache in case the user comes back to it.
+    */
   updateSections(newScheduleNum) {
-
     var year = this.props.config.term.year;
     var term = this.props.config.term.name;
 
@@ -147,7 +165,7 @@ export default class ScheduleView extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                onClick={() => {this.prevSection()}}
+                onClick={() => {this.nextSection()}}
                 disabled={this.state.scheduleNum > 0 ? false : true}>&lt;</button>
               <span className="schedule-num">
                 Schedule {this.state.scheduleNum + 1} of {this.state.schedules.length}
@@ -155,7 +173,7 @@ export default class ScheduleView extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
-                onClick={() => {this.nextSection()}}
+                onClick={() => {this.nextSchedule()}}
                 disabled={this.state.scheduleNum < this.state.schedules.length - 1 ? false : true}>&gt;</button>
             </div>
         </div>
@@ -165,6 +183,7 @@ export default class ScheduleView extends React.Component {
             <div className='row day-name'></div>
             {
               Array.from(Array(this.numHours).keys()).map(i => {
+                // List numbers alongside left column
                 var hour = (this.baseTime + i);
                 var ampm = 'AM';
                 if (hour > 12) {

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// A button, used in some filters
 export default class FilterButton extends React.Component {
   constructor(props) {
     super(props);

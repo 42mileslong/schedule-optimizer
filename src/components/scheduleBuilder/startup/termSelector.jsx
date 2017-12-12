@@ -2,6 +2,7 @@ import React from 'react';
 
 import ButtonSelector from './buttonSelector';
 
+// Term selection widget
 export default class TermSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +13,8 @@ export default class TermSelector extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/term?year=2018')
+    // Select all terms for the current year
+    fetch('/api/term')
       .then(res => {
           return res.json()
       })
@@ -27,6 +29,11 @@ export default class TermSelector extends React.Component {
       });
   }
 
+  /**
+    * Selects a given term in the overall builder config
+    *
+    * @param {Boolean} term The term to select
+    */
   selectTerm(term) {
     this.props.selectConfig('term', term);
     this.props.selectCourses('requiredCourses', []);

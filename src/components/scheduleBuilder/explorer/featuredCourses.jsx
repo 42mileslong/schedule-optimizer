@@ -1,6 +1,7 @@
 import React from 'react';
 import GridView from './courseList/gridView';
 
+// lol this doesn't do anything right now
 export default class CourseList extends React.Component {
   constructor(props) {
     super(props);

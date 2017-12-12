@@ -1,5 +1,7 @@
 import React from 'react'
 import ListViewItem from './listViewItem';
+
+// A more straightforward list view of courses
 export default class GridView extends React.Component {
   constructor(props) {
     super(props);

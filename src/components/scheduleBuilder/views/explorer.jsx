@@ -5,6 +5,7 @@ import Filter from './../explorer/filter/filter';
 import CourseList from './../explorer/courseList/courseList';
 import FeaturedCourses from './../explorer/featuredCourses';
 
+// This page allows the user to search for courses and select them
 export default class Schedule extends React.Component {
   constructor() {
     super()
@@ -14,14 +15,17 @@ export default class Schedule extends React.Component {
   }
 
   componentDidMount() {
+    // Load search criteria (in case the user left and returns to this page)
     var searchCriteria = this.props.searchCriteria;
-    console.log(searchCriteria);
     searchCriteria.avalibility = this.props.config.term;
     this.props.updateSearchCriteria(searchCriteria);
   }
 
-
-
+  /**
+    * Whether or not search criteria is set
+    *
+    * @return {Boolean} Whether or not there is search criteria
+    */
   hasSearchCriteria() {
     var hasSearchCriteria = false;
     if (this.props.searchCriteria.avalibility.year !== undefined) {

@@ -2,10 +2,12 @@ import React from 'react';
 
 import TermSelector from '../startup/termSelector';
 
+// Startup is the 'welcome' page, the user selects the term/year here
 export default class Startup extends React.Component {
   constructor(props) {
     super(props)
   }
+
   render() {
     return (
       <div className="container-fluid">

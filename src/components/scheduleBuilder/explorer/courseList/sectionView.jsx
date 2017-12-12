@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionViewItem from './sectionViewItem';
 
+// Shows all sections for a course
 export default class SectionView extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ export default class SectionView extends React.Component {
         return res.json();
       })
       .then(sections => {
+        // Collect all sections for this course
         this.setState({
           sections: sections
         })

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Item for each individual section for a course
 export default class SectionViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +18,7 @@ export default class SectionViewItem extends React.Component {
     var instructor = "N/A";
     var time = "N/A";
 
+    // Grab meeting type, days, instructor etc from data structure
     if (section.meetings.length > 0) {
       meetingType = section.meetings[0].type_verbose;
       if (section.meetings[0].days !== null) {
@@ -38,7 +40,6 @@ export default class SectionViewItem extends React.Component {
         }
       }
     }
-
 
     return (
       <tr>
