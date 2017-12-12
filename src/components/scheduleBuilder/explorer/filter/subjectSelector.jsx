@@ -1,6 +1,7 @@
 import React from 'react';
 import FilterButton from './filterButton';
 
+// Selector for subject
 export default class SubjectSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -14,10 +15,17 @@ export default class SubjectSelector extends React.Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
+  /**
+    * Handles a click on a specific subject
+    *
+    * @param {Object} subject The subject clicked
+    */
   handleClick(subject) {
     var name = subject.name;
     var activeSubjects = [];
     var found = false;
+
+    // Toggle the state of the subject (remove/add to list)
     this.props.searchCriteria.subjects.forEach(subject => {
       if (subject !== name) {
         activeSubjects.push(subject);
@@ -70,6 +78,8 @@ export default class SubjectSelector extends React.Component {
     var yearName = this.props.searchCriteria.avalibility.year;
     var isNewYearOrTerm = (termName != this.state.loadedTermName)
             || (yearName != this.state.loadedYearName);
+
+    // Pull all subjects for this year/term and list them
     if (typeof termName != 'undefined' && isNewYearOrTerm) {
       fetch('/api/subject?year=' + yearName + '&term=' + termName)
         .then(res => {
@@ -88,8 +98,6 @@ export default class SubjectSelector extends React.Component {
           });
         })
     }
-
-
   }
 
   render() {

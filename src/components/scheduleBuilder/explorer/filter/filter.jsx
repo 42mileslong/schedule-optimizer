@@ -5,6 +5,7 @@ import SubjectSelector from './subjectSelector';
 import CreditHourSelector from './creditHourSelector';
 import SearchSelector from './searchSelector';
 
+// A set of filters for the explorer view
 export default class Filter extends React.Component {
   constructor(props) {
     super(props);
