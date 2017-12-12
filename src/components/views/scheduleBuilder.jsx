@@ -142,7 +142,7 @@ export default class ScheduleBuilder extends React.Component {
             <li className="nav-item">
               <button
                 className={"nav-link btn btn-link " + (this.state.view === "startup" ? "selected" : "")}
-                onClick={() => this.setView("startup")}>Startup</button>
+                onClick={() => this.setView("startup")}>Welcome</button>
             </li>
             <li className="nav-item">
               <button
