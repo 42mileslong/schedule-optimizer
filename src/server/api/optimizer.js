@@ -78,7 +78,9 @@ function getCourseSections(allSections, course, callback) {
     database.Section.findCurrent(
         searchParams,
         function(err, sections) {
-            allSections.push(sections);
+            if (sections[0].meetings[0].start_time != "ARRANGED") {
+                allSections.push(sections);
+            }
             callback();
         }
     );
@@ -142,10 +144,8 @@ function oneRecursiveBoi(topC, i, classList) {
 function noConflict(arr) {
     arr = sort(arr);
     for (var i = 1; i < arr.length; i++) {
-        if (!arr[i - 1].start_time === "ARRANGED" && !arr[i].start_time === "ARRANGED") {
-            if (arr[i - 1].end_time > arr[i].start_time) {
-                return false;
-            }
+        if (arr[i - 1].end_time > arr[i].start_time) {
+            return false;
         }
     }
     return true;
@@ -187,7 +187,7 @@ function merge(left, right) {
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0].meetings[0].start_time === "ARRANGED" || (right[0].meetings[0].start_time !== "ARRANGED" && timeToInt(left[0].meetings[0].end_time) <= timeToInt(right[0].meetings[0].end_time))) {
+        if (timeToInt(left[0].meetings[0].end_time) <= timeToInt(right[0].meetings[0].end_time)) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
