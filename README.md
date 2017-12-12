@@ -25,7 +25,7 @@ See our [GitHub Issues page](https://github.com/CS196Illinois/schedule-optimizer
 ## Credits
 Developed by:
 * Alpri Else [aelse2]
-* Osama Esmail [oesmail2]
+* Osama "React God" Esmail [oesmail2]
 * Hassan Goodarzifarahani [hassang2]
 * Rafi Long [rlong2]
 * Benjamin Pankow [bpankow2]
