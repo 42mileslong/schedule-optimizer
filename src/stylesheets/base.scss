@@ -33,11 +33,20 @@ body {
 .btn-link {
   color: white;
 }
-.list-group-item, .card {
+.list-group-item, .card, input[type=text], input[type=text]:focus {
   color: $lightText;
   background-color: $darkOpaque;
 }
-
+.card {
+  border-radius: 0;
+}
+.modal {
+  color: $dark;
+}
+.modal-header {
+  color: $lightText;
+  background-color: #1D42AE;
+}
 
 /* Oper Specific Styling */
 .opener {
@@ -111,4 +120,8 @@ body {
 
 .selector {
 
+}
+
+.planner, .scheduleView {
+  padding: 30px;
 }

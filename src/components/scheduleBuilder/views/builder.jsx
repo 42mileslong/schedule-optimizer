@@ -19,10 +19,12 @@ export default class Builder extends React.Component {
           </div>
         </div>
         <br />
-        <ScheduleView
-          config={this.props.config}
-          courses={courses}
-          />
+        <div className="scheduleView card">
+          <ScheduleView
+            config={this.props.config}
+            courses={courses}
+            />
+        </div>
       </div>
     )
   }
