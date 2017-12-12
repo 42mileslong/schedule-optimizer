@@ -2,11 +2,12 @@ import React from 'react';
 
 import ScheduleCourse from './scheduleCourse';
 
+// One column of the schedule view - corresponds to a specific day
+// Passed a day param (M, T, W, F etc)
 export default class ScheduleView extends React.Component {
 
   constructor(props) {
     super(props);
-
   }
 
   render() {
@@ -25,6 +26,7 @@ export default class ScheduleView extends React.Component {
                   var start_time = this.props.timeToInt(section.meetings[0].start_time) * (4/6.);
                   var end_time = this.props.timeToInt(section.meetings[0].end_time) * (4/6.);
 
+                  // Move course to appropriate location based on start/end time
                   var style = {
                     top: (start_time + 'px'),
                     height: ((end_time - start_time) + 'px')

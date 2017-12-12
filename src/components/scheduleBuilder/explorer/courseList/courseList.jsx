@@ -2,6 +2,7 @@ import React from 'react';
 import GridView from './gridView';
 import ListView from './listView';
 
+// Lists all courses that satisfy given parameters
 export default class CourseList extends React.Component {
   constructor(props) {
     super(props);
@@ -20,8 +21,7 @@ export default class CourseList extends React.Component {
   }
 
   componentWillReceiveProps() {
-    //  Rebuild course list on change
-    //this.state.courses = [];
+    // Rebuild course list on change
     var subjects = this.props.searchCriteria.subjects;
     var creditHours = this.props.searchCriteria.creditHours;
     var textSearch = this.props.searchCriteria.textSearch;
@@ -34,14 +34,15 @@ export default class CourseList extends React.Component {
 
     // Add multiple &subject parameters, one for each desired subject
     subjects.forEach(subject => {
-      url += '&subject=' + subject.name;
+      url += '&subject=' + subject;
     });
 
     // Add multiple &subject parameters, one for each desired subject
     creditHours.forEach(creditHour => {
-      url += '&credit_hours=' + creditHour.name;
+      url += '&credit_hours=' + creditHour;
     });
 
+    // Check to see if there is a lower bound ('<XX' or '>XX') in the query
     var lowerNumberBound = null;
     var upperNumberBound = null;
 
@@ -65,10 +66,12 @@ export default class CourseList extends React.Component {
       url += '&max_course_num=' + upperNumberBound;
     }
 
+    // Add text search to search url
     if (textSearch.length > 0) {
       url += '&search=' + textSearch;
     }
 
+    // If at least one 'meaninful' selector is picked, fetch matching courses
     if (subjects.length > 0 || textSearch.length > 0) {
       fetch(url)
         .then(res => {
@@ -88,6 +91,12 @@ export default class CourseList extends React.Component {
 
   }
 
+  /**
+    * Adds a course to the user's selected course list
+    *
+    * @param {String} type    The type of selection to make (requiredCourses, preferredCourses)
+    * @param {Object} course  The course object
+    */
   addCourse(type, course) {
     var courseWork = this.props.courseWork;
     var typedWork = courseWork[type];
@@ -109,6 +118,12 @@ export default class CourseList extends React.Component {
     this.props.selectCourses(type, typedWork);
   }
 
+  /**
+    * Removes a course from the user's selected course list
+    *
+    * @param {String} type    The type of selection to make (requiredCourses, preferredCourses)
+    * @param {Object} course  The course object
+    */
   removeCourse(type, course) {
     var courseWork = this.props.courseWork;
     var typedWork = courseWork[type];
@@ -123,12 +138,18 @@ export default class CourseList extends React.Component {
     this.props.selectCourses(type, typedWork);
   }
 
+  /**
+    * Toggle to grid view
+    */
   handleGridToggle() {
     this.setState({
       viewType: 'grid'
     })
   }
 
+  /**
+    * Toggle to list view
+    */
   handleListToggle() {
     this.setState({
       viewType: 'list'
@@ -167,9 +188,7 @@ export default class CourseList extends React.Component {
                 addCourse={this.addCourse}
                 removeCourse={this.removeCourse}/>
             )
-
           }
-
         </div>
       </div>
     );

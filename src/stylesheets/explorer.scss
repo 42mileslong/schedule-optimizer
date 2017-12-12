@@ -12,6 +12,10 @@ $buttonBlue: #007bff;
   background-color: $primary;
 }
 
+.clickable {
+  cursor:pointer;
+}
+
 .btn:not([disabled]) {
   cursor: pointer;
 }
@@ -163,4 +167,66 @@ td.remove-button button {
   padding-right: 0.75rem;
   padding-bottom: 0.125rem;
   padding-left: 0.75rem;
+
+.subject-search-wrapper {
+  position: relative;
+  height: 0px;
+  width: 100%;
+}
+
+.subject-search .list-group-item {
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  border-left: 1px solid rgba(0, 0, 0, 0.4);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.subject-search .list-group-item:last-of-type {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.subject-search {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15);
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+}
+
+.subject-search .list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.subject-search {
+  display: none;
+}
+
+.subject-selector.focused .subject-search {
+  display: block;
+}
+
+.selected-subjects .list-group-item {
+  z-index: 2;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+  padding-right: 2.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.selected-subjects .list-group-item::after {
+  content: 'X';
+  display: block;
+  color: #fff;
+  z-index: 3;
+  position: absolute;
+  right: .75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
 }

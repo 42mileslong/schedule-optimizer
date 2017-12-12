@@ -1,6 +1,7 @@
 import React from 'react';
 import FilterButton from './filterButton';
 
+// No longer in use (deprecated)
 export default class AvalibilitySelector extends React.Component {
   constructor(props) {
     super(props);

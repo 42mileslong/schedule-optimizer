@@ -5,39 +5,33 @@ import Filter from './../explorer/filter/filter';
 import CourseList from './../explorer/courseList/courseList';
 import FeaturedCourses from './../explorer/featuredCourses';
 
+// This page allows the user to search for courses and select them
 export default class Schedule extends React.Component {
   constructor() {
     super()
     this.state = {
-      searchCriteria: {
-        avalibility: {},
-        subjects: [],
-        creditHours: [],
-        textSearch: ""
-      },
       coursesToDisplay: []
     }
-    this.updateSearchCriteria = this.updateSearchCriteria.bind(this);
   }
 
   componentDidMount() {
-    var searchCriteria = this.state.searchCriteria;
+    // Load search criteria (in case the user left and returns to this page)
+    var searchCriteria = this.props.searchCriteria;
     searchCriteria.avalibility = this.props.config.term;
-    this.updateSearchCriteria(searchCriteria);
+    this.props.updateSearchCriteria(searchCriteria);
   }
 
-  updateSearchCriteria(searchCriteria) {
-    this.setState({
-      searchCriteria: searchCriteria,
-    });
-  }
-
+  /**
+    * Whether or not search criteria is set
+    *
+    * @return {Boolean} Whether or not there is search criteria
+    */
   hasSearchCriteria() {
     var hasSearchCriteria = false;
-    if (this.state.searchCriteria.avalibility.year !== undefined) {
+    if (this.props.searchCriteria.avalibility.year !== undefined) {
       hasSearchCriteria = true;
     }
-    if (this.state.searchCriteria.subjects.length > 0) {
+    if (this.props.searchCriteria.subjects.length > 0) {
       hasSearchCriteria = true;
     }
     return hasSearchCriteria;
@@ -51,7 +45,7 @@ export default class Schedule extends React.Component {
           <div className="col-4 mx-auto">
             <button
               type="button"
-              className="btn btn-primary btn-lg"
+              className="btn btn-outline-primary btn-lg"
               onClick={() => this.props.setView("startup")}>Previous Step: Startup</button>
           </div>
           <div className="col-4">
@@ -60,7 +54,7 @@ export default class Schedule extends React.Component {
           <div className="col-4" style={{'text-align' : 'right'}}>
             <button
               type="button"
-              className="btn btn-primary btn-lg"
+              className="btn btn-outline-primary btn-lg"
               onClick={() => this.props.setView("planner")}>Next Step: Planner</button>
           </div>
         </div>
@@ -69,14 +63,14 @@ export default class Schedule extends React.Component {
         </div>
         <div className="row">
           <Filter
-            searchCriteria={this.state.searchCriteria}
-            onChange={this.updateSearchCriteria}
+            searchCriteria={this.props.searchCriteria}
+            onChange={this.props.updateSearchCriteria}
             config={this.props.config}/>
 
           {
             this.hasSearchCriteria() ? (
               <CourseList
-                searchCriteria={this.state.searchCriteria}
+                searchCriteria={this.props.searchCriteria}
                 selectCourses={this.props.selectCourses}
                 courseWork={this.props.courseWork}
                 />

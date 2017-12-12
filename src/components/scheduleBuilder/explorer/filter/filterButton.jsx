@@ -1,5 +1,6 @@
 import React from 'react';
 
+// A button, used in some filters
 export default class FilterButton extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +16,7 @@ export default class FilterButton extends React.Component {
     var props = this.props;
     return (
       <li
-        className={props.active ? "list-group-item text-center active" : "list-group-item text-center"}
+        className={props.active ? "list-group-item text-center active clickable" : "list-group-item text-center clickable"}
         onClick={this.handleClick}>
         {props.name}
       </li>

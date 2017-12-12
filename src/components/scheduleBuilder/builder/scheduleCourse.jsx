@@ -1,11 +1,11 @@
 import React from 'react';
 import CourseModal from '../explorer/courseList/courseModal';
 
+// An individual course in the schedule view
 export default class ScheduleCourse extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       id: ""
     }
@@ -14,7 +14,7 @@ export default class ScheduleCourse extends React.Component {
   componentDidMount() {
     var section = this.props.section;
 
-    // Build URL to access desired sections
+    // Build URL to access desired section
     var url = 'api/course'
       + '?year=' + section.year
       + '&term=' + section.term
@@ -39,6 +39,8 @@ export default class ScheduleCourse extends React.Component {
     var type = section.meetings[0].type_verbose;
     var display_name = section.subject + ' ' + section.course_number
         + ' ' + type + ' (' + section.number + ')';
+
+    // Displays an individual course, and includes a modal for more info if clicked
     return (
       <div>
         <div

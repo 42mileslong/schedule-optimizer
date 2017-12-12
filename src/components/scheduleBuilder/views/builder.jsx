@@ -1,6 +1,7 @@
 import React from 'react';
 import ScheduleView from './../builder/scheduleView';
 
+// This page displays finished schedules to the user
 export default class Builder extends React.Component {
   render() {
     var courses = this.props.courseWork.requiredCourses;
@@ -11,7 +12,7 @@ export default class Builder extends React.Component {
           <div className="col-4">
             <button
               type="button"
-              className="btn btn-primary btn-lg"
+              className="btn btn-outline-primary btn-lg"
               onClick={() => this.props.setView("planner")}>Previous Step: Planner</button>
           </div>
           <div className="col-4" style={{'text-align' : 'right'}}>
@@ -19,10 +20,12 @@ export default class Builder extends React.Component {
           </div>
         </div>
         <br />
-        <ScheduleView
-          config={this.props.config}
-          courses={courses}
-          />
+        <div className="scheduleView card">
+          <ScheduleView
+            config={this.props.config}
+            courses={courses}
+            />
+        </div>
       </div>
     )
   }

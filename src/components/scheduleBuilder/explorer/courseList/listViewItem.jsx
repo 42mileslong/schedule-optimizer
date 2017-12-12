@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionView from './sectionView';
 
+// A course list entry for list view
 export default class ListViewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +42,11 @@ export default class ListViewItem extends React.Component {
       })
   }
 
+  /**
+    * Adds this course to the user's selected course list
+    *
+    * @param {String} type  The type of selection to make (requiredCourses, preferredCourses)
+    */
   addCourse(type) {
     this.getSectionTypes(sectionTypes => {
       console.log(sectionTypes);
@@ -50,10 +56,18 @@ export default class ListViewItem extends React.Component {
     });
   }
 
+  /**
+    * Removes this course from the user's selected course list
+    *
+    * @param {String} type  The type of selection to make (requiredCourses, preferredCourses)
+    */
   removeCourse(type) {
     this.props.removeCourse(type, this.props.course);
   }
 
+  /**
+    * Render the button to select this course
+    */
   renderSelectorButton() {
     var isSelected = false;
     var courseWork = this.props.courseWork;

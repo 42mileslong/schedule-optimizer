@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Displays all selected courses of a specific type (required, preferred)
 export default class CourseTable extends React.Component {
 
   removeCourse(course) {
@@ -16,6 +17,7 @@ export default class CourseTable extends React.Component {
     this.props.selectCourses(this.props.courseType, typedWork);
   }
 
+  // Simple table view for each course that's selected
   render() {
     var courses = this.props.courseWork[this.props.courseType];
     if (typeof courses == 'undefined') {

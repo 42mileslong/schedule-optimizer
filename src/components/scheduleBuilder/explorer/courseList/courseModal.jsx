@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionView from './sectionView';
 
+// A modal that gives details on a given course
 export default class CourseModal extends React.Component {
   constructor(props) {
     super(props);
