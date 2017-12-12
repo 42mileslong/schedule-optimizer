@@ -47,7 +47,19 @@ export default class TermSelector extends React.Component {
         <br />
         <div className="row justify-content-center">
             {
-              this.state.terms.map(term => {
+              this.state.terms.sort((term1, term2) => {
+                if (term1.year !== term2.year) {
+                  return parseInt(term1.year) - parseInt(term2.year);
+                } else {
+                  var t1Val = (term1.name === "Spring") ? 1 :
+                              (term1.name === "Summer") ? 2 :
+                              (term1.name === "Fall") ? 3 : 4;
+                  var t2Val = (term2.name === "Spring") ? 1 :
+                              (term2.name === "Summer") ? 2 :
+                              (term2.name === "Fall") ? 3 : 4;
+                  return t1Val - t2Val;
+                }
+              }).map(term => {
                 var name = term.name + " " + term.year;
                 return (
                   <ButtonSelector
