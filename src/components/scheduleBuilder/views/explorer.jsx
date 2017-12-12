@@ -41,7 +41,7 @@ export default class Schedule extends React.Component {
           <div className="col-4 mx-auto">
             <button
               type="button"
-              className="btn btn-primary btn-lg"
+              className="btn btn-outline-primary btn-lg"
               onClick={() => this.props.setView("startup")}>Previous Step: Startup</button>
           </div>
           <div className="col-4">
@@ -50,7 +50,7 @@ export default class Schedule extends React.Component {
           <div className="col-4" style={{'text-align' : 'right'}}>
             <button
               type="button"
-              className="btn btn-primary btn-lg"
+              className="btn btn-outline-primary btn-lg"
               onClick={() => this.props.setView("planner")}>Next Step: Planner</button>
           </div>
         </div>
