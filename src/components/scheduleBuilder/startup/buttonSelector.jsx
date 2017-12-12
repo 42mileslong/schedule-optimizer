@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Button to select a term
 export default class ButtonSelector extends React.Component {
 
   render() {

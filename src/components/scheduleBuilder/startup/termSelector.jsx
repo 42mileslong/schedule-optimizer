@@ -2,6 +2,7 @@ import React from 'react';
 
 import ButtonSelector from './buttonSelector';
 
+// Term selection widget
 export default class TermSelector extends React.Component {
   constructor(props) {
     super(props);
