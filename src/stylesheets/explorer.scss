@@ -97,6 +97,7 @@ $darkOpaque: rgba(30,31,30, .8);
   padding: 0;
   padding-top: .25rem;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .hour-number, .hour-delimiter, .day-name {

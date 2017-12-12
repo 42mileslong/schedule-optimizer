@@ -99,34 +99,43 @@ function getCourseSections(allSections, course, callback) {
  */
 function generate(courseList) {
     // INIT
-    
+
     // Schedules should be initialized as a list of lists where each list contains 1 value
     var schedules = [];
 
-    for (var i = 0; i < courseList[0].length; i++) {
-        schedules.push([courseList[0][i]]);
+    var baseIndex = 0;
+    while (baseIndex < courseList.length && courseList[baseIndex] === undefined) {
+      baseIndex++;
     }
 
+    if (baseIndex != courseList.length) {
+      for (var i = 0; i < courseList[0].length; i++) {
+          schedules.push([courseList[0][i]]);
+      }
 
-    // CHECK
-    for (var i = 1; i < courseList.length; i++) {
-        var temp = []
-        for (var j = 0; j < schedules.length; j++) {
-            var s = addCourse(schedules[j], courseList[i]);
-            if (s.length > 0) {
-                temp = temp.concat(s);
-            }
-        }
-        schedules = temp;
+
+      // CHECK
+      for (var i = 1; i < courseList.length; i++) {
+          var temp = []
+          for (var j = 0; j < schedules.length; j++) {
+              var s = addCourse(schedules[j], courseList[i]);
+              if (s.length > 0) {
+                  temp = temp.concat(s);
+              }
+          }
+          schedules = temp;
+      }
+
+      return schedules.slice(0, 25).map(a => a.map(b => b.number));
+    } else {
+      return [[]];
     }
-
-    return schedules.slice(0, 25).map(a => a.map(b => b.number));
 }
 
 /**
  * Tries to add every section for a course to a given schedule.
  * Returns all schedules where the given section did not introduce a conflict.
- * 
+ *
  * @param {Array} schedule  List of sections that make a schedule
  * @param {Array} course    List of sections for a course
  * @return {Array}          List of lists of acceptable schedules
@@ -145,7 +154,7 @@ function addCourse(schedule, course) {
 
 /**
  * Checks if the given schedule conflicts with the given section
- * 
+ *
  * @param {Array} schedule  List of sections
  * @param {Object} section  Section object
  * @return {Boolean}        True if the section was added, False otherwise
@@ -162,7 +171,7 @@ function checkSchedule(schedule, section) {
 
 /**
  * Checks if two sections overlap in times.
- * 
+ *
  * @param {Object} s1  Section object
  * @param {Object} s2  Section object
  * @return {Boolean}   True if there is a conflict, False otherwise
@@ -174,7 +183,7 @@ function checkConflict(s1, s2) {
         return false;
     }
 }
-        
+
 /**
  * Converts a time in the format XX:XX AM to an integer, for display purposes
  *
