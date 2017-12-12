@@ -2,7 +2,7 @@ var express = require('express');
 var http = require('http');
 var promise = require('request-promise');
 var request = require("request");
-var database = require('../database')
+var database = require('../database');
 
 
 /**
