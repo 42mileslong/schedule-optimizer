@@ -120,8 +120,6 @@ function generate(courseList) {
         schedules = temp;
     }
 
-    console.log(schedules[0].map(a => a.number));
-    
     return schedules.slice(0, 25).map(a => a.map(b => b.number));
 }
 
@@ -153,7 +151,7 @@ function addCourse(schedule, course) {
  * @return {Boolean}        True if the section was added, False otherwise
  */
 function checkSchedule(schedule, section) {
-    for (var i = 0; i < section.length; i++) {
+    for (var i = 0; i < schedule.length; i++) {
         if (checkConflict(schedule[i], section)) {
             return false;
         }
@@ -170,10 +168,8 @@ function checkSchedule(schedule, section) {
  * @return {Boolean}   True if there is a conflict, False otherwise
  */
 function checkConflict(s1, s2) {
-    console.log("hi there");
-    
-    if (s1.days.filter((n) => s2.days.includes(n))) {
-        return !(s1.start_time <= s2.end_time &&  s1.end_time >= s2.start_time);
+    if (s1.days.some((n) => s2.days.includes(n))) {
+        return s1.start_time <= s2.end_time &&  s1.end_time >= s2.start_time;
     } else {
         return false;
     }
@@ -187,7 +183,7 @@ function checkConflict(s1, s2) {
 function timeToInt(time) {
     var startAmPm = time.split(' ')[1];
     var startClock = time.split(' ')[0];
-    var startHour = parseInt(startClock.split(':')[0]) - this.baseTime;
+    var startHour = parseInt(startClock.split(':')[0]) - 6;
     if (startAmPm === 'PM' && startClock.split(':')[0] !== '12') {
         startHour += 12;
     }
