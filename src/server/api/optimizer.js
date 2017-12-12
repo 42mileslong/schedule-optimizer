@@ -15,7 +15,6 @@ var database = require('../database')
   */
 module.exports.generate = function(courseList, callback) {
   getAvailableSectionsForCourses(courseList, function(sectionList) {
-    //callback(sectionList[0]);
     callback(generate(sectionList));
   });
 };
@@ -85,14 +84,24 @@ function getCourseSections(allSections, course, i, callback) {
     );
 }
 
+/**
+ * Generates a sorted list of schedules given the parameters
+ *
+ * @param {Array} courseList  List of lists of sections for each course to be included in schedule
+ * @return {Array}            List of lists of sections that make schedules
+ */
 function generate(courseList) {
     return oneRecursiveBoi([], 0, courseList);
-
 }
 
-//topC : the list of courses from upper for loops, it's empty if we are on first course
-//i : the index of the class we want to pick courses
 
+/**
+ * Some recursive magic that generates schedules without conflicts
+ *
+ * @param {Number} topC       the list of courses from upper for loops, it's empty if we are on first course
+ * @param {Array} courseList  List of lists of sections for each course to be included in schedule
+ * @param {Number} i          the index of the class we want to pick courses
+ */
 function oneRecursiveBoi(topC, i, classList) {
   secListId = []
 
@@ -125,7 +134,11 @@ function oneRecursiveBoi(topC, i, classList) {
   return secListId.slice(0, 25);
 }
 
-
+/**
+ * Checks if two courses aren't conflicting in an ordered list of sections
+ *
+ * @param {Array} arr  An ordered list of sections by time
+ */
 function noConflict(arr) {
     arr = sort(arr);
     for (var i = 1; i < arr.length; i++) {
@@ -138,8 +151,9 @@ function noConflict(arr) {
     return true;
 }
 
-//Finds the next course from the courses in arr from k index
-//and onward that doesn't conflict with the current courses in schedule
+/**
+ * Finds the next course from the courses in arr from k index and onward that doesn't conflict with the current courses in schedule
+ */
 function nextNonConflict(schedule, courseList, k) {
     for (var i = k; i < courseList.length; i++) {
         schedule.push(courseList[i]);
@@ -152,7 +166,9 @@ function nextNonConflict(schedule, courseList, k) {
     return -1;
 }
 
-
+/**
+ * Sorts the courses by start time
+ */
 function sort(courses) {  // has start time, finish time, and weight
    if (courses.length < 2) {
         return courses;
@@ -164,12 +180,14 @@ function sort(courses) {  // has start time, finish time, and weight
     return merge(sort(left), sort(right));
 }
 
+/**
+ * Merges the courses by start time
+ */
 function merge(left, right) {
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0].meetings[0].start_time === "ARRANGED"
-          || (right[0].meetings[0].start_time !== "ARRANGED" && left[0].meetings[0].end_time <= right[0].meetings[0].end_time)) {
+        if (left[0].meetings[0].start_time === "ARRANGED" || (right[0].meetings[0].start_time !== "ARRANGED" && left[0].meetings[0].end_time <= right[0].meetings[0].end_time)) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
