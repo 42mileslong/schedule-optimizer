@@ -7,6 +7,7 @@ $orangeAccent: #E84E01;
 $dark: #1E1F1E;
 
 $buttonBlue: #007bff;
+$darkOpaque: rgba(30,31,30, .8);
 
 #explorer {
   background-color: $primary;
@@ -100,35 +101,34 @@ $buttonBlue: #007bff;
 
 .hour-number, .hour-delimiter, .day-name {
   height: 40px;
-  border-bottom: 1px solid #BABDB6;
-  border-right: 1px solid #BABDB6;
+  border-bottom: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
   display: block;
   box-sizing: border-box;
 }
 
-.hours .day-name {
-  border-left: 1px solid #BABDB6;
-}
-
 .day-name {
-  border-top: 1px solid #BABDB6;
+  border-right: none;
   text-align: center;
   color: #ffffff;
   font-size: 1.25rem;
   line-height: 40px;
+  border-bottom: 2px solid #e9ecef;
 }
 
 .hours {
   margin-left: 4.166666%;
 }
 
+.hours .day-name {
+  border-bottom: none;
+}
+
 .hour-number {
   text-align: right;
-  border-left: 1px solid #BABDB6;
   box-sizing: border-box;
   padding: 10px;
-  font-weight: bold;
-  background-color: #f8f9fa;
+  border-bottom: none;
 }
 
 .hour-delimiter.top-half,
