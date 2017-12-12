@@ -50,7 +50,6 @@ export default class ScheduleView extends React.Component {
     }).then(res => {
         return res.json()
     }).then(sectionIds => {
-
         // Populate schedules, set up current sections to view
         this.setState({
           schedules: sectionIds,
@@ -110,45 +109,59 @@ export default class ScheduleView extends React.Component {
           + '?year=' + year
           + '&term=' + term;
 
-      sectionIds.forEach(sectionId => {
-        url += '&number=' + sectionId;
-      });
-
-      fetch(url)
-        .then(res => {
-          return res.json()
-        })
-        .then(sections => {
-          // Pull Section objects from API, display them, and cache for later
-          this.state.sectionsForSchedule[newScheduleNum] = sections;
-
-          this.setState({
-            sections: sections,
-            sectionsForSchedule: this.state.sectionsForSchedule
-          });
+      if (sectionids.length > 0) {
+        sectionIds.forEach(sectionId => {
+          url += '&number=' + sectionId;
         });
+
+        fetch(url)
+          .then(res => {
+            return res.json()
+          })
+          .then(sections => {
+            // Pull Section objects from API, display them, and cache for later
+            this.state.sectionsForSchedule[newScheduleNum] = sections;
+
+            this.setState({
+              sections: sections,
+              sectionsForSchedule: this.state.sectionsForSchedule
+            });
+          });
+      } else {
+        this.state.sectionsForSchedule[newScheduleNum] = [];
+
+        this.setState({
+          sections: [],
+          sectionsForSchedule: this.state.sectionsForSchedule
+        });
+      }
+
     }
 
     // Load the next schedule too, to reduce perceived latency
     if (newScheduleNum < this.state.schedules.length - 1
         && this.state.sectionsForSchedule[newScheduleNum + 1] === undefined) {
-          var sectionIds = this.state.schedules[newScheduleNum + 1];
-          var url = 'api/section'
-              + '?year=' + year
-              + '&term=' + term;
+      var sectionIds = this.state.schedules[newScheduleNum + 1];
+      var url = 'api/section'
+          + '?year=' + year
+          + '&term=' + term;
 
-          sectionIds.forEach(sectionId => {
-            url += '&number=' + sectionId;
+      if (sectionIds.length > 0) {
+        sectionIds.forEach(sectionId => {
+          url += '&number=' + sectionId;
+        });
+
+        fetch(url)
+          .then(res => {
+            return res.json()
+          })
+          .then(sections => {
+            // Pull Section objects from API, display them, and cache for later
+            this.state.sectionsForSchedule[newScheduleNum + 1] = sections;
           });
-
-          fetch(url)
-            .then(res => {
-              return res.json()
-            })
-            .then(sections => {
-              // Pull Section objects from API, display them, and cache for later
-              this.state.sectionsForSchedule[newScheduleNum + 1] = sections;
-            });
+      } else {
+        this.state.sectionsForSchedule[newScheduleNum + 1] = [];
+      }
     }
   }
 
@@ -204,6 +217,34 @@ export default class ScheduleView extends React.Component {
           <DayView day='W' dayName='Wednesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
           <DayView day='R' dayName='Thursday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
           <DayView day='F' dayName='Friday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+        </div>
+        <div className='row'>
+          <div className='col-3'></div>
+          <div className='col-6'>
+            <table className="table course-table">
+              <thead>
+                <tr>
+                  <th scope="col">Course</th>
+                  <th scope="col">Section Type</th>
+                  <th scope="col">CRN</th>
+                </tr>
+              </thead>
+              <tbody>
+              {
+                sections.map(section => {
+                  return (
+                      <tr key={section._id}>
+                        <td>{section.subject + " " + section.course_number}</td>
+                        <td>{section.meetings[0].type_verbose}</td>
+                        <td>{section.number}</td>
+                      </tr>
+                  )
+                })
+              }
+              </tbody>
+            </table>
+          </div>
+          <div className='col-3'></div>
         </div>
       </div>
     )
