@@ -2,7 +2,7 @@
 
 Schedule Optimizer is a web platform that allows students at the University of Illinois at Urbana-Champaign to browse available courses and automatically build conflict-free schedules. The traditional registration process is complicated, frustrating, and often results in imperfect schedules - we hope to fix that.
 
-Check out our sister repo for [schedule-optimizer-scraper](https://github.com/CS196Illinois/schedule-optimizer-scraper)
+Check out our sister repo for [schedule-optimizer-scraper](https://github.com/CS196Illinois/schedule-optimizer-scraper) and our [GitHub wiki](https://github.com/CS196Illinois/schedule-optimizer/wiki) for more internal information / documentation
 
 Live demo available at https://schedule-host.herokuapp.com/scheduleBuilder
 
