@@ -31,7 +31,7 @@ Developed by:
 * Benjamin Pankow [bpankow2]
 
 Project Managers:
-* Pooja Mikkilineni [pmikki2]
 * David Brewster [davidb2]
+* Pooja Mikkilineni [pmikki2]
 
 #####  All rights reserved.
