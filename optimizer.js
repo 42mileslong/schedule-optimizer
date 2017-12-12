@@ -22,7 +22,7 @@ var request = require("request");
 // app.set('view engine', 'ejs');
 
 // serv.createServer(app).listen(PORT, function() {
-//     console.log("Server is listening on port 3000");
+//     console.log("Server is listening on port 3000"); 
 // });
 
 
@@ -78,6 +78,7 @@ var optCourses = []
 
 //2D array to hold generated schedules
 var schedules = [];
+console.log("Working");
 samCourses = [{
     year: '2018',
     term: 'Summer',
@@ -209,7 +210,7 @@ function sort(courses){  // has start time, finish time, and weight
     if (courses.length < 2){
         return courses;
     }
-
+  
     var middle = parseInt(courses.length / 2);
     var left   = courses.slice(0, middle);
     var right  = courses.slice(middle, courses.length);
@@ -227,15 +228,15 @@ function merge(left, right){
             result.push(right.shift());
         }
     }
-
+  
     while (left.length){
         result.push(left.shift());
     }
-
+ 
     while (right.length){
         result.push(right.shift());
     }
-
+ 
     return result;
 }
 
@@ -259,6 +260,9 @@ function getAvailableCourses(arr){
 
         allCourses.push([]);
         var add = 'http://localhost:5000/api/section?year=' + arr[i].year + '&term=' + arr[i].term + '&subject=' + arr[i].subject + '&course_number=' + arr[i].code;
+        //console.log(add);
+
+        console.log("Req " + i + " sent");
 
         sendRequest(allCourses, arr, add, i);
 
@@ -272,11 +276,14 @@ function getAvailableCourses(arr){
 //i : the index of the course we are currently getting information for
 function sendRequest(allCourses, arr, add, i){
     request(add, function(err, response, chunk) {
+        console.log("Res " + i  + " received");
+
         var obj = JSON.parse(chunk);
 
         for (k in obj){
             if (meetsFilter(k)){
                 allCourses[i].push(Course(arr[i].subject, arr[i].code, obj[k]._id, obj[k].meetings[0].start_time, obj[k].meetings[0].end_time, obj[k].start_date, obj[k].end_date));
+                console.log(allCourses[i][k]);
             }
         }
     });
@@ -284,7 +291,7 @@ function sendRequest(allCourses, arr, add, i){
 
 
 //checks if the given class meets the filters given by
-//the class we want to check
+//the class we want to check 
 function meetsFilter(class){
     //come up with a way to store the periods of time the users wants to take courses. ( maybe ?? dictionary??)
 }

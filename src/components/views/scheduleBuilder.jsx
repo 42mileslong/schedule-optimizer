@@ -108,6 +108,7 @@ export default class ScheduleBuilder extends React.Component {
       return (
         <Planner
           courseWork={this.state.courseWork}
+          selectCourses={this.selectCourses}
           setView={this.setView}/>
       )
     } else if (view == "startup") {
@@ -133,37 +134,43 @@ export default class ScheduleBuilder extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul className="nav justify-content-center">
-          <li className="nav-item">
-            <button
-              className="nav-link btn btn-link"
-              onClick={() => this.setView("startup")}>Startup</button>
-          </li>
-          <li className="nav-item">
-            <button
-              className="nav-link btn btn-link"
-              disabled={this.state.config.term.name ? false : true}
-              onClick={() => this.setView("explorer")}>Explorer</button>
-          </li>
-          <li className="nav-item">
-            <button
-              className="nav-link btn btn-link"
-              disabled={this.state.config.term.name ? false : true}
-              onClick={() => this.setView("planner")}>Planner</button>
-          </li>
-          <li className="nav-item">
-            <button
-              className="nav-link btn btn-link"
-              disabled={
-                this.state.config.term.name ? (
-                  this.state.courseWork.requiredCourses.length > 0 ? false : true
-                ) : true
-              }
-              onClick={() => this.setView("builder")}>Builder</button>
-          </li>
-        </ul>
-        {  this.renderSection()}
+      <div className="section scheduleBuilder">
+        <div className="scheduleBuilder-background background-image-parralax">
+        </div>
+        <div className="section-content">
+          <ul className="nav justify-content-center">
+            <li className="nav-item">
+              <button
+                className="nav-link btn btn-link"
+                onClick={() => this.setView("startup")}>Startup</button>
+            </li>
+            <li className="nav-item">
+              <button
+                className="nav-link btn btn-link"
+                disabled={this.state.config.term.name ? false : true}
+                onClick={() => this.setView("explorer")}>Explorer</button>
+            </li>
+            <li className="nav-item">
+              <button
+                className="nav-link btn btn-link"
+                disabled={this.state.config.term.name ? false : true}
+                onClick={() => this.setView("planner")}>Planner</button>
+            </li>
+            <li className="nav-item">
+              <button
+                className="nav-link btn btn-link"
+                disabled={
+                  this.state.config.term.name ? (
+                    this.state.courseWork.requiredCourses.length > 0 ? false : true
+                  ) : true
+                }
+                onClick={() => this.setView("builder")}>Builder</button>
+            </li>
+          </ul>
+          <div>
+            {  this.renderSection()}
+          </div>
+        </div>
       </div>
 
     )
