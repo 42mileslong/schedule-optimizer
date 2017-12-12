@@ -26,7 +26,28 @@ export default class GridViewItem extends React.Component {
   }
 
   componentDidMount() {
-    this.state.id = this.props.course.name.replace(/\s/g,''); // No render
+    this.state.id = this.props.course._id.replace(/\s/g,''); // No render
+  }
+
+  getSectionTypes(callback) {
+    var course = this.props.course;
+
+    var url = 'api/section'
+      + '?year=' + course.year
+      + '&term=' + course.term
+      + '&subject=' + course.subject
+      + '&course_number=' + course.number;
+
+    fetch(url)
+      .then(res => {
+        return res.json();
+      })
+      .then(sections => {
+        var sectionTypes = Array.from(new Set(sections.map(section => {
+          return section.meetings[0].type_verbose;
+        })));
+        callback(sectionTypes);
+      })
   }
 
   /**
@@ -35,7 +56,12 @@ export default class GridViewItem extends React.Component {
     * @param {String} type  The type of selection to make (requiredCourses, preferredCourses)
     */
   addCourse(type) {
-    this.props.addCourse(type, this.props.course);
+    this.getSectionTypes(sectionTypes => {
+      console.log(sectionTypes);
+      var courseObject = Object.assign({}, this.props.course);
+      courseObject.section_types = sectionTypes;
+      this.props.addCourse(type, courseObject);
+    });
   }
 
   /**

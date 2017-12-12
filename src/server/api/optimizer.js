@@ -15,7 +15,6 @@ var database = require('../database')
   */
 module.exports.generate = function(courseList, callback) {
   getAvailableSectionsForCourses(courseList, function(sectionList) {
-    //callback(sectionList[0]);
     callback(generate(sectionList));
   });
 };
@@ -29,13 +28,25 @@ module.exports.generate = function(courseList, callback) {
   */
 function getAvailableSectionsForCourses(courseList, callback) {
     var allSections = [];
-    var numCourses = courseList.length;
 
+    var elementList = [];
     for (var i = 0; i < courseList.length; i++) {
-        var course = courseList[i];
+      var course = courseList[i];
+
+      course.section_types.forEach(sectionType => {
+        var element = Object.assign({}, course);
+        element.section_type = sectionType;
+        elementList.push(element);
+      });
+    }
+
+    var numCourses = elementList.length;
+
+    for (var i = 0; i < elementList.length; i++) {
+        var course = elementList[i];
 
         // Call method for each individual section
-        getCourseSections(allSections, course, i, function() {
+        getCourseSections(allSections, course, function() {
             // This lets us count how many callbacks finished - once they're all
             // done, return
             numCourses--;
@@ -55,121 +66,127 @@ function getAvailableSectionsForCourses(courseList, callback) {
   * @param {Number} i           The index in the array to insert into
   * @param {Function} callback  Callback that will be evoked when finished
   */
-function getCourseSections(allSections, course, i, callback) {
+function getCourseSections(allSections, course, callback) {
     var searchParams = {};
-    searchParams['course_number'] = course['number'];
-    searchParams['term'] = course['term'];
     searchParams['year'] = course['year'];
+    searchParams['term'] = course['term'];
     searchParams['subject'] = course['subject'];
+    searchParams['course_number'] = course['number'];
+    searchParams['meetings'] = {'$elemMatch' : {'type_verbose' : course['section_type']}};
 
     // Get current sections that correspond with search parameters
     database.Section.findCurrent(
         searchParams,
         function(err, sections) {
-            allSections[i] = sections;
+            if (sections[0].meetings[0].start_time != "ARRANGED") {
+                for (var i = 0; i < sections.length; i++) {
+                    sections[i].start_time = timeToInt(sections[i].meetings[0].start_time);
+                    sections[i].end_time = timeToInt(sections[i].meetings[0].end_time);
+                    sections[i].days = Array.from(sections[i].meetings[0].days);
+                }
+                allSections.push(sections);
+            }
             callback();
         }
     );
 }
 
+/**
+ * Generates a sorted list of schedules given the parameters
+ *
+ * @param {Array} courseList  List of lists of sections for each course to be included in schedule
+ * @return {Array}            List of lists of sections where each sublist is a complete schedule
+ */
 function generate(courseList) {
-    return oneRecursiveBoi([], 0, courseList);
+    // INIT
+    
+    // Schedules should be initialized as a list of lists where each list contains 1 value
+    var schedules = [];
 
-}
-
-//topC : the list of courses from upper for loops, it's empty if we are on first course
-//i : the index of the class we want to pick courses
-
-function oneRecursiveBoi(topC, i, classList) {
-  secListId = []
-
-  function funBoi(topC, i, classList) {
-
-      if (i == classList.length) {
-        temp = []
-        for (var i = 0; i < topC.length; i++) {
-              temp.push(topC[i].number);
-        }
-        secListId.push(temp)
-      } else {
-          var k = 0;
-          var next = nextNonConflict(topC, classList[i], k);
-          while (next != -1) {
-              var currentSch = topC;
-              currentSch.push(classList[i][next]);
-
-              funBoi(currentSch, i + 1, classList);
-
-              currentSch.pop();
-              k = next + 1;
-              next = nextNonConflict(topC, classList[i], k);
-          }
-      }
-  }
-
-  funBoi(topC, i, classList);
-
-  return secListId.slice(0, 25);
-}
+    for (var i = 0; i < courseList[0].length; i++) {
+        schedules.push([courseList[0][i]]);
+    }
 
 
-function noConflict(arr) {
-    arr = sort(arr);
-    for (var i = 1; i < arr.length; i++) {
-        if (!arr[i - 1].start_time === "ARRANGED" && !arr[i].start_time === "ARRANGED") {
-            if (arr[i - 1].end_time > arr[i].start_time) {
-                return false;
+    // CHECK
+    for (var i = 1; i < courseList.length; i++) {
+        var temp = []
+        for (var j = 0; j < schedules.length; j++) {
+            var s = addCourse(schedules[j], courseList[i]);
+            if (s.length > 0) {
+                temp = temp.concat(s);
             }
         }
+        schedules = temp;
     }
+
+    return schedules.slice(0, 25).map(a => a.map(b => b.number));
+}
+
+/**
+ * Tries to add every section for a course to a given schedule.
+ * Returns all schedules where the given section did not introduce a conflict.
+ * 
+ * @param {Array} schedule  List of sections that make a schedule
+ * @param {Array} course    List of sections for a course
+ * @return {Array}          List of lists of acceptable schedules
+ */
+function addCourse(schedule, course) {
+    var output = [];
+
+    for (var i = 0; i < course.length; i++) {
+        if (checkSchedule(schedule, course[i])) {
+            output.push(schedule.concat(course[i]));
+        }
+    }
+
+    return output;
+}
+
+/**
+ * Checks if the given schedule conflicts with the given section
+ * 
+ * @param {Array} schedule  List of sections
+ * @param {Object} section  Section object
+ * @return {Boolean}        True if the section was added, False otherwise
+ */
+function checkSchedule(schedule, section) {
+    for (var i = 0; i < schedule.length; i++) {
+        if (checkConflict(schedule[i], section)) {
+            return false;
+        }
+    }
+
     return true;
 }
 
-//Finds the next course from the courses in arr from k index
-//and onward that doesn't conflict with the current courses in schedule
-function nextNonConflict(schedule, courseList, k) {
-    for (var i = k; i < courseList.length; i++) {
-        schedule.push(courseList[i]);
-        if (noConflict(schedule)) {
-            schedule.pop();
-            return i;
-        }
-        schedule.pop();
+/**
+ * Checks if two sections overlap in times.
+ * 
+ * @param {Object} s1  Section object
+ * @param {Object} s2  Section object
+ * @return {Boolean}   True if there is a conflict, False otherwise
+ */
+function checkConflict(s1, s2) {
+    if (s1.days.some((n) => s2.days.includes(n))) {
+        return s1.start_time <= s2.end_time &&  s1.end_time >= s2.start_time;
+    } else {
+        return false;
     }
-    return -1;
 }
-
-
-function sort(courses) {  // has start time, finish time, and weight
-   if (courses.length < 2) {
-        return courses;
+        
+/**
+ * Converts a time in the format XX:XX AM to an integer, for display purposes
+ *
+ * @param {String} time The time to convert
+ */
+function timeToInt(time) {
+    var startAmPm = time.split(' ')[1];
+    var startClock = time.split(' ')[0];
+    var startHour = parseInt(startClock.split(':')[0]) - 6;
+    if (startAmPm === 'PM' && startClock.split(':')[0] !== '12') {
+        startHour += 12;
     }
-
-    var middle = parseInt(courses.length / 2);
-    var left   = courses.slice(0, middle);
-    var right  = courses.slice(middle, courses.length);
-    return merge(sort(left), sort(right));
-}
-
-function merge(left, right) {
-    var result = [];
-
-    while (left.length && right.length) {
-        if (left[0].meetings[0].start_time === "ARRANGED"
-          || (right[0].meetings[0].start_time !== "ARRANGED" && left[0].meetings[0].end_time <= right[0].meetings[0].end_time)) {
-            result.push(left.shift());
-        } else {
-            result.push(right.shift());
-        }
-    }
-
-    while (left.length) {
-        result.push(left.shift());
-    }
-
-    while (right.length) {
-        result.push(right.shift());
-    }
-
-    return result;
+    var startMinute = parseInt(startClock.split(':')[1]);
+    return startHour * 60 + startMinute;
 }

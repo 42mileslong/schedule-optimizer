@@ -108,6 +108,7 @@ export default class ScheduleBuilder extends React.Component {
       return (
         <Planner
           courseWork={this.state.courseWork}
+          selectCourses={this.selectCourses}
           setView={this.setView}/>
       )
     } else if (view == "startup") {
