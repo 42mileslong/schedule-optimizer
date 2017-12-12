@@ -11,14 +11,11 @@ export default class NavBar extends React.Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
+                    <li className="nav-item">
                         <a className="nav-link" href="/">Home</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="courses">Explorer</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Disabled</a>
+                        <a className="nav-link" href="scheduleBuilder">Schedule Builder</a>
                     </li>
                 </ul>
 

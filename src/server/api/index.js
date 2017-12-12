@@ -1,53 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../database')
-
+var optimizer = require('./optimizer');
 
 var getHead = function(callback) {
     database.Head.findOne({}, callback);
 }
 
-var replaceChildrenWithUrls = function(doc, urlBase, fieldName, callback) {
-    if (doc === null) {
-       callback(null);
-       return;
-    }
-    doc.getChildren(function(err, children) {
-        var docObj = doc.toObject();
-        var list = [];
-        children.forEach(function(child) {
-           var identifying = child[fieldName].split(' ')[0];
-           list.push({
-              name: identifying,
-              url: urlBase + '/' + identifying
-           });
+router.post('/optimize', function(req, res) {
+    if (req.body.constructor !== Array) {
+        res.send(['asdfasdf']);
+    } else {
+        optimizer.generate(req.body, function(schedules) {
+            res.send(schedules);
         });
-        docObj.children = list;
-        callback(docObj);
-    });
-}
-
-var getChildWhere = function(doc, fieldName, value, res, callback) {
-    if (doc === null || doc === undefined) {
-        res.send(null);
-        return;
     }
-    doc.getChildWhere(fieldName, value, function(err, childDoc) {
-        if (childDoc === null) {
-            res.send(null);
-            return;
-        }
-        callback(err, childDoc);
-    });
-}
-
-var getChildren = function(doc, callback) {
-    if (doc === null || doc === undefined) {
-        res.send(null);
-        return;
-    }
-    doc.getChildren(callback);
-}
+});
 
 // This module routes specific urls / API endpoints to content - in this case,
 // data pulled from the database.
@@ -104,11 +72,59 @@ router.get('/course', function(req, res) {
     getHead(function(err, head) {
         var parameters = req.query;
         parameters['iteration'] = head.iter_id;
-        database.Course.find(
-            parameters,
-            function(err, years) {
+        var credit_hours_options = parameters['credit_hours'];
+        if (credit_hours_options !== undefined) {
+          if (credit_hours_options.constructor !== Array) {
+            credit_hours_options = [credit_hours_options];
+          }
+          var min_credit_hours = Math.min.apply(null, credit_hours_options);
+          parameters['max_credit_hours'] = { '$gte' : min_credit_hours };
+
+          var max_credit_hours = Math.max.apply(null, credit_hours_options);
+          parameters['min_credit_hours'] = { '$lte' : max_credit_hours };
+
+          delete parameters['credit_hours'];
+        }
+
+        var maxCourseNum = parameters['max_course_num'];
+        var minCourseNum = parameters['min_course_num'];
+        if (maxCourseNum !== undefined) {
+          if (minCourseNum !== undefined) {
+            parameters['number'] = { '$lte' : maxCourseNum, '$gte' : minCourseNum };
+            delete parameters['min_course_num'];
+          } else {
+            parameters['number'] = { '$lte' : maxCourseNum };
+          }
+          delete parameters['max_course_num'];
+        }
+        else if (minCourseNum !== undefined) {
+          delete parameters['min_course_num'];
+          parameters['number'] = { '$gte' : minCourseNum };
+        }
+
+        if (parameters['search'] !== undefined) {
+          parameters['$text'] = {
+            '$search' :  parameters['search']
+          }
+
+          delete parameters['search'];
+
+          database.Course.find(
+              parameters,
+              { score : { $meta: 'textScore' } }
+            ).sort({
+              score: { $meta: "textScore" }
+            }).exec(function(err, years) {
                 res.send(years);
-        });
+            });
+
+        } else {
+          database.Course.find(
+              parameters
+            ).exec(function(err, years) {
+                res.send(years);
+            });
+        }
     });
 });
 

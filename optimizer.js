@@ -7,7 +7,7 @@ var request = require("request");
 
 
 //##################################################################//
-//what options are given to the users, 
+//what options are given to the users,
 
 //what are the factors of the optimization : travel time ? starting time ? instructor ?
 
@@ -37,7 +37,7 @@ var request = require("request");
 //     socket.id=Math.random();
 //     SOCKET_LIST[socket.id]=socket;
 
-//     socket.on("sentData", function(data){   //assuming data has a courses list and a preferences property 
+//     socket.on("sentData", function(data){   //assuming data has a courses list and a preferences property
 //         fetchData(data.courses);
 //     })
 //     socket.on("disconnect", function(){           //Delete when the player disconnects
@@ -149,7 +149,7 @@ function oneRecursiveBoi(topC, i, classList){
 
             oneRecursiveBoi(currentSch, i + 1, classList);
 
-            currentSch.pop(); 
+            currentSch.pop();
             k = next + 1;
             next = nextNonConflict(topC, classList[i], k);
         }
@@ -171,7 +171,7 @@ function oneRecursiveBoi(topC, i, classList){
 
 //             oneRecursiveBoi(currentSch, i + 1, classList);
 
-//             currentSch.pop();   
+//             currentSch.pop();
 //         }
 //     }
 // }
@@ -188,7 +188,7 @@ function noConflict(arr){
     return true;
 }
 
-//Finds the INDEX of the next course from the courses in courseList from k index 
+//Finds the INDEX of the next course from the courses in courseList from k index
 //and onward that doesn't conflict with the current courses in schedule
 //schedule: the current schedule
 //courseList: list of courses we are searching thu
@@ -210,17 +210,17 @@ function sort(courses){  // has start time, finish time, and weight
     if (courses.length < 2){
         return courses;
     }
- 
+  
     var middle = parseInt(courses.length / 2);
     var left   = courses.slice(0, middle);
     var right  = courses.slice(middle, courses.length);
- 
+
     return merge(sort(left), sort(right));
 }
 
 function merge(left, right){
     var result = [];
- 
+
     while (left.length && right.length) {
         if (left[0].finishTime <= right[0].finishTime) {
             result.push(left.shift());
@@ -228,7 +228,7 @@ function merge(left, right){
             result.push(right.shift());
         }
     }
- 
+  
     while (left.length){
         result.push(left.shift());
     }
@@ -263,6 +263,7 @@ function getAvailableCourses(arr){
         //console.log(add);
 
         console.log("Req " + i + " sent");
+
         sendRequest(allCourses, arr, add, i);
 
     }
@@ -276,6 +277,7 @@ function getAvailableCourses(arr){
 function sendRequest(allCourses, arr, add, i){
     request(add, function(err, response, chunk) {
         console.log("Res " + i  + " received");
+
         var obj = JSON.parse(chunk);
 
         for (k in obj){

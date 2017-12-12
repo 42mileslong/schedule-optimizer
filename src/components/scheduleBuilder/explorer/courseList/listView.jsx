@@ -1,5 +1,7 @@
 import React from 'react'
 import ListViewItem from './listViewItem';
+
+// A more straightforward list view of courses
 export default class GridView extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,12 @@ export default class GridView extends React.Component {
           {
             this.props.courses.map(course => {
               return (
-                <ListViewItem course={course} />
+                <ListViewItem
+                  key={course._id}
+                  courseWork={this.props.courseWork}
+                  course={course}
+                  addCourse={this.props.addCourse}
+                  removeCourse={this.props.removeCourse}/>
               )
 
             })
