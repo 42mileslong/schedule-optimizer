@@ -79,6 +79,10 @@ function getCourseSections(allSections, course, callback) {
         searchParams,
         function(err, sections) {
             if (sections[0].meetings[0].start_time != "ARRANGED") {
+                for (var i = 0; i < sections.length; i++) {
+                    sections[i].start_time = timeToInt(section[i].meetings[0].start_time);
+                    section[i].end_time = timeToInt(section[i].meetings[0].end_time);
+                }
                 allSections.push(sections);
             }
             callback();
