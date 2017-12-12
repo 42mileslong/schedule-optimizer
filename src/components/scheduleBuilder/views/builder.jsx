@@ -1,6 +1,7 @@
 import React from 'react';
 import ScheduleView from './../builder/scheduleView';
 
+// This page displays finished schedules to the user
 export default class Builder extends React.Component {
   render() {
     var courses = this.props.courseWork.requiredCourses;
