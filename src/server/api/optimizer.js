@@ -15,7 +15,7 @@ var database = require('../database');
   */
 module.exports.generate = function(courseList, callback) {
   getAvailableSectionsForCourses(courseList, function(sectionList) {
-    callback(generate(sectionList));
+    callback(generateGenetic(sectionList));
   });
 };
 
@@ -63,7 +63,6 @@ function getAvailableSectionsForCourses(courseList, callback) {
   *
   * @param {Array} allSections  Array to insert within
   * @param {Object} course      A course object, defined by the Course schema (https://github.com/CS196Illinois/schedule-optimizer/wiki/Data-Schema)
-  * @param {Number} i           The index in the array to insert into
   * @param {Function} callback  Callback that will be evoked when finished
   */
 function getCourseSections(allSections, course, callback) {
@@ -83,6 +82,8 @@ function getCourseSections(allSections, course, callback) {
                     sections[i].start_time = timeToInt(sections[i].meetings[0].start_time);
                     sections[i].end_time = timeToInt(sections[i].meetings[0].end_time);
                     sections[i].days = Array.from(sections[i].meetings[0].days);
+                    sections[i].type = sections[i].meetings[0].type;
+                    sections[i].score = 100;
                 }
                 allSections.push(sections);
             }
@@ -116,7 +117,7 @@ function generate(courseList) {
 
       // CHECK
       for (var i = 1; i < courseList.length; i++) {
-          var temp = []
+          var temp = [];
           for (var j = 0; j < schedules.length; j++) {
               var s = addCourse(schedules[j], courseList[i]);
               if (s.length > 0) {
@@ -131,6 +132,85 @@ function generate(courseList) {
       return [[]];
     }
 }
+
+/**
+ * Generates a sorted list of schedules given the parameters using a genetic algorithm
+ *
+ * @param {Array} courseList  List of lists of sections for each course to be included in schedule
+ * @return {Array}            List of lists of sections where each sublist is a complete schedule
+ */
+function generateGenetic(courseList) {
+    const generations = 5;
+    const population = 100;
+    const topN = 10;
+    const createN = Math.floor(population/topN);
+    
+    var schedules = [...Array(topN).keys()].map(i => [[getRandomSection(courseList)], 0]);
+
+    for (var g = 0; g < generations; g++) {
+        // CREATE
+        var newSchedules = [];
+
+        for (var i = 0; i < schedules.length; i++) {
+            for (var j = 0; j < createN; j++) {
+                var rand = getRandomSection(courseList);
+                if (checkSchedule(schedules[i][0], rand)) {
+                    newSchedules.push([schedules[i][0].concat(rand), 0]);
+                } else {
+                    newSchedules.push([removeRandomSection(schedules[i][0]), 0]);
+                }
+            }
+        }
+
+        schedules = newSchedules;
+        
+        // SCORE
+        for (var i = 0; i < schedules.length; i++) {
+            schedules[i][1] = scoreSchedule(schedules[i][0]);
+        }
+        
+        // WEED
+        schedules = schedules.sort(function(a, b) {
+            return a[1] < b[1];
+        });
+        
+        schedules = schedules.slice(0, topN);
+    }
+
+    console.log(schedules);
+    console.log(schedules.map(a => a[0].map(b => b.number)));
+    return schedules.map(a => a[0].map(b => b.number));
+}
+
+/**
+ * Returns a random section from the aray
+ */
+function getRandomSection(courseList) {
+    var rand = Math.floor(Math.random() * courseList.length);
+    return courseList[rand][Math.floor(Math.random() * courseList[rand].length)];
+}
+
+/**
+ * Removes a random element from the array
+ */
+function removeRandomSection(schedule) {
+    var s = schedule.slice(0);
+    s.splice(Math.floor(Math.random() * schedule.length), 1);
+    return s;
+}
+
+/**
+ * Sums the scores of each section added to the schedule
+ */
+function scoreSchedule(schedule) {
+//    return schedule.length;
+    if (schedule.length === 0) {
+        return 0;
+    } else {
+        return schedule.map(section => section.score).reduce((prev, next) => prev + next);
+    }
+}
+        
 
 /**
  * Tries to add every section for a course to a given schedule.
@@ -162,6 +242,10 @@ function addCourse(schedule, course) {
 function checkSchedule(schedule, section) {
     for (var i = 0; i < schedule.length; i++) {
         if (checkConflict(schedule[i], section)) {
+            return false;
+        }
+
+        if (schedule[i].subject === section.subject && schedule[i].course_number === section.course_number && schedule[i].type === section.type) {
             return false;
         }
     }
