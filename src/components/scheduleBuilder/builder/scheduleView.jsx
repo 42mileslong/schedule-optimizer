@@ -109,7 +109,7 @@ export default class ScheduleView extends React.Component {
           + '?year=' + year
           + '&term=' + term;
 
-      if (sectionids.length > 0) {
+      if (sectionIds.length > 0) {
         sectionIds.forEach(sectionId => {
           url += '&number=' + sectionId;
         });
