@@ -35,5 +35,15 @@
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CS196Illinois/schedule-optimizer.git"
+  },
+  "author": "RockStars",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CS196Illinois/schedule-optimizer/issues"
+  },
+  "homepage": "https://github.com/CS196Illinois/schedule-optimizer#readme"
 }
