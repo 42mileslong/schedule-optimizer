@@ -46,7 +46,7 @@ function getAvailableSectionsForCourses(courseList, callback) {
         var course = elementList[i];
 
         // Call method for each individual section
-        getCourseSections(allSections, course, i, function() {
+        getCourseSections(allSections, course, function() {
             // This lets us count how many callbacks finished - once they're all
             // done, return
             numCourses--;
@@ -66,19 +66,19 @@ function getAvailableSectionsForCourses(courseList, callback) {
   * @param {Number} i           The index in the array to insert into
   * @param {Function} callback  Callback that will be evoked when finished
   */
-function getCourseSections(allSections, course, i, callback) {
+function getCourseSections(allSections, course, callback) {
     var searchParams = {};
-    searchParams['course_number'] = course['number'];
-    searchParams['term'] = course['term'];
     searchParams['year'] = course['year'];
+    searchParams['term'] = course['term'];
     searchParams['subject'] = course['subject'];
+    searchParams['course_number'] = course['number'];
     searchParams['meetings'] = {'$elemMatch' : {'type_verbose' : course['section_type']}};
-    // children:{$elemMatch:{age: {$gte: 18}}}}
+
     // Get current sections that correspond with search parameters
     database.Section.findCurrent(
         searchParams,
         function(err, sections) {
-            allSections[i] = sections;
+            allSections.push(sections);
             callback();
         }
     );
@@ -187,7 +187,7 @@ function merge(left, right) {
     var result = [];
 
     while (left.length && right.length) {
-        if (left[0].meetings[0].start_time === "ARRANGED" || (right[0].meetings[0].start_time !== "ARRANGED" && left[0].meetings[0].end_time <= right[0].meetings[0].end_time)) {
+        if (left[0].meetings[0].start_time === "ARRANGED" || (right[0].meetings[0].start_time !== "ARRANGED" && timeToInt(left[0].meetings[0].end_time) <= timeToInt(right[0].meetings[0].end_time))) {
             result.push(left.shift());
         } else {
             result.push(right.shift());
@@ -203,4 +203,20 @@ function merge(left, right) {
     }
 
     return result;
+}
+
+/**
+ * Converts a time in the format XX:XX AM to an integer, for display purposes
+ *
+ * @param {String} time The time to convert
+ */
+function timeToInt(time) {
+    var startAmPm = time.split(' ')[1];
+    var startClock = time.split(' ')[0];
+    var startHour = parseInt(startClock.split(':')[0]) - this.baseTime;
+    if (startAmPm === 'PM' && startClock.split(':')[0] !== '12') {
+        startHour += 12;
+    }
+    var startMinute = parseInt(startClock.split(':')[1]);
+    return startHour * 60 + startMinute;
 }
