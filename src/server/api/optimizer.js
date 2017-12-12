@@ -144,7 +144,7 @@ function oneRecursiveBoi(topC, i, classList) {
 function noConflict(arr) {
     arr = sort(arr);
     for (var i = 1; i < arr.length; i++) {
-        if (arr[i - 1].end_time > arr[i].start_time) {
+        if (timeToInt(arr[i - 1].meetings[0].end_time) > timeToInt(arr[i].meetings[0].start_time)) {
             return false;
         }
     }
