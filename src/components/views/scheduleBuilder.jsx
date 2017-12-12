@@ -141,24 +141,24 @@ export default class ScheduleBuilder extends React.Component {
           <ul className="nav justify-content-center">
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className={"nav-link btn btn-link " + (this.state.view === "startup" ? "selected" : "")}
                 onClick={() => this.setView("startup")}>Startup</button>
             </li>
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className={"nav-link btn btn-link " + (this.state.view === "explorer" ? "selected" : "")}
                 disabled={this.state.config.term.name ? false : true}
                 onClick={() => this.setView("explorer")}>Explorer</button>
             </li>
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className={"nav-link btn btn-link " + (this.state.view === "planner" ? "selected" : "")}
                 disabled={this.state.config.term.name ? false : true}
                 onClick={() => this.setView("planner")}>Planner</button>
             </li>
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className={"nav-link btn btn-link " + (this.state.view === "builder" ? "selected" : "")}
                 disabled={
                   this.state.config.term.name ? (
                     this.state.courseWork.requiredCourses.length > 0 ? false : true
