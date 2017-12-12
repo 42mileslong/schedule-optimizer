@@ -163,6 +163,7 @@ function generateGenetic(courseList) {
         }
 
         schedules = newSchedules;
+
         
         // SCORE
         for (var i = 0; i < schedules.length; i++) {
@@ -192,16 +193,17 @@ function getRandomSection(courseList) {
  * Removes a random element from the array
  */
 function removeRandomSection(schedule) {
-    var s = schedule.slice(0);
-    s.splice(Math.floor(Math.random() * schedule.length), 1);
-    return s;
+    var section = schedule[Math.floor(Math.random() * schedule.length)];
+    
+    return schedule.filter(function(s) {
+        return !(s.subject === section.subject && s.course_number === section.course_number);
+    });
 }
 
 /**
  * Sums the scores of each section added to the schedule
  */
 function scoreSchedule(schedule) {
-//    return schedule.length;
     if (schedule.length === 0) {
         return 0;
     } else {
