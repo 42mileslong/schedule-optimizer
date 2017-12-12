@@ -30,14 +30,52 @@ body {
   border-color: white;
   color: white;
 }
+
 .btn-outline-primary:hover {
   border-color: #E87220;
   background-color: #E87220;
 }
 
+.btn-outline-primary:disabled {
+  color: white;
+}
+
+.btn-success {
+  border-color: #E87220;
+  background-color: #E87220;
+}
+
+.btn-success:hover {
+  border-color: #cb6115;
+  background-color: #cb6115
+}
+
+.btn-success:active {
+  border-color: #bd5a14 !important;
+  background-color: #bd5a14 !important;
+}
+
+.btn-success:active,
+.btn-success:focus {
+  box-shadow: 0 0 0 0.2rem rgba(189, 90, 20, 0.5) !important;
+}
+
 .btn-link {
   color: white;
 }
+
+.btn-link:disabled {
+  color: white;
+  opacity: 0.3;
+}
+
+.btn-link:hover:not(:disabled),
+.btn-link.selected {
+  color: #E87220;
+}
+
+
+
 .list-group-item, .card, input[type=text], input[type=text]:focus {
   color: $lightText;
   background-color: $darkOpaque;

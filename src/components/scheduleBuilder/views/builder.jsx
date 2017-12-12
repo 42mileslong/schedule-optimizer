@@ -20,7 +20,7 @@ export default class Builder extends React.Component {
           </div>
         </div>
         <br />
-        <div className="scheduleView card">
+        <div className="scheduleView">
           <ScheduleView
             config={this.props.config}
             courses={courses}
