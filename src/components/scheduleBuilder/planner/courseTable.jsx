@@ -47,7 +47,7 @@ export default class CourseTable extends React.Component {
                       onClick={() => {
                         this.removeCourse(course);
                         this.removeCourse(course);
-                      }}>&#128465;</button>
+                    }}>X</button>
                   </td>
                 </tr>
                 {

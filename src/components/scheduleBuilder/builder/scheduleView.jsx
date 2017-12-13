@@ -171,82 +171,95 @@ export default class ScheduleView extends React.Component {
     if (typeof sections == 'undefined') {
       sections = [];
     }
-    return (
-      <div>
-        <div className='row'>
-            <div className='col text-center'>
-              <button
-                type="button"
-                className="btn btn-primary btn-lg"
-                onClick={() => {this.nextSection()}}
-                disabled={this.state.scheduleNum > 0 ? false : true}>&lt;</button>
-              <span className="schedule-num">
-                Schedule {this.state.scheduleNum + 1} of {this.state.schedules.length}
-              </span>
-              <button
-                type="button"
-                className="btn btn-primary btn-lg"
-                onClick={() => {this.nextSchedule()}}
-                disabled={this.state.scheduleNum < this.state.schedules.length - 1 ? false : true}>&gt;</button>
-            </div>
-        </div>
-        <br/>
-        <div className='row' style={{'margin': '0px'}}>
-          <div className='col-1 hours'>
-            <div className='row day-name'></div>
-            {
-              Array.from(Array(this.numHours).keys()).map(i => {
-                // List numbers alongside left column
-                var hour = (this.baseTime + i);
-                var ampm = 'AM';
-                if (hour > 12) {
-                  hour -= 12;
-                  ampm = 'PM';
-                } else if (hour == 12) {
-                  ampm = 'PM';
-                }
 
-                return (
-                  <div key={i} className='row hour-number'>{hour + ' ' + ampm}</div>
-                )
-              })
-            }
+    if (sections.length == 0) {
+
+        return (
+            <div className='row'>
+                <div className='col text-center'>
+                    <h1>Loading...</h1>
+                </div>
+            </div>
+        )
+    } else {
+
+        return (
+          <div>
+            <div className='row'>
+                <div className='col text-center'>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-lg"
+                    onClick={() => {this.nextSection()}}
+                    disabled={this.state.scheduleNum > 0 ? false : true}>&lt;</button>
+                  <span className="schedule-num">
+                    Schedule {this.state.scheduleNum + 1} of {this.state.schedules.length}
+                  </span>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-lg"
+                    onClick={() => {this.nextSchedule()}}
+                    disabled={this.state.scheduleNum < this.state.schedules.length - 1 ? false : true}>&gt;</button>
+                </div>
+            </div>
+            <br/>
+            <div className='row' style={{'margin': '0px'}}>
+              <div className='col-1 hours'>
+                <div className='row day-name'></div>
+                {
+                  Array.from(Array(this.numHours).keys()).map(i => {
+                    // List numbers alongside left column
+                    var hour = (this.baseTime + i);
+                    var ampm = 'AM';
+                    if (hour > 12) {
+                      hour -= 12;
+                      ampm = 'PM';
+                    } else if (hour == 12) {
+                      ampm = 'PM';
+                    }
+
+                    return (
+                      <div key={i} className='row hour-number'>{hour + ' ' + ampm}</div>
+                    )
+                  })
+                }
+              </div>
+              <DayView day='M' dayName='Monday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+              <DayView day='T' dayName='Tuesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+              <DayView day='W' dayName='Wednesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+              <DayView day='R' dayName='Thursday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+              <DayView day='F' dayName='Friday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
+            </div>
+            <div className='row'>
+              <div className='col-3'></div>
+              <div className='col-6'>
+                <table className="table course-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Course</th>
+                      <th scope="col">Section Type</th>
+                      <th scope="col">CRN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {
+                    sections.map(section => {
+                      return (
+                          <tr key={section._id}>
+                            <td>{section.subject + " " + section.course_number}</td>
+                            <td>{section.meetings[0].type_verbose}</td>
+                            <td>{section.number}</td>
+                          </tr>
+                      )
+                    })
+                  }
+                  </tbody>
+                </table>
+              </div>
+              <div className='col-3'></div>
+            </div>
           </div>
-          <DayView day='M' dayName='Monday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
-          <DayView day='T' dayName='Tuesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
-          <DayView day='W' dayName='Wednesday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
-          <DayView day='R' dayName='Thursday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
-          <DayView day='F' dayName='Friday' sections={sections} timeToInt={this.timeToInt} numHours={this.numHours}/>
-        </div>
-        <div className='row'>
-          <div className='col-3'></div>
-          <div className='col-6'>
-            <table className="table course-table">
-              <thead>
-                <tr>
-                  <th scope="col">Course</th>
-                  <th scope="col">Section Type</th>
-                  <th scope="col">CRN</th>
-                </tr>
-              </thead>
-              <tbody>
-              {
-                sections.map(section => {
-                  return (
-                      <tr key={section._id}>
-                        <td>{section.subject + " " + section.course_number}</td>
-                        <td>{section.meetings[0].type_verbose}</td>
-                        <td>{section.number}</td>
-                      </tr>
-                  )
-                })
-              }
-              </tbody>
-            </table>
-          </div>
-          <div className='col-3'></div>
-        </div>
-      </div>
-    )
+        )
+    }
   }
 }
