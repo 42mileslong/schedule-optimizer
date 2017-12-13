@@ -140,7 +140,7 @@ function generate(courseList) {
  * @return {Array}            List of lists of sections where each sublist is a complete schedule
  */
 function generateGenetic(courseList) {
-    const generations = 5;
+    const generations = 100;
     const population = 100;
     const topN = 10;
     const createN = Math.floor(population/topN);
@@ -170,15 +170,13 @@ function generateGenetic(courseList) {
         }
         
         // WEED
-        schedules = schedules.sort(function(a, b) {
-            return a[1] < b[1];
+        schedules.sort(function(a, b) {
+            return b[1] - a[1];
         });
         
         schedules = schedules.slice(0, topN);
     }
 
-    console.log(schedules);
-    console.log(schedules.map(a => a[0].map(b => b.number)));
     return schedules.map(a => a[0].map(b => b.number));
 }
 
