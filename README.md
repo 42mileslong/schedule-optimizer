@@ -34,4 +34,21 @@ Project Managers:
 * David Brewster [davidb2]
 * Pooja Mikkilineni [pmikki2]
 
-#####  All rights reserved.
+## Technologies Used
+### Frontend
+* HTML & CSS/SCSS
+* Bootstrap v4
+* ReactJS
+* Babel
+* Webpack
+
+### Backend
+* NodeJS
+* Express
+* Mongoose
+
+### Other
+* MongoDB
+* Heroku
+
+#####  Copyright 2017. All rights reserved.
